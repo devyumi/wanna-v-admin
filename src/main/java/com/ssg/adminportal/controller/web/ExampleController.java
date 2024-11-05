@@ -1,4 +1,4 @@
-package com.ssg.adminportal.controller;
+package com.ssg.adminportal.controller.web;
 
 public class ExampleController {
 

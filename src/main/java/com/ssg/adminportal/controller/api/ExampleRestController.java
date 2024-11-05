@@ -1,5 +1,5 @@
-package com.ssg.adminportal.controller;
+package com.ssg.adminportal.controller.api;
 
-public class ExampleController {
+public class ExampleRestController {
 
 }
