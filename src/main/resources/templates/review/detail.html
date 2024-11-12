@@ -36,8 +36,7 @@
 </head>
 
 <body>
-
-
+  <!-- main -->
   <nav class="navbar navbar-expand-lg navbar-glass">
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center w-100">
@@ -213,10 +212,10 @@
     </div>
     </div>
 </nav>
-  <!-- main wrapper-->
+  <!-- main wrapper -->
   <div class="main-wrapper">
     <!-- navbar vertical -->
-
+    
             <nav class="navbar-vertical-nav d-none d-xl-block ">
                 <div class="navbar-vertical">
                                 <div class="px-4 py-5">
@@ -254,7 +253,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link   collapsed " href="#"
+                                            <a class="nav-link  " href="#"
                                                 data-bs-toggle="collapse" data-bs-target="#navCategoriesOrders" aria-expanded="false"
                                                 aria-controls="navCategoriesOrders">
                                                 <div class="d-flex align-items-center">
@@ -262,7 +261,7 @@
                                                     <span class="nav-link-text">Orders</span>
                                                 </div>
                                             </a>
-                                            <div id="navCategoriesOrders" class="collapse "
+                                            <div id="navCategoriesOrders" class="collapse  show "
                                                 data-bs-parent="#sideNavbar">
                                                 <ul class="nav flex-column">
                                                     <li class="nav-item ">
@@ -273,7 +272,7 @@
                                                     </li>
                                                     <!-- Nav item -->
                                                     <li class="nav-item ">
-                                                        <a class="nav-link "
+                                                        <a class="nav-link  active "
                                                             href="../dashboard/order-single.html">
                                                             Single
 
@@ -300,7 +299,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item ">
-                                            <a class="nav-link  active " href="../dashboard/reviews.html">
+                                            <a class="nav-link " href="../dashboard/reviews.html">
                                                 <div class="d-flex align-items-center">
                                                     <span class="nav-link-icon"> <i class="bi bi-star"></i></span>
                                                     <span class="nav-link-text">Reviews</span>
@@ -493,7 +492,7 @@
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link   collapsed " href="#"
+                                                            <a class="nav-link  " href="#"
                                                                 data-bs-toggle="collapse" data-bs-target="#navOrders" aria-expanded="false"
                                                                 aria-controls="navOrders">
                                                                 <div class="d-flex align-items-center">
@@ -501,7 +500,7 @@
                                                                     <span class="nav-link-text">Orders</span>
                                                                 </div>
                                                             </a>
-                                                            <div id="navOrders" class="collapse "
+                                                            <div id="navOrders" class="collapse  show "
                                                                 data-bs-parent="#sideNavbar">
                                                                 <ul class="nav flex-column">
                                                                     <li class="nav-item ">
@@ -512,7 +511,7 @@
                                                                     </li>
                                                                     <!-- Nav item -->
                                                                     <li class="nav-item ">
-                                                                        <a class="nav-link "
+                                                                        <a class="nav-link  active "
                                                                             href="../dashboard/order-single.html">
                                                                             Single
 
@@ -538,7 +537,7 @@
                                                             </a>
                                                         </li>
                                                         <li class="nav-item ">
-                                                            <a class="nav-link  active " href="../dashboard/reviews.html">
+                                                            <a class="nav-link " href="../dashboard/reviews.html">
                                                                 <div class="d-flex align-items-center">
                                                                     <span class="nav-link-icon"> <i class="bi bi-star"></i></span>
                                                                     <span class="nav-link-text">Reviews</span>
@@ -683,133 +682,76 @@
                                             </div>
 
                                             </nav>
+    
 
-
-<!-- main -->
 <main class="main-content-wrapper">
-  <div class="container">
-    <div class="row mb-8">
-      <div class="col-md-12">
-        <div>
-          <!-- page header -->
-          <h2>리뷰 관리</h2>
-          <!-- breacrumb -->
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0">
-              <li class="breadcrumb-item"><a href="#" class="text-inherit">리뷰 관리</a></li>
-              <li class="breadcrumb-item active" aria-current="page">리뷰 목록</li>
-            </ol>
-          </nav>
+    <!-- container -->
+    <div class="container">
+    <!-- row -->
+        <div class="row ">
+            <div class="col-xl-12 col-12 mb-5">
+                <!-- card -->
+                <div class="card h-100 card-lg">
+                    <div class="card-body p-6">
+                        <!-- table -->
+                        <table class="table mb-6 border fs-5">
+                            <tbody>
+                            <tr>
+                                <td class="table-secondary fw-bold" style="width: 15%;">ID</td>
+                                <td>10</td>
+                                <td class="table-secondary fw-bold" style="width: 15%;">상태</td>
+                                <td>게시</td> 
+                            </tr>
 
+                            <tr>
+                                <td class="table-secondary fw-bold">작성자</td>
+                                <td>뷰리풀</td>
+                                <td class="table-secondary fw-bold">작성일</td>
+                                <td>2024-11-12</td>
+                            </tr>
+
+                            <tr>
+                                <td class="table-secondary fw-bold">식당명</td>
+                                <td>다켄씨엘</td>
+                                <td class="table-secondary fw-bold">별점</td>
+                                <td>5점</td>
+                            </tr>
+
+                            <tr>
+                                <td class="table-secondary fw-bold">내용</td>
+                                <td colspan="4">너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요 너무 맛있어요</td>
+                            </tr>
+
+                            <tr>
+                                <td class="table-secondary fw-bold">태그</td>
+                                <td colspan="4">
+                                    <div class="badge text-bg-light border">분위기가 좋아요</div>
+                                    <div class="badge text-bg-light border">재료가 신선해요</div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="table-secondary fw-bold">사진</td>
+                                <td colspan="4">
+                                    <img src="../assets/images/products/product-img-18.jpg" alt="">
+                                    <img src="../assets/images/products/product-img-17.jpg" alt="">
+                                    <img src="../assets/images/products/product-img-15.jpg" alt="">
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-secondary me-2" style="border-radius: 5%;">뒤로</button>
+                            <button type="button" class="btn btn-outline-danger" style="border-radius: 5%;">숨기기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-
-    <div class="row">
-      <div class="col-xl-12 col-12 mb-5">
-        <div class="card h-100 card-lg">
-
-            <!--필터링 Start-->
-            <div class="p-6 d-flex">
-                <form class="me-auto" role="search">
-                    <input class="form-control" type="search" placeholder="내용을 입력하세요." aria-label="Search">
-                </form>
-
-                <div class="ms-2">
-                    <select class="form-select" id="type" onchange="filtering()">
-                        <option selected value="new">최신순</option>
-                        <option value="old">등록순</option>
-                        <option value="rating">별점</option>
-                        <option value="status">상태</option>
-                    </select>
-                </div>
-
-                <div class="ms-2" style="display: none;" id="ratingSub">
-                    <select class="form-select">
-                        <option selected value="5">5점</option>
-                        <option value="4">4점</option>
-                        <option value="3">3점</option>
-                        <option value="2">2점</option>
-                        <option value="1">1점</option>
-                    </select>
-                </div>
-
-                <div class="ms-2" style="display: none;" id="statusSub">
-                    <select class="form-select">
-                        <option selected value="true">게시</option>
-                        <option value="false">삭제</option>
-                    </select>
-                </div>
-            </div>
-          <!--필터링 End-->
-
-          <!-- card body -->
-          <div class="card-body p-0">
-            <!-- table -->
-            <div class="table-responsive">
-              <table class="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap text-center">
-                <thead class="bg-light">
-                  <tr>
-                    <th>ID</th>
-                    <th>작성일</th>
-                    <th>고객 정보</th>
-                    <th>식당명</th>
-                    <th>내용</th>
-                    <th>상태</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>10</td>
-
-                    <td>2024-11-12</td>
-                    <td>
-                      <p class="mb-0">뷰리풀</p>
-                      <p class="mb-0">beautiful123</p>
-                      <p class="mb-0">새싹 등급</p>
-                    </td>
-
-                    <td>
-                      <p class="mb-0">다켄씨엘</p>
-                      <p class="mb-0">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </p>
-                    </td>
-
-                    <td>
-                      <span class="text-truncate" style="display: inline-block; width: 40rem;"><a href="#" class="text-reset">너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 </a></span>
-                    </td>
-
-                    <td>
-                      <span class="badge bg-light-primary text-dark-primary fs-6">게시</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="border-top d-md-flex justify-content-between align-items-center p-6">
-              <span>Showing 1 to 8 of 12 entries</span>
-              <nav class="mt-2 mt-md-0">
-                <ul class="pagination mb-0 ">
-                  <li class="page-item disabled"><a class="page-link " href="#!">Previous</a></li>
-                  <li class="page-item"><a class="page-link active" href="#!">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#!">Next</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </main>
+
 
   <!-- Libs JS -->
 <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
@@ -818,26 +760,6 @@
 
 <!-- Theme JS -->
 <script src="../assets/js/theme.min.js"></script>
-
-<!--custom JS-->
-<script>
-  function filtering() {
-    const type = document.getElementById('type').value;
-    const ratingSub = document.getElementById('ratingSub');
-    const statusSub = document.getElementById('statusSub');
-
-    if (type === 'old' || type == 'new') {
-      ratingSub.style.display = 'none';
-      statusSub.style.display = 'none';
-    } else if (type === 'rating') {
-      ratingSub.style.display = 'block';
-      statusSub.style.display = 'none';
-    } else if (type === 'status') {
-      ratingSub.style.display = 'none';
-      statusSub.style.display = 'block';
-    }
-  }
-</script>
 
 </body>
 
