@@ -1,0 +1,117 @@
+<html th:replace="~{fragment/layout.html :: layout(~{::main})}" xmlns:th="http://www.thymeleaf.org">
+  <main class="main-content-wrapper">
+    <style>
+      @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+      body{
+        font-family: 'NanumSquare', sans-serif;
+      }
+
+      .profile{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        position: absolute;
+        top: -50px;
+        border: 1px solid;
+      }
+    </style>
+    <!-- container -->
+    <div class="container">
+      <!-- row -->
+      <div class="row mb-8">
+        <div class="col-md-12">
+          <div class="d-md-flex justify-content-between align-items-center">
+            <!-- page header -->
+            <h2>회원 상세 조회</h2>
+            <!-- button -->
+            <form action="" class="btn btn-primary">수정</form>
+          </div>
+        </div>
+      </div>
+      <!-- row -->
+      <div class="row">
+        <!-- card -->
+        <div class="card mb-6 card-lg">
+          <!-- card body -->
+          <div class="card-body p-6 ">
+            <div class="mb-3 d-flex justify-content-center">
+              <img src="/assets/images/image.png" class="profile"/>
+            </div>
+            <div class="row">
+              <!-- input -->
+              <div class="mb-3 col-lg-6 mt-5">
+                <label class="form-label">소셜 닉네임</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6 mt-5">
+                <label class="form-label">우편번호</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">전화번호</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">도로명 주소</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">이름</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">지번 주소</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">이메일</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">상세 주소</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">등급</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">탈퇴 시각</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">추천인 코드</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">탈퇴 여부</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">포인트</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">최초 등록 시각</label>
+                <input type="text" class="form-control" required readonly>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">쿠폰</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label class="form-label">최종 수정 시각</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-3 col-lg-6">
+                <label for="exampleFormControlTextarea1" class="form-label">특이사항</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</html>
