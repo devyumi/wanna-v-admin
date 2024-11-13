@@ -2,11 +2,12 @@ package com.ssg.adminportal.repository.repositoryImpl;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.wanna_v_local.domain.QRestaurant;
-import com.wanna_v_local.domain.QReview;
-import com.wanna_v_local.domain.QUser;
-import com.wanna_v_local.domain.Review;
-import com.wanna_v_local.dto.request.ReviewRequestDTO;
+import com.ssg.adminportal.domain.QRestaurant;
+import com.ssg.adminportal.domain.QReview;
+import com.ssg.adminportal.domain.QUser;
+import com.ssg.adminportal.domain.Review;
+import com.ssg.adminportal.dto.request.ReviewRequestDTO;
+import com.ssg.adminportal.repository.ReviewCustomRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
