@@ -1,0 +1,27 @@
+package com.ssg.adminportal.controller.web;
+
+import com.ssg.adminportal.dto.response.ProductResponseDTO;
+import com.ssg.adminportal.service.ProductService;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Log4j2
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/products")
+public class ProductController {
+
+    private final ProductService productService;
+
+    @GetMapping()
+    public String getProductList(Model model) {
+        List<ProductResponseDTO> products = productService.getProductList();
+        model.addAttribute("products", products);
+        return "/product/products";
+    }
+}
