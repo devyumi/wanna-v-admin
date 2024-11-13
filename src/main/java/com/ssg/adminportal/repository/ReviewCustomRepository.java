@@ -1,7 +1,7 @@
 package com.ssg.adminportal.repository;
 
-import com.wanna_v_local.domain.Review;
-import com.wanna_v_local.dto.request.ReviewRequestDTO;
+import com.ssg.adminportal.domain.Review;
+import com.ssg.adminportal.dto.request.ReviewRequestDTO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

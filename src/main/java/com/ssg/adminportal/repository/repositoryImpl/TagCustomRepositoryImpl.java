@@ -2,10 +2,11 @@ package com.ssg.adminportal.repository.repositoryImpl;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.wanna_v_local.domain.QReviewTag;
-import com.wanna_v_local.domain.QTag;
-import com.wanna_v_local.domain.ReviewTag;
-import com.wanna_v_local.dto.request.TagRequestDTO;
+import com.ssg.adminportal.domain.QReviewTag;
+import com.ssg.adminportal.domain.QTag;
+import com.ssg.adminportal.domain.ReviewTag;
+import com.ssg.adminportal.dto.request.TagRequestDTO;
+import com.ssg.adminportal.repository.TagCustomRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

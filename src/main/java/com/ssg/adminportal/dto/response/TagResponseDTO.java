@@ -1,7 +1,7 @@
 package com.ssg.adminportal.dto.response;
 
-import com.wanna_v_local.domain.ReviewTag;
-import com.wanna_v_local.dto.request.TagRequestDTO;
+import com.ssg.adminportal.domain.ReviewTag;
+import com.ssg.adminportal.dto.request.TagRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
