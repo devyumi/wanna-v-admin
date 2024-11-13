@@ -33,4 +33,14 @@ public class ProductServiceImpl implements ProductService {
                 product.getIsActive(), product.getCreatedAt()))
             .collect(Collectors.toList());
     }
+
+    /**
+     * 상품 상세 조회
+     * @param productId → 상품 ID
+     */
+    @Transactional(readOnly = true)
+    public Product getProduct(Long productId) {
+        return productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Invalid ID value: " + productId));
+    }
+
 }

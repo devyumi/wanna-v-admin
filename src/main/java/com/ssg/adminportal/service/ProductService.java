@@ -8,4 +8,5 @@ public interface ProductService {
 
     List<ProductResponseDTO> getProductList();
 
+    Product getProduct(Long productId);
 }
