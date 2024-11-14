@@ -1,5 +1,6 @@
 package com.ssg.adminportal.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssg.adminportal.common.Category;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -18,5 +19,7 @@ public class ProductResponseDTO {
     private Category category;
     private Integer stock;
     private Boolean isActive;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 }
