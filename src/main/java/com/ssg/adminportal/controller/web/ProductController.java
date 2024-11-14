@@ -1,9 +1,6 @@
 package com.ssg.adminportal.controller.web;
 
-import com.ssg.adminportal.domain.Product;
-import com.ssg.adminportal.dto.response.ProductResponseDTO;
 import com.ssg.adminportal.service.ProductService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;

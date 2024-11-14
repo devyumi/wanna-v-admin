@@ -10,35 +10,30 @@ import lombok.ToString;
 
 @Entity
 @Getter
-@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Admin")
-public class Admin {
-
+@Builder
+public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 15, nullable = false)
-    private String username;
+    @ManyToOne
+    @JoinColumn(name="restaurant_id")
+    private Restaurant restaurant;
 
-    @Column(length = 20, nullable = false)
-    private String password;
+    @Column(name="seat_capacity", nullable = false)
+    private Integer seatCapacity;
 
-    @Column(length = 50, nullable = false)
-    private String email;
+    @Column(name="seat_count", nullable = false)
+    private Integer seatCount;
 
-    @Column(length = 10, nullable = false)
-    private String name;
-
-    @Column(name = "created_at", nullable = false)
+    @Column(name="created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name="updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
-
 }
