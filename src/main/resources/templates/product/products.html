@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- <link rel="stylesheet" href="/css/product/products.css"> // 적용 시키고 싶은 CSS 파일 -->
+  <!-- <script defer src="/js/product/products.js"></script> // 적용 시키고 싶은 js 파일 -->
+  <title>Product List Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
+
+  <div class="container">
+    <div class="row mb-8">
+      <div class="col-md-12">
+        <div>
+          <h2>상점 관리</h2>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="#" class="text-inherit">상점 관리</a></li>
+              <li class="breadcrumb-item active" aria-current="page">상품 목록</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-12 mb-5">
+        <div class="card h-100 card-lg">
+            <div class="p-6 d-flex">
+                <form class="me-auto" role="search">
+                    <input class="form-control" type="search" placeholder="내용을 입력하세요." aria-label="Search">
+                </form>
+                <div class="ms-2">
+                    <select class="form-select" id="type" onchange="filtering()">
+                        <option selected value="new">최신순</option>
+                        <option value="name">이름순</option>
+                        <option value="price">가격순</option>
+                        <option value="selling">판매순</option>
+                    </select>
+                </div>
+            </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap text-center">
+                <thead class="bg-light">
+                  <tr>
+                    <th>ID</th>
+                    <th>상품명</th>
+                    <th>판매가</th>
+                    <th>카테고리</th>
+                    <th>재고</th>
+                    <th>활셩화 싱테</th>
+                    <th>등록일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>10</td>
+
+                    <td>2024-11-12</td>
+                    <td>
+                      <p class="mb-0">뷰리풀</p>
+                      <p class="mb-0">beautiful123</p>
+                      <p class="mb-0">새싹 등급</p>
+                    </td>
+
+                    <td>
+                      <p class="mb-0">다켄씨엘</p>
+                      <p class="mb-0">
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                      </p>
+                    </td>
+
+                    <td>
+                      <span class="text-truncate" style="display: inline-block; width: 40rem;"><a href="#" class="text-reset">너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 </a></span>
+                    </td>
+
+                    <td>
+                      <span class="badge bg-light-primary text-dark-primary fs-6">게시</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="border-top d-md-flex justify-content-between align-items-center p-6">
+              <span>Showing 1 to 8 of 12 entries</span>
+              <nav class="mt-2 mt-md-0">
+                <ul class="pagination mb-0 ">
+                  <li class="page-item disabled"><a class="page-link " href="#!">Previous</a></li>
+                  <li class="page-item"><a class="page-link active" href="#!">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#!">Next</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

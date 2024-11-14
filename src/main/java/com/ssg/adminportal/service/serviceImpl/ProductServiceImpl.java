@@ -28,7 +28,6 @@ public class ProductServiceImpl implements ProductService {
 
         return products.stream()
             .map(product -> new ProductResponseDTO(product.getId(), product.getName(),
-                product.getCostPrice(), product.getSellingPrice(), product.getDiscountRate(),
                 product.getFinalPrice(), product.getCategory(), product.getStock(),
                 product.getIsActive(), product.getCreatedAt()))
             .collect(Collectors.toList());

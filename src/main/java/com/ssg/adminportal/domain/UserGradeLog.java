@@ -1,5 +1,6 @@
 package com.ssg.adminportal.domain;
 
+import com.ssg.adminportal.common.Grade;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -10,35 +11,27 @@ import lombok.ToString;
 
 @Entity
 @Getter
-@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Admin")
-public class Admin {
-
+@Builder
+public class UserGradeLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 15, nullable = false)
-    private String username;
+    @OneToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
-    @Column(length = 20, nullable = false)
-    private String password;
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
 
-    @Column(length = 50, nullable = false)
-    private String email;
-
-    @Column(length = 10, nullable = false)
-    private String name;
-
-    @Column(name = "created_at", nullable = false)
+    @Column(name="created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name="updated_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime updatedAt;
-
+    private LocalDateTime updateAt;
 }
