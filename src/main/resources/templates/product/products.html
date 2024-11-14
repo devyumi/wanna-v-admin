@@ -4,11 +4,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}"
 >
-<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <script defer type="module" src="/js/product/products.js"></script>
-  // 적용 시키고 싶은 js 파일
+  <script defer type="module" src="/js/product/product.js"></script>
   <title>Product List Page</title>
 </head>
 <body>
@@ -33,7 +31,7 @@
         <div class="card h-100 card-lg">
           <div class="p-6 d-flex">
             <form class="me-auto" role="search">
-              <input class="form-control" type="search" placeholder="내용을 입력하세요."
+              <input class="form-control" type="search" placeholder="상품명을 입력하세요."
                      aria-label="Search">
             </form>
             <div class="ms-2">
@@ -67,7 +65,12 @@
                   </td>
                   <td class="name" th:text="${product.name}"></td>
                   <td class="final-price price" th:data-price="${product.finalPrice}"></td>
-                  <td class="category" th:text="${product.category}"></td>
+                  <td class="category" th:switch="${product.category}">
+                    <span th:case="'MK'">밀키트</span>
+                    <span th:case="'C'">화장품</span>
+                    <span th:case="'S'">간식</span>
+                    <span th:case="*">-</span>
+                  </td>
                   <td class="stock" th:text="${product.stock}"></td>
                   <td class="isActive" th:text="${product.isActive ? 'O' : 'X'}"></td>
                   <td class="createdAt" th:text="${product.createdAt}"></td>
