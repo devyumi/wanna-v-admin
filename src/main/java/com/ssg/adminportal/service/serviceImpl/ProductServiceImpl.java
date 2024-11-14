@@ -63,6 +63,7 @@ public class ProductServiceImpl implements ProductService {
             .stock(requestDTO.getStock())
             .description(requestDTO.getDescription())
             .isActive(requestDTO.getIsActive())
+            .createdAt(requestDTO.getCreatedAt())
             .build());
     }
 
