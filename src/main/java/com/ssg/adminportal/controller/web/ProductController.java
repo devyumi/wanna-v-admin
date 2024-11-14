@@ -20,13 +20,13 @@ public class ProductController {
     @GetMapping()
     public String getProductList(Model model) {
         model.addAttribute("products", productService.getProductList());
-        return "/product/products";
+        return "product/products";
     }
 
     @GetMapping("/{id}")
     public String getProductDetail(@PathVariable Long id, Model model) {
         model.addAttribute("product", productService.getProduct(id));
-        return "/product/product";
+        return "product/product";
     }
 
 }

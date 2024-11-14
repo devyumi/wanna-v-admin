@@ -65,12 +65,7 @@
                   </td>
                   <td class="name" th:text="${product.name}"></td>
                   <td class="final-price price" th:data-price="${product.finalPrice}"></td>
-                  <td class="category" th:switch="${product.category}">
-                    <span th:case="'MK'">밀키트</span>
-                    <span th:case="'C'">화장품</span>
-                    <span th:case="'S'">간식</span>
-                    <span th:case="*">-</span>
-                  </td>
+                  <td th:text="${product.category.getName()}"></td>
                   <td class="stock" th:text="${product.stock}"></td>
                   <td class="isActive" th:text="${product.isActive ? 'O' : 'X'}"></td>
                   <td class="createdAt" th:text="${product.createdAt}"></td>

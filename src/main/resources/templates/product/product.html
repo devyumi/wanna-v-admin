@@ -49,12 +49,7 @@
               </tr>
               <tr>
                 <td class="table-secondary fw-bold" style="width: 15%;">카테고리</td>
-                <td th:switch="${product.category}">
-                  <span th:case="'MK'">밀키트</span>
-                  <span th:case="'C'">화장품</span>
-                  <span th:case="'S'">간식</span>
-<!--                  <span th:case="*">-</span>-->
-                </td>
+                <td th:text="${product.category.getName()}"></td>
                 <td class="table-secondary fw-bold" style="width: 15%;">재고</td>
                 <td th:text="${product.stock}"></td>
               </tr>
