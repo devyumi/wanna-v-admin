@@ -2,6 +2,7 @@ package com.ssg.adminportal.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssg.adminportal.common.Category;
+import com.ssg.adminportal.dto.request.ProductRequestDTO;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -80,4 +81,18 @@ public class Product {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:MM:SS")
     private LocalDateTime updatedAt;
+
+    public void update(ProductRequestDTO requestDTO) {
+        this.name = requestDTO.getName();
+        this.image = requestDTO.getImage();
+        this.costPrice = requestDTO.getCostPrice();
+        this.sellingPrice = requestDTO.getSellingPrice();
+        this.discountRate = requestDTO.getDiscountRate();
+        this.finalPrice = requestDTO.getFinalPrice();
+        this.category = requestDTO.getCategory();
+        this.stock = requestDTO.getStock();
+        this.description = requestDTO.getDescription();
+        this.isActive = requestDTO.getIsActive();
+        this.updatedAt = requestDTO.getUpdatedAt();
+    }
 }
