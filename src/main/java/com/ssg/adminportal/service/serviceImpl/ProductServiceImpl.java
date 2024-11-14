@@ -1,6 +1,7 @@
 package com.ssg.adminportal.service.serviceImpl;
 
 import com.ssg.adminportal.domain.Product;
+import com.ssg.adminportal.dto.request.ProductRequestDTO;
 import com.ssg.adminportal.dto.response.ProductResponseDTO;
 import com.ssg.adminportal.repository.ProductRepository;
 import com.ssg.adminportal.service.ProductService;
@@ -35,11 +36,34 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * 상품 상세 조회
+     *
      * @param productId → 상품 ID
      */
     @Transactional(readOnly = true)
     public Product getProduct(Long productId) {
-        return productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Invalid ID value: " + productId));
+        return productRepository.findById(productId)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid ID value: " + productId));
+    }
+
+    /**
+     * 상품 등록
+     *
+     * @param requestDTO
+     */
+    @Transactional
+    public void createProduct(ProductRequestDTO requestDTO) {
+        productRepository.save(Product.builder()
+            .name(requestDTO.getName())
+            .image(requestDTO.getImage())
+            .costPrice(requestDTO.getCostPrice())
+            .sellingPrice(requestDTO.getSellingPrice())
+            .discountRate(requestDTO.getDiscountRate())
+            .finalPrice(requestDTO.getFinalPrice())
+            .category(requestDTO.getCategory())
+            .stock(requestDTO.getStock())
+            .description(requestDTO.getDescription())
+            .isActive(requestDTO.getIsActive())
+            .build());
     }
 
 }
