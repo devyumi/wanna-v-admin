@@ -27,18 +27,18 @@
             <div class="row mb-3">
               <div class="col-12">
                 <label class="form-label">상품명</label>
-                <input type="text" id="name" name="name" class="form-control">
+                <input type="text" id="name" name="name" class="form-control" required>
               </div>
             </div>
 
             <div class="row mb-3">
               <div class="col-6">
                 <label class="form-label">원가</label>
-                <input type="number" id="costPrice" name="cost-price" class="form-control">
+                <input type="number" id="costPrice" name="cost-price" class="form-control" required>
               </div>
               <div class="col-6">
                 <label class="form-label">판매가</label>
-                <input type="number" id="sellingPrice" name="selling-price" class="form-control">
+                <input type="number" id="sellingPrice" name="selling-price" class="form-control" required>
               </div>
             </div>
 
@@ -49,8 +49,8 @@
               </div>
               <div class="col-6" id="formArea">
                 <label class="form-label">카테고리</label>
-                <select id="category" name="category" class="form-select">
-                  <option selected disabled>-- 선택 --</option>
+                <select id="category" name="category" class="form-select" required>
+                  <option value="" disabled selected hidden>-- 선택 --</option>
                   <option value="MK">밀키트</option>
                   <option value="C">화장품</option>
                   <option value="S">간식</option>
@@ -61,7 +61,7 @@
             <div class="row mb-3">
               <div class="col-6">
                 <label class="form-label">재고</label>
-                <input type="number" id="stock" name="stock" class="form-control">
+                <input type="number" id="stock" name="stock" class="form-control" required>
               </div>
               <div class="col-6">
                 <label class="form-label">상태</label>
@@ -85,14 +85,13 @@
               <div class="mb-3">
                 <h4 class="mb-3 h5">썸네일</h4>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="image" name="image">
+                  <input type="file" class="form-control" id="image" name="image" required>
                 </div>
               </div>
               <div class="mb-3">
                 <h4 class="mb-3 h5">상품 설명</h4>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="description" name="description"
-                  >
+                  <input type="file" class="form-control" id="description" name="description" required>
                 </div>
               </div>
             </div>
