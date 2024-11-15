@@ -6,13 +6,13 @@
 >
 <head>
   <meta charset="UTF-8">
-  <script defer src="/js/product/save.js"></script>
+  <script defer src="/js/product/update.js"></script>
   <title>Product Save Page</title>
 </head>
 <body>
 <main layout:fragment="main-content" th:class="main-container">
   <div class="container">
-    <form id="productForm">
+    <form id="productUpdateForm">
       <div class="row mb-8">
         <div class="col-md-12">
           <div class="d-md-flex justify-content-between align-items-center">
@@ -22,9 +22,12 @@
                 <li class="breadcrumb-item"><a href="/products" class="text-inherit">상점 관리</a></li>
                 <li class="breadcrumb-item active" aria-current="page">상품 수정</li>
               </ol>
+              <h2 th:text="'# ' + ${product.id}" id="productId" name="productId"  style="margin-top: 25px;"></h2>
             </div>
             <div>
-              <button type="submit" class="btn btn-primary">상품 수정</button>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                상품 수정
+              </button>
             </div>
           </div>
         </div>
@@ -98,16 +101,35 @@
               <div class="mb-3">
                 <h4 class="mb-3 h5">썸네일</h4>
                 <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="image" name="image" required>
+                  <input type="file" class="form-control" id="image" name="image">
                 </div>
               </div>
               <div class="mb-3">
                 <h4 class="mb-3 h5">상품 설명</h4>
                 <div class="input-group mb-3">
                   <input type="file" class="form-control" id="description" name="description"
-                         required>
+                  >
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="confirmModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false"
+           tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">상품 정보 수정</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              상품의 정보를 정말로 수정하시겠습니까?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
+              <button type="submit" class="btn btn-primary" id="btn-modify">수정</button>
             </div>
           </div>
         </div>

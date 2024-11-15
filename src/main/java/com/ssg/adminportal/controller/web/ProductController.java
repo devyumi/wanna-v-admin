@@ -34,4 +34,10 @@ public class ProductController {
         return "product/save";
     }
 
+    @GetMapping("/{id}/update")
+    public String updateProductForm(@PathVariable Long id, Model model) {
+        model.addAttribute("product", productService.getProduct(id));
+        return "product/update";
+    }
+
 }

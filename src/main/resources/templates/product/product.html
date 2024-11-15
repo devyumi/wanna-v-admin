@@ -14,14 +14,21 @@
   <div class="container">
     <div class="row mb-8">
       <div class="col-md-12">
-        <div>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0">
-              <li class="breadcrumb-item"><a href="/products" class="text-inherit">상점 관리</a></li>
-              <li class="breadcrumb-item active" aria-current="page">상품 관리</li>
-            </ol>
-          </nav>
-          <h2 th:text="'# ' + ${product.id}" style="margin-top: 25px;"></h2>
+        <div class="d-md-flex justify-content-between align-items-center">
+          <div>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/products" class="text-inherit">상점 관리</a></li>
+                <li class="breadcrumb-item active" aria-current="page">상품 관리</li>
+              </ol>
+            </nav>
+            <h2 th:text="'# ' + ${product.id}" style="margin-top: 25px;"></h2>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary"
+                    th:onclick="'window.location.href=\'/products/' + ${product.id} + '/update\''">상품 수정
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -71,9 +78,9 @@
               </tr>
               <tr>
                 <td class="table-secondary fw-bold" style="width: 15%;">최초 생성일</td>
-                <td th:text="${product.createdAt}"></td>
+                <td th:text="${product.createdAt != null ? product.createdAt : '-'}"></td>
                 <td class="table-secondary fw-bold" style="width: 15%;">최초 생성자</td>
-                <td th:text="${product.createdById.name}"></td>
+                <td th:text="${product.createdById?.name != null ? product.createdById.name : '-'}"></td>
               </tr>
               <tr>
                 <td class="table-secondary fw-bold" style="width: 15%;">최종 수정일</td>
