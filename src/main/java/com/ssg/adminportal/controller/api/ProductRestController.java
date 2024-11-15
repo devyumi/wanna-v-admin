@@ -4,6 +4,7 @@ import com.ssg.adminportal.domain.Product;
 import com.ssg.adminportal.dto.request.ProductRequestDTO;
 import com.ssg.adminportal.dto.response.ProductResponseDTO;
 import com.ssg.adminportal.service.ProductService;
+import jakarta.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,7 @@ public class ProductRestController {
     }
 
     @PostMapping()
-    public ResponseEntity<Map<String, String>> createProduct(@RequestBody ProductRequestDTO requestDTO) {
+    public ResponseEntity<Map<String, String>> createProduct(@RequestBody @Valid ProductRequestDTO requestDTO) {
         productService.createProduct(requestDTO);
 
         Map<String, String> response = new HashMap<>();

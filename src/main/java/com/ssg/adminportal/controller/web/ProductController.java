@@ -1,6 +1,5 @@
 package com.ssg.adminportal.controller.web;
 
-import com.ssg.adminportal.domain.Product;
 import com.ssg.adminportal.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -31,8 +30,7 @@ public class ProductController {
     }
 
     @GetMapping("/create")
-    public String createProductForm(Model model) {
-        model.addAttribute("product", new Product());
+    public String createProductForm() {
         return "product/save";
     }
 

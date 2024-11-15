@@ -10,12 +10,14 @@ import com.ssg.adminportal.service.ProductService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
@@ -55,6 +57,7 @@ public class ProductServiceImpl implements ProductService {
      */
     @Transactional
     public void createProduct(ProductRequestDTO requestDTO) {
+        log.info("!!!!!!!!" + requestDTO.toString());
 
         productRepository.save(Product.builder()
             .name(requestDTO.getName())

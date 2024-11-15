@@ -6,95 +6,102 @@
 >
 <head>
   <meta charset="UTF-8">
-  <script defer type="module" src="/js/product/product.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script defer src="/js/product/save.js"></script>
   <title>Product Save Page</title>
 </head>
 <body>
 <main layout:fragment="main-content" th:class="main-container">
   <div class="container">
-    <div class="row mb-8">
-      <div class="col-md-12">
-        <div class="d-md-flex justify-content-between align-items-center">
-          <h2>상품 등록</h2>
-          <form action="post" class="btn btn-primary">등록</form>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="card mb-6 card-lg">
-        <div class="card-body p-6 ">
-          <div class="row mb-3">
-            <div class="col-12">
-              <label class="form-label">상품명</label>
-              <input type="text" name="name" class="form-control">
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col-6">
-              <label class="form-label">원가</label>
-              <input type="number" name="cost-price" class="form-control">
-            </div>
-            <div class="col-6">
-              <label class="form-label">판매가</label>
-              <input type="number" name="selling-price" class="form-control">
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col-6">
-              <label class="form-label">할인율</label>
-              <input type="number" name="discount-rate" class="form-control">
-            </div>
-            <div class="col-6" id="formArea">
-              <label class="form-label">카테고리</label>
-              <select name="category" class="form-select">
-                <option selected disabled>-- 선택 --</option>
-                <option value="MK">밀키트</option>
-                <option value="C">화장품</option>
-                <option value="S">간식</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col-6">
-              <label class="form-label">재고</label>
-              <input type="number" name="stock" class="form-control">
-            </div>
-            <div class="col-6">
-              <label class="form-label">상태</label>
-              <div class="pt-2 pb-2">
-                <label class="form-check form-check-inline">
-                  <input type="radio" name="status" value="inactive" class="form-check-input"
-                         checked>
-                  비활성화
-                </label>
-                <label class="form-check form-check-inline">
-                  <input type="radio" name="status" value="active" class="form-check-input">
-                  활성화
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div class="mb-3">
-              <h4 class="mb-3 h5">썸네일</h4>
-              <div class="input-group mb-3">
-                <input type="file" class="form-control" id="image" name="image">
-              </div>
-            </div>
-            <div class="mb-3">
-              <h4 class="mb-3 h5">상품 설명</h4>
-              <div class="input-group mb-3">
-                <input type="file" class="form-control" id="description" name="description">
-              </div>
-            </div>
+    <form id="productForm">
+      <div class="row mb-8">
+        <div class="col-md-12">
+          <div class="d-md-flex justify-content-between align-items-center">
+            <h2>상품 등록</h2>
+            <button type="submit" class="btn btn-primary">상품 등록</button>
           </div>
         </div>
       </div>
-    </div>
+      <div class="row">
+        <div class="card mb-6 card-lg">
+          <div class="card-body p-6 ">
+            <div class="row mb-3">
+              <div class="col-12">
+                <label class="form-label">상품명</label>
+                <input type="text" id="name" name="name" class="form-control">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="form-label">원가</label>
+                <input type="number" id="costPrice" name="cost-price" class="form-control">
+              </div>
+              <div class="col-6">
+                <label class="form-label">판매가</label>
+                <input type="number" id="sellingPrice" name="selling-price" class="form-control">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="form-label">할인율</label>
+                <input type="number" id="discountRate" name="discount-rate" class="form-control">
+              </div>
+              <div class="col-6" id="formArea">
+                <label class="form-label">카테고리</label>
+                <select id="category" name="category" class="form-select">
+                  <option selected disabled>-- 선택 --</option>
+                  <option value="MK">밀키트</option>
+                  <option value="C">화장품</option>
+                  <option value="S">간식</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="form-label">재고</label>
+                <input type="number" id="stock" name="stock" class="form-control">
+              </div>
+              <div class="col-6">
+                <label class="form-label">상태</label>
+                <div class="pt-2 pb-2">
+                  <label class="form-check form-check-inline">
+                    <input type="radio" id="statusFalse" name="isActive" value="inactive"
+                           class="form-check-input"
+                           checked>
+                    비활성화
+                  </label>
+                  <label class="form-check form-check-inline">
+                    <input type="radio" id="statusTrue" name="isActive" value="active"
+                           class="form-check-input">
+                    활성화
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="mb-3">
+                <h4 class="mb-3 h5">썸네일</h4>
+                <div class="input-group mb-3">
+                  <input type="file" class="form-control" id="image" name="image">
+                </div>
+              </div>
+              <div class="mb-3">
+                <h4 class="mb-3 h5">상품 설명</h4>
+                <div class="input-group mb-3">
+                  <input type="file" class="form-control" id="description" name="description"
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </main>
 </body>
