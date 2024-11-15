@@ -67,8 +67,8 @@
                   <td class="final-price price" th:data-price="${product.finalPrice}"></td>
                   <td th:text="${product.category.getName()}"></td>
                   <td class="stock" th:text="${product.stock}"></td>
-                  <td class="isActive" th:text="${product.isActive ? 'O' : 'X'}"></td>
-                  <td class="createdAt" th:text="${product.createdAt}"></td>
+                  <td class="is-active" th:text="${product.isActive ? 'O' : 'X'}"></td>
+                  <td class="create-at" th:text="${product.createdAt}"></td>
                 </tr>
                 </tbody>
               </table>
