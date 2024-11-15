@@ -4,11 +4,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}"
 >
-<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- <link rel="stylesheet" href="/css/product/products.css"> // 적용 시키고 싶은 CSS 파일 -->
-  <!-- <script defer src="/js/product/products.js"></script> // 적용 시키고 싶은 js 파일 -->
+  <script defer type="module" src="/js/product/product.js"></script>
   <title>Product List Page</title>
 </head>
 <body>
@@ -17,77 +15,69 @@
   <div class="container">
     <div class="row mb-8">
       <div class="col-md-12">
-        <div>
-          <h2>상점 관리</h2>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0">
-              <li class="breadcrumb-item"><a href="#" class="text-inherit">상점 관리</a></li>
-              <li class="breadcrumb-item active" aria-current="page">상품 목록</li>
-            </ol>
-          </nav>
+        <div class="d-md-flex justify-content-between align-items-center">
+          <div>
+            <h2>상점 관리</h2>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="#" class="text-inherit">상점 관리</a></li>
+                <li class="breadcrumb-item active" aria-current="page">상품 목록</li>
+              </ol>
+            </nav>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary"
+                    onclick="window.location.href='/products/create'">상품 등록
+            </button>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="col-xl-12 col-12 mb-5">
         <div class="card h-100 card-lg">
-            <div class="p-6 d-flex">
-                <form class="me-auto" role="search">
-                    <input class="form-control" type="search" placeholder="내용을 입력하세요." aria-label="Search">
-                </form>
-                <div class="ms-2">
-                    <select class="form-select" id="type" onchange="filtering()">
-                        <option selected value="new">최신순</option>
-                        <option value="name">이름순</option>
-                        <option value="price">가격순</option>
-                        <option value="selling">판매순</option>
-                    </select>
-                </div>
+          <div class="p-6 d-flex">
+            <form class="me-auto" role="search">
+              <input class="form-control" type="search" placeholder="상품명을 입력하세요."
+                     aria-label="Search">
+            </form>
+            <div class="ms-2">
+              <select class="form-select" id="type" onchange="filtering()">
+                <option selected value="new">최신순</option>
+                <option value="name">이름순</option>
+                <option value="price">가격순</option>
+                <option value="selling">판매순</option>
+              </select>
             </div>
+          </div>
           <div class="card-body p-0">
             <div class="table-responsive">
-              <table class="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap text-center">
+              <table
+                  class="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap text-center">
                 <thead class="bg-light">
-                  <tr>
-                    <th>ID</th>
-                    <th>상품명</th>
-                    <th>판매가</th>
-                    <th>카테고리</th>
-                    <th>재고</th>
-                    <th>활셩화 싱테</th>
-                    <th>등록일</th>
-                  </tr>
+                <tr>
+                  <th>ID</th>
+                  <th>상품명</th>
+                  <th>판매가</th>
+                  <th>카테고리</th>
+                  <th>재고</th>
+                  <th>활셩화 싱테</th>
+                  <th>등록일</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>10</td>
-
-                    <td>2024-11-12</td>
-                    <td>
-                      <p class="mb-0">뷰리풀</p>
-                      <p class="mb-0">beautiful123</p>
-                      <p class="mb-0">새싹 등급</p>
-                    </td>
-
-                    <td>
-                      <p class="mb-0">다켄씨엘</p>
-                      <p class="mb-0">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                      </p>
-                    </td>
-
-                    <td>
-                      <span class="text-truncate" style="display: inline-block; width: 40rem;"><a href="#" class="text-reset">너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 너무 맛있어여 </a></span>
-                    </td>
-
-                    <td>
-                      <span class="badge bg-light-primary text-dark-primary fs-6">게시</span>
-                    </td>
-                  </tr>
+                <tr class="product-item" th:each="product : ${products}">
+                  <td class="id">
+                    <a th:href="@{/products/{id}(id=${product.id})}" th:text="${product.id}"></a>
+                  </td>
+                  <td class="name" th:text="${product.name}"></td>
+                  <td class="final-price price" th:data-price="${product.finalPrice}"></td>
+                  <td th:text="${product.category.getName()}"></td>
+                  <td class="stock" th:text="${product.stock}"></td>
+                  <td class="is-active" th:text="${product.isActive ? 'O' : 'X'}"></td>
+                  <td class="create-at" th:text="${product.createdAt}"></td>
+                </tr>
                 </tbody>
               </table>
             </div>

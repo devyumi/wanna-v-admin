@@ -1,8 +1,8 @@
 package com.ssg.adminportal.common;
 
 public enum ErrorCode {
-    EXAMPLE_ERROR(404, "index.css"),
-    INVALID_VALUE(400, "Invalid value index.css error message️");
+    INVALID_VALUE(400, "Invalid value provided"),
+    NON_EXISTENT_ID(404, "The ID does not exist");
 
     private int code;
     private String message;
@@ -18,5 +18,9 @@ public enum ErrorCode {
 
     public String getMessage() {
         return message;
+    }
+
+    public String getError() {
+        return "[" + code + "]" + " " + message;
     }
 }

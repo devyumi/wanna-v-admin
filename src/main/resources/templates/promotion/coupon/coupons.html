@@ -1,12 +1,16 @@
-<html th:replace="~{fragment/layout.html :: layout(~{::main})}" xmlns:th="http://www.thymeleaf.org">
-<main class="main-content-wrapper">
-  <style>
-    @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
-
-    body{
-      font-family: 'NanumSquare', sans-serif;
-    }
-  </style>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<head>
+  <meta charset="UTF-8">
+  <script defer src="/js/product/update.js"></script>
+  <title>Product Save Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
   <div class="container">
     <!-- row -->
     <div class="row mb-5">
@@ -25,7 +29,8 @@
               <div class="col-md-4 col-12 mb-2 mb-md-0">
                 <!-- form -->
                 <form class="d-flex" role="search">
-                  <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                  <input class="form-control" type="search" placeholder="Search"
+                         aria-label="Search">
                 </form>
               </div>
               <div class="col-lg-2 col-md-4 col-12">
@@ -44,7 +49,8 @@
             <div class="card-body p-0">
               <!-- table responsive -->
               <div class="table-responsive">
-                <table class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
+                <table
+                    class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
                   <thead class="bg-light">
                   <tr>
                     <th class="text-center">
@@ -110,5 +116,6 @@
       </div>
     </div>
   </div>
-  </main>
+</main>
+</body>
 </html>

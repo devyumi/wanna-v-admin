@@ -1,12 +1,16 @@
-<html th:replace="~{fragment/layout.html :: layout(~{::main})}" xmlns:th="http://www.thymeleaf.org">
-<main class="main-content-wrapper">
-  <style>
-    @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
-
-    body{
-      font-family: 'NanumSquare', sans-serif;
-    }
-  </style>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<head>
+  <meta charset="UTF-8">
+  <script defer src="/js/product/update.js"></script>
+  <title>Product Save Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
   <!-- container -->
   <div class="container">
     <!-- row -->
@@ -73,4 +77,5 @@
     </div>
   </div>
 </main>
+</body>
 </html>
