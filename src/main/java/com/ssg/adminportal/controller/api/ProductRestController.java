@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/products")
+@RequestMapping("/api/v1/products")
 public class ProductRestController {
 
     private final ProductService productService;

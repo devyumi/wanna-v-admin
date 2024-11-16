@@ -30,9 +30,8 @@ public class Product {
     @Column(length = 50, nullable = false)
     private String name;
 
-    @Column(nullable = false, columnDefinition = "json")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<String> image;
+    @Column(nullable = false)
+    private String image;
 
     @Column(name = "cost_price", nullable = false)
     private Double costPrice;
