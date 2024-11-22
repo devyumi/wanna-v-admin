@@ -1,5 +1,6 @@
 package com.ssg.adminportal.domain;
 
+import com.ssg.adminportal.common.Sentiment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,5 +44,9 @@ public class Review {
     private LocalDateTime updatedAt;
 
     private Boolean isActive;
+
+    @Enumerated(EnumType.STRING)
+    private Sentiment sentiment;
+
     private String note;
 }
