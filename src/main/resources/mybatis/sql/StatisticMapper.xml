@@ -345,8 +345,7 @@
         FROM Statistic
         WHERE type = 'M'
           AND created_at BETWEEN DATE_SUB(NOW(), INTERVAL 1 YEAR) AND NOW()
-        GROUP BY year, MONTH
-        ORDER BY YEAR DESC, MONTH DESC
+        ORDER BY year DESC, month DESC
     ]]>
     </select>
 

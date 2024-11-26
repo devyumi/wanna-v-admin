@@ -10,9 +10,9 @@ import com.ssg.adminportal.repository.StatisticCustomRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
-@Slf4j
+@Log4j2
 @RequiredArgsConstructor
 public class StatisticCustomRepositoryImpl implements StatisticCustomRepository {
 

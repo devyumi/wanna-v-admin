@@ -4,7 +4,7 @@ import com.ssg.adminportal.domain.Statistic;
 import com.ssg.adminportal.dto.StatisticDTO;
 import com.ssg.adminportal.dto.request.StatisticRequestDTO;
 import com.ssg.adminportal.mapper.StatisticMapper;
-import com.ssg.adminportal.repository.StatisticCustomRepository;
+import com.ssg.adminportal.repository.StatisticRepository;
 import com.ssg.adminportal.service.StatisticService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class StatisticServiceImpl implements StatisticService {
 
     private final StatisticMapper statisticMapper;
-    private final StatisticCustomRepository statisticCustomRepository;
+    private final StatisticRepository statisticRepository;
 
 
     @Override
@@ -32,6 +32,6 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Override
     public List<Statistic> getDashboardStats(StatisticRequestDTO requestDTO) {
-        return statisticCustomRepository.getDashboardStats(requestDTO);
+        return statisticRepository.getDashboardStats(requestDTO);
     }
 }
