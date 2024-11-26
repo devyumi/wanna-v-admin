@@ -7,8 +7,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,5 +30,27 @@ public class TagController {
         model.addAttribute("tagSaveDTO", new TagSaveDTO());
         model.addAttribute("tagUpdateDTO", new TagSaveDTO());
         return "review/tag/tags";
+    }
+
+    @PostMapping("/write")
+    public String saveTag(@ModelAttribute @Validated TagSaveDTO tagSaveDTO, BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            printErrorLog(bindingResult);
+            redirectAttributes.addFlashAttribute("alertMessage", bindingResult.getFieldErrors().get(0).getDefaultMessage());
+            return "redirect:/reviews/tags";
+        }
+        tagService.saveTag(tagSaveDTO);
+        log.info("태그 추가 완료");
+        redirectAttributes.addFlashAttribute("alertMessage", "추가 되었습니다.");
+        return "redirect:/reviews/tags";
+    }
+
+    private static void printErrorLog(BindingResult result) {
+        log.info("{}", "*".repeat(20));
+        for (FieldError fieldError : result.getFieldErrors()) {
+            log.error("{}: {}", fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        log.info("{}", "*".repeat(20));
     }
 }
