@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="/js/dashboard/statistic.js"></script>
+  <script th:inline="javascript">
+    const monthlyStatistics = [[${monthlyStatistics}]];
+    console.log("monthlyStatistics: ", monthlyStatistics);
+  </script>
+  <title>Dashboard Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
+  <div class="container">
+    <h2>대시보드</h2>
+    <!-- bar Chart -->
+    <div class="row">
+      <!-- 재무 통계 -->
+      <div class="col-lg-6">
+        <div class="card shadow mb-6">
+          <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary text-center">매출 통계</h4>
+          </div>
+          <div class="card-body">
+            <div class="chart-bar">
+              <canvas id="salesChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 활성 유저 통계 -->
+      <div class="col-lg-6">
+        <div class="card shadow mb-6">
+          <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary text-center">활성 유저 통계</h4>
+          </div>
+          <div class="card-body">
+            <div class="chart-bar">
+              <canvas id="activeUserChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 신규 유저 통계 -->
+      <div class="col-lg-6">
+        <div class="card shadow mb-6">
+          <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary text-center">신규 유저 통계</h4>
+          </div>
+          <div class="card-body">
+            <div class="chart-bar">
+              <canvas id="newUserChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 탈퇴 유저 통계 -->
+      <div class="col-lg-6">
+        <div class="card shadow mb-6">
+          <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary text-center">탈퇴 유저 통계</h4>
+          </div>
+          <div class="card-body">
+            <div class="chart-bar">
+              <canvas id="deletedUserChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 신규 식당 통계 -->
+      <div class="col-lg-6">
+        <div class="card shadow mb-6">
+          <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary text-center">신규 식당 통계</h4>
+          </div>
+          <div class="card-body">
+            <div class="chart-bar">
+              <canvas id="restaurantChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 리뷰 통계 -->
+      <div class="col-lg-6">
+        <div class="card shadow mb-6">
+          <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary text-center">리뷰 통계</h4>
+          </div>
+          <div class="card-body">
+            <div class="chart-bar">
+              <canvas id="reviewChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 식당 예약 통계 -->
+      <div class="col-lg-6">
+        <div class="card shadow mb-6">
+          <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary text-center">식당 예약 통계</h4>
+          </div>
+          <div class="card-body">
+            <div class="chart-bar">
+              <canvas id="reservationChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 식당 예약 취소 통계 -->
+      <div class="col-lg-6">
+        <div class="card shadow mb-6">
+          <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary text-center">식당 예약 취소 통계</h4>
+          </div>
+          <div class="card-body">
+            <div class="chart-bar">
+              <canvas id="cancelledResChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
