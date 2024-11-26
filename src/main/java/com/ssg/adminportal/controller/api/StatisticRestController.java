@@ -1,6 +1,8 @@
 package com.ssg.adminportal.controller.api;
 
+import com.ssg.adminportal.domain.Statistic;
 import com.ssg.adminportal.dto.StatisticDTO;
+import com.ssg.adminportal.dto.request.StatisticRequestDTO;
 import com.ssg.adminportal.service.StatisticService;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +12,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,6 +45,18 @@ public class StatisticRestController {
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
         response.put("data", weeklyStatistics);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // 통계 API
+    @PostMapping("/statistic")
+    public ResponseEntity<Map<String, Object>> getStatistics(@RequestBody StatisticRequestDTO requestDTO) {
+        List<Statistic> statistics = statisticService.getDashboardStats(requestDTO);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("data", statistics);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

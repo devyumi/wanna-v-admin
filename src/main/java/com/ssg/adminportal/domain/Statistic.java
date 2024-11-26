@@ -9,17 +9,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.joda.time.DateTime;
 
-@Data
+@Getter
+@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity
 public class Statistic {
 
     @Id
@@ -35,5 +35,5 @@ public class Statistic {
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private DateTime createdAt;
+    private LocalDateTime createdAt;
 }
