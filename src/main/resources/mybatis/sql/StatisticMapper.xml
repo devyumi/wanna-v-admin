@@ -332,4 +332,42 @@
       )
     ]]>
   </insert>
+
+  <!-- 월별 통계 데이터 조회 -->
+    <select id="getMonthlyStatistics" resultType="com.ssg.adminportal.dto.StatisticDTO">
+      <![CDATA[
+        SELECT
+            year,
+            month,
+            value,
+            category,
+            type
+        FROM Statistic
+        WHERE type = 'M'
+          AND (
+            (year = YEAR(CURDATE()) AND month <= MONTH(CURDATE()))
+         OR (year = YEAR(CURDATE()) - 1 AND month > MONTH(CURDATE()) - 6)
+              )
+        ORDER BY year DESC, month DESC
+    ]]>
+    </select>
+
+    <!-- 주별 통계 데이터 조회 -->
+    <select id="getWeeklyStatistics" resultType="com.ssg.adminportal.dto.StatisticDTO">
+      <![CDATA[
+        SELECT
+            year,
+            week,
+            value,
+            category,
+            type
+        FROM Statistic
+        WHERE type = 'W'
+          AND (
+                (year = YEAR(CURDATE()) AND week < WEEK(CURDATE())) -- 현재 연도, 현재 주차 이전
+             OR (year = YEAR(CURDATE()) - 1 AND week >= WEEK(DATE_SUB(CURDATE(), INTERVAL 3 MONTH))) -- 이전 연도, 3개월 전 이후 주차
+            )
+        ORDER BY year DESC, week DESC
+    ]]>
+    </select>
 </mapper>
