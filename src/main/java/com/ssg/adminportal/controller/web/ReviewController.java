@@ -52,6 +52,15 @@ public class ReviewController {
         return "redirect:/reviews/{id}";
     }
 
+    @PostMapping("/{id}/update-true")
+    public String updateReviewTrue(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        reviewService.updateReviewActiveTrue(id);
+        log.info("{}번 리뷰 게시 완료", id);
+        redirectAttributes.addAttribute("id", id);
+        redirectAttributes.addFlashAttribute("alertMessage", "게시 처리 되었습니다.");
+        return "redirect:/reviews/{id}";
+    }
+
     private static void printErrorLog(BindingResult result) {
         log.info("{}", "*".repeat(20));
         for (FieldError fieldError : result.getFieldErrors()) {
