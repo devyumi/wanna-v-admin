@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -34,14 +35,29 @@ public class Review {
     private String image;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "visit_date")
     private LocalDate visitDate;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "is_active")
     private Boolean isActive;
     private String note;
+
+    @OneToMany(mappedBy = "review")
+    private List<ReviewTag> reviewTags;
+
+    /**
+     * 연관관계 편의 메서드
+     */
+    public void addRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+        restaurant.getReviews().add(this);
+    }
 }
