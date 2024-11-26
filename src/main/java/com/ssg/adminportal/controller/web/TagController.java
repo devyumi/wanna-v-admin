@@ -58,6 +58,14 @@ public class TagController {
         return "redirect:/reviews/tags";
     }
 
+    @PostMapping("/{id}/delete")
+    public String deleteTag(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        tagService.deleteTag(id);
+        log.info("{}번 태그 삭제 완료", id);
+        redirectAttributes.addFlashAttribute("alertMessage", "삭제 되었습니다.");
+        return "redirect:/reviews/tags";
+    }
+
     private static void printErrorLog(BindingResult result) {
         log.info("{}", "*".repeat(20));
         for (FieldError fieldError : result.getFieldErrors()) {
