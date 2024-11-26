@@ -344,11 +344,9 @@
             type
         FROM Statistic
         WHERE type = 'M'
-          AND (
-            (year = YEAR(CURDATE()) AND month <= MONTH(CURDATE()))
-         OR (year = YEAR(CURDATE()) - 1 AND month > MONTH(CURDATE()) - 6)
-              )
-        ORDER BY year DESC, month DESC
+          AND created_at BETWEEN DATE_SUB(NOW(), INTERVAL 1 YEAR) AND NOW()
+        GROUP BY year, MONTH
+        ORDER BY YEAR DESC, MONTH DESC
     ]]>
     </select>
 
@@ -363,10 +361,7 @@
             type
         FROM Statistic
         WHERE type = 'W'
-          AND (
-                (year = YEAR(CURDATE()) AND week < WEEK(CURDATE())) -- 현재 연도, 현재 주차 이전
-             OR (year = YEAR(CURDATE()) - 1 AND week >= WEEK(DATE_SUB(CURDATE(), INTERVAL 3 MONTH))) -- 이전 연도, 3개월 전 이후 주차
-            )
+            AND created_at BETWEEN DATE_SUB(NOW(), INTERVAL 3 MONTH) AND NOW()
         ORDER BY year DESC, week DESC
     ]]>
     </select>
