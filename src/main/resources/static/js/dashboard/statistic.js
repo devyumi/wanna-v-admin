@@ -27,12 +27,25 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     options: {
       responsive: true,
+      plugins: {
+        datalabels: { // 데이터 라벨 옵션
+          anchor: 'end', // 데이터 라벨의 위치
+          align: 'top',  // 막대 위쪽에 정렬
+          color: '#50565C', // 라벨 색상
+          font: {
+            size: 8,    // 라벨 글꼴 크기
+            // weight: 'bold'
+          },
+          formatter: (value) => `${value.toLocaleString()}원` // 값 포맷팅
+        }
+      },
       scales: {
         y: {
           beginAtZero: true  // y축이 0에서 시작하도록 설정
         }
       }
-    }
+    },
+    plugins: [ChartDataLabels] // 플러그인 활성화
   });
 
   /**
@@ -59,12 +72,24 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     options: {
       responsive: true,
+      plugins: {
+        datalabels: {
+          anchor: 'end',
+          align: 'top',
+          color: '#50565C',
+          font: {
+            size: 10,
+          },
+          formatter: (value) => `${value.toLocaleString()}`
+        }
+      },
       scales: {
         y: {
           beginAtZero: true
         }
       }
-    }
+    },
+    plugins: [ChartDataLabels]
   });
 
   /**
@@ -90,12 +115,24 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     options: {
       responsive: true,
+      plugins: {
+        datalabels: {
+          anchor: 'end',
+          align: 'top',
+          color: '#50565C',
+          font: {
+            size: 10,
+          },
+          formatter: (value) => `${value.toLocaleString()}`
+        }
+      },
       scales: {
         y: {
           beginAtZero: true
         }
       }
-    }
+    },
+    plugins: [ChartDataLabels]
   });
 
   /**
@@ -123,12 +160,24 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     options: {
       responsive: true,
+      plugins: {
+        datalabels: {
+          anchor: 'end',
+          align: 'top',
+          color: '#50565C',
+          font: {
+            size: 10,
+          },
+          formatter: (value) => `${value.toLocaleString()}`
+        }
+      },
       scales: {
         y: {
           beginAtZero: true
         }
       }
-    }
+    },
+    plugins: [ChartDataLabels]
   });
 
   /**
@@ -155,12 +204,24 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     options: {
       responsive: true,
+      plugins: {
+        datalabels: {
+          anchor: 'end',
+          align: 'top',
+          color: '#50565C',
+          font: {
+            size: 10,
+          },
+          formatter: (value) => `${value.toLocaleString()}`
+        }
+      },
       scales: {
         y: {
           beginAtZero: true
         }
       }
-    }
+    },
+    plugins: [ChartDataLabels]
   });
 
   /**
@@ -183,28 +244,52 @@ document.addEventListener('DOMContentLoaded', function () {
       labels: period,  // x축 레이블: 각 년도 + 월
       datasets: [{
         label: '신규 리뷰',
-        data: reviewMonthlyValues, // y축 값: 매출 데이터
+        data: reviewMonthlyValues, // y축 값: 신규 리뷰 데이터
         fill: false,  // 선 아래를 채우지 않음
         borderColor: 'rgba(153, 102, 255, 1)',  // 선 색상
         tension: 0.1,  // 선의 곡률(0이면 직선, 1이면 부드러운 곡선)
-        borderWidth: 2  // 선의 두께
+        borderWidth: 2,  // 선의 두께
+        datalabels: {  // 리뷰에 대한 데이터 레이블 옵션
+          anchor: 'end',  // 막대의 끝에 레이블 표시
+          align: 'top',  // 값이 막대 위쪽에 표시
+          color: '#50565C',
+          font: {
+            size: 10
+          },
+          formatter: (value) => `${value.toLocaleString()}`
+        }
       }, {
         label: '고유 신규 리뷰',
-        data: uniqueReviewMonthlyValues, // y축 값: 매출 데이터
+        data: uniqueReviewMonthlyValues, // y축 값: 고유 리뷰 데이터
         fill: false,  // 선 아래를 채우지 않음
         borderColor: 'rgba(255, 159, 64, 1)',  // 선 색상
         tension: 0.1,  // 선의 곡률(0이면 직선, 1이면 부드러운 곡선)
-        borderWidth: 2  // 선의 두께
+        borderWidth: 2,  // 선의 두께
+        datalabels: {  // 고유 리뷰에 대한 데이터 레이블 옵션
+          anchor: 'start',  // 막대의 시작 지점에 레이블 표시
+          align: 'bottom',  // 값이 막대 아래쪽에 표시
+          color: '#50565C',
+          font: {
+            size: 10
+          },
+          formatter: (value) => `${value.toLocaleString()}`
+        }
       }]
     },
     options: {
       responsive: true,
+      plugins: {
+        legend: {
+          display: true
+        }
+      },
       scales: {
         y: {
-          beginAtZero: true  // y축이 0에서 시작하도록 설정
+          beginAtZero: true
         }
       }
-    }
+    },
+    plugins: [ChartDataLabels]
   });
 
   /**
@@ -232,12 +317,24 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     options: {
       responsive: true,
+      plugins: {
+        datalabels: {
+          anchor: 'end',
+          align: 'top',
+          color: '#50565C',
+          font: {
+            size: 10,
+          },
+          formatter: (value) => `${value.toLocaleString()}`
+        }
+      },
       scales: {
         y: {
           beginAtZero: true
         }
       }
-    }
+    },
+    plugins: [ChartDataLabels]
   });
 
   /**
@@ -265,11 +362,23 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     options: {
       responsive: true,
+      plugins: {
+        datalabels: {
+          anchor: 'end',
+          align: 'top',
+          color: '#50565C',
+          font: {
+            size: 10,
+          },
+          formatter: (value) => `${value.toLocaleString()}`
+        }
+      },
       scales: {
         y: {
           beginAtZero: true
         }
       }
-    }
+    },
+    plugins: [ChartDataLabels]
   });
 });
