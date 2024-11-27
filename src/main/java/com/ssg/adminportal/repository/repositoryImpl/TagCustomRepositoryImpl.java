@@ -4,7 +4,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssg.adminportal.domain.QReviewTag;
 import com.ssg.adminportal.domain.QTag;
-import com.ssg.adminportal.domain.ReviewTag;
+import com.ssg.adminportal.domain.Tag;
 import com.ssg.adminportal.dto.request.TagRequestDTO;
 import com.ssg.adminportal.repository.TagCustomRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,59 +16,47 @@ import java.util.stream.Collectors;
 public class TagCustomRepositoryImpl implements TagCustomRepository {
 
     private final JPAQueryFactory queryFactory;
+    private final QTag tag = QTag.tag;
     private final QReviewTag reviewTag = QReviewTag.reviewTag;
 
-
     @Override
-    public List<ReviewTag> findAll(TagRequestDTO tagRequestDTO) {
+    public List<Tag> findAll(TagRequestDTO tagRequestDTO) {
         //기본
-        JPAQuery<ReviewTag> result = queryFactory.selectFrom(reviewTag)
-                .rightJoin(reviewTag.tag, QTag.tag);
+        JPAQuery<Tag> result = queryFactory
+                .selectFrom(tag)
+                .leftJoin(reviewTag).on(reviewTag.tag.id.eq(tag.id));
 
         //동적쿼리
         processWhere(result, tagRequestDTO);
-        return result
-                .groupBy(reviewTag.tag.id)
-                .fetch();
+        return result.groupBy(tag.id).fetch();
     }
 
     @Override
     public List<Integer> count(TagRequestDTO tagRequestDTO) {
         //기본
-        JPAQuery<Long> result = queryFactory.select(reviewTag.count())
-                .from(reviewTag)
-                .rightJoin(reviewTag.tag, QTag.tag);
+        JPAQuery<Long> result = queryFactory
+                .select(reviewTag.tag.id.count())
+                .from(tag)
+                .leftJoin(reviewTag).on(reviewTag.tag.id.eq(tag.id));
 
         //동적쿼리
         processWhere(result, tagRequestDTO);
-        return result
-                .groupBy(reviewTag.tag.id)
-                .fetch()
-                .stream().map(Long::intValue)
+        return result.groupBy(tag.id).fetch()
+                .stream()
+                .map(Long::intValue)
                 .collect(Collectors.toList());
     }
 
     public void processWhere(JPAQuery<?> result, TagRequestDTO tagRequestDTO) {
-        switch (tagRequestDTO.getType()) {
-            //이용형태
-            case "pattern" -> {
-                result.where(reviewTag.tag.category.contains("이용형태"));
-            }
 
-            //맛/가격
-            case "price" -> {
-                result.where(reviewTag.tag.category.contains("맛/가격"));
-            }
-
-            //서비스/기타
-            case "service" -> {
-                result.where(reviewTag.tag.category.contains("서비스/기타"));
-            }
-
-            //분위기
-            case "mood" -> {
-                result.where(reviewTag.tag.category.contains("분위기"));
-            }
+        if (tagRequestDTO.getType() == null || tagRequestDTO.getType().equals("price")) {
+            result.where(QTag.tag.category.contains("맛/가격"));
+        } else if (tagRequestDTO.getType().equals("service")) {
+            result.where(QTag.tag.category.contains("서비스/기타"));
+        } else if (tagRequestDTO.getType().equals("pattern")) {
+            result.where(QTag.tag.category.contains("이용형태"));
+        } else if (tagRequestDTO.getType().equals("mood")) {
+            result.where(QTag.tag.category.contains("분위기"));
         }
     }
 }

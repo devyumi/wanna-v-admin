@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -55,7 +56,21 @@ public class Review {
     private Sentiment sentiment;
 
     private String note;
+    @OneToMany(mappedBy = "review")
+    private List<ReviewTag> reviewTags;
 
+    /**
+     * 연관관계 편의 메서드
+     */
+    public void addRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+        restaurant.getReviews().add(this);
+    }
+
+    /**
+     * 감성 분석 결과 업데이트
+     * @param sentiment
+     */
     public void reviewSentiment(String sentiment) {
         switch (sentiment) {
             case "긍정" -> this.sentiment = Sentiment.POSITIVE;
@@ -65,4 +80,5 @@ public class Review {
 
         this.updatedAt = LocalDateTime.now();
     }
+
 }

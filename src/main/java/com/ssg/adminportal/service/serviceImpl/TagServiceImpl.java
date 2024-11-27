@@ -68,7 +68,7 @@ public class TagServiceImpl implements TagService {
         Tag tag = findTag(tagId);
         tagRepository.save(Tag.builder()
                 .id(tagId)
-                .category(tagSaveDTO.getCategory())
+                .category(tag.getCategory())
                 .name(tagSaveDTO.getName())
                 .build());
     }

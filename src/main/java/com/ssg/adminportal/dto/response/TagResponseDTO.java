@@ -1,6 +1,6 @@
 package com.ssg.adminportal.dto.response;
 
-import com.ssg.adminportal.domain.ReviewTag;
+import com.ssg.adminportal.domain.Tag;
 import com.ssg.adminportal.dto.request.TagRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,11 +15,11 @@ import java.util.List;
 public class TagResponseDTO {
 
     private String type;
-    private List<ReviewTag> tags;
+    private List<Tag> tags;
     private List<Integer> count;
 
     @Builder
-    public TagResponseDTO(TagRequestDTO tagRequestDTO, List<ReviewTag> tags, List<Integer> count) {
+    public TagResponseDTO(TagRequestDTO tagRequestDTO, List<Tag> tags, List<Integer> count) {
         this.type = tagRequestDTO.getType();
         this.tags = tags;
         this.count = count;
