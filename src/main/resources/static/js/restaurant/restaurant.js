@@ -37,6 +37,14 @@ document.addEventListener('DOMContentLoaded', function () {
             size: 20,
           },
           formatter: (value) => `${value.toLocaleString()}`
+        },
+        legend: {
+          position: 'right',
+          labels: {
+            font: {
+              size: 17,
+            }
+          }
         }
       }
     },
