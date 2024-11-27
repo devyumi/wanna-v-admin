@@ -1,6 +1,8 @@
 package com.ssg.adminportal.domain;
 
+import com.ssg.adminportal.common.ErrorCode;
 import com.ssg.adminportal.common.Sentiment;
+import com.ssg.adminportal.exception.CustomException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,18 +37,32 @@ public class Review {
     private String image;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "visit_date")
     private LocalDate visitDate;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "is_active")
     private Boolean isActive;
 
     @Enumerated(EnumType.STRING)
     private Sentiment sentiment;
 
     private String note;
+
+    public void reviewSentiment(String sentiment) {
+        switch (sentiment) {
+            case "긍정" -> this.sentiment = Sentiment.POSITIVE;
+            case "부정" -> this.sentiment = Sentiment.NEGATIVE;
+            default -> throw new CustomException(ErrorCode.SENTIMENT_ANALYSIS_FAILURE);
+        }
+
+        this.updatedAt = LocalDateTime.now();
+    }
 }
