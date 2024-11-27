@@ -17,6 +17,7 @@ public class StatisticController {
     @GetMapping("/")
     public String showDashboard(Model model) {
         model.addAttribute("monthlyStatistics", statisticService.getMonthlyStatistics());
+        model.addAttribute("weeklyStatistics", statisticService.getWeeklyStatistics());
         return "dashboard/statistic"; // 대시보드 페이지 반환
     }
 }

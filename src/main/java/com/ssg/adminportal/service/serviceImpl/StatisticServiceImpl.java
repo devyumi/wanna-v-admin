@@ -2,7 +2,6 @@ package com.ssg.adminportal.service.serviceImpl;
 
 import com.ssg.adminportal.domain.Statistic;
 import com.ssg.adminportal.dto.StatisticDTO;
-import com.ssg.adminportal.dto.request.StatisticRequestDTO;
 import com.ssg.adminportal.mapper.StatisticMapper;
 import com.ssg.adminportal.repository.StatisticRepository;
 import com.ssg.adminportal.service.StatisticService;
@@ -31,7 +30,7 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     @Override
-    public List<Statistic> getDashboardStats(StatisticRequestDTO requestDTO) {
-        return statisticRepository.getDashboardStats(requestDTO);
+    public List<Statistic> getDashboardStats(String type) {
+        return statisticRepository.getDashboardStats(type);
     }
 }

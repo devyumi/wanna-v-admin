@@ -4,7 +4,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssg.adminportal.common.ErrorCode;
 import com.ssg.adminportal.domain.QStatistic;
 import com.ssg.adminportal.domain.Statistic;
-import com.ssg.adminportal.dto.request.StatisticRequestDTO;
 import com.ssg.adminportal.exception.CustomException;
 import com.ssg.adminportal.repository.StatisticCustomRepository;
 import java.time.LocalDateTime;
@@ -20,12 +19,12 @@ public class StatisticCustomRepositoryImpl implements StatisticCustomRepository 
     private final QStatistic statistic = QStatistic.statistic;
 
     @Override
-    public List<Statistic> getDashboardStats(StatisticRequestDTO requestDTO) {
+    public List<Statistic> getDashboardStats(String type) {
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime endDate = LocalDateTime.now();
 
         try {
-            switch (requestDTO.getType()) {
+            switch (type) {
                 case "M":
                     startDate = endDate.minusYears(1);
                     break;
@@ -37,7 +36,7 @@ public class StatisticCustomRepositoryImpl implements StatisticCustomRepository 
             }
 
             return queryFactory.selectFrom(statistic)
-                .where(statistic.type.eq(requestDTO.getType())
+                .where(statistic.type.eq(type)
                     .and(statistic.createdAt.between(startDate, endDate)))
                 .fetch(); // 조건에 맞는 결과 반환
         } catch (CustomException e) {
