@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      const response = await axios.patch(`/api/products/${productId}`,
+      const response = await axios.patch(`/api/v1/products/${productId}`,
           productUpdateData, {
             headers: {
               'Content-Type': 'application/json'

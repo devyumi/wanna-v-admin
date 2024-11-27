@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-          const response = await axios.post('/api/products', productData, {
+          const response = await axios.post('/api/v1/products', productData, {
             headers: {
               'Content-Type': 'application/json'
             }

@@ -1,5 +1,8 @@
 package com.ssg.adminportal.domain;
 
+import com.ssg.adminportal.common.ErrorCode;
+import com.ssg.adminportal.common.Sentiment;
+import com.ssg.adminportal.exception.CustomException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,8 +51,11 @@ public class Review {
 
     @Column(name = "is_active")
     private Boolean isActive;
-    private String note;
 
+    @Enumerated(EnumType.STRING)
+    private Sentiment sentiment;
+
+    private String note;
     @OneToMany(mappedBy = "review")
     private List<ReviewTag> reviewTags;
 
@@ -60,4 +66,19 @@ public class Review {
         this.restaurant = restaurant;
         restaurant.getReviews().add(this);
     }
+
+    /**
+     * 감성 분석 결과 업데이트
+     * @param sentiment
+     */
+    public void reviewSentiment(String sentiment) {
+        switch (sentiment) {
+            case "긍정" -> this.sentiment = Sentiment.POSITIVE;
+            case "부정" -> this.sentiment = Sentiment.NEGATIVE;
+            default -> throw new CustomException(ErrorCode.SENTIMENT_ANALYSIS_FAILURE);
+        }
+
+        this.updatedAt = LocalDateTime.now();
+    }
+
 }

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script defer src="/js/dashboard/statistic.js"></script>
+  <script th:inline="javascript">
+    const monthlyStatistics = [[${monthlyStatistics}]];
+    const weeklyStatistics = [[${weeklyStatistics}]];
+  </script>
+  <title>Dashboard Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
+  <div class="container">
+    <h2>대시보드</h2>
+
+    <!-- 탭 네비게이션 -->
+    <ul class="nav nav-tabs px-3" id="dashboardTabs" role="tablist" style="border-style: none;">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="monthly-tab" data-bs-toggle="tab"
+                data-bs-target="#monthly"
+                type="button" role="tab" aria-controls="monthly" aria-selected="true">
+          월별 통계
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="weekly-tab" data-bs-toggle="tab" data-bs-target="#weekly"
+                type="button" role="tab" aria-controls="weekly" aria-selected="false">
+          주별 통계
+        </button>
+      </li>
+    </ul>
+
+    <!-- 탭 내용 -->
+    <div class="tab-content p-3" id="dashboardTabContent" style="border: 1px solid #ddd; border-radius: 10px;">
+      <!-- 월별 통계 -->
+      <div class="tab-pane fade show active" id="monthly" role="tabpanel"
+           aria-labelledby="monthly-tab">
+
+        <!-- Monthly Chart -->
+        <div class="row">
+          <!-- 재무 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">매출 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="salesMonthlyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 활성 유저 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">활성 유저 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="activeUserMonthlyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 신규 유저 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">신규 유저 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="newUserMonthlyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 탈퇴 유저 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">탈퇴 유저 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="deletedUserMonthlyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 신규 식당 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">신규 식당 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="restaurantMonthlyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 리뷰 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">리뷰 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="reviewMonthlyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 식당 예약 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">식당 예약 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="reservationMonthlyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 식당 예약 취소 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">식당 예약 취소 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="cancelledResMonthlyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 주별 통계 -->
+      <div class="tab-pane fade" id="weekly" role="tabpanel" aria-labelledby="weekly-tab">
+
+        <!-- Weekly Chart -->
+        <div class="row">
+          <!-- 재무 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">매출 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="salesWeeklyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 활성 유저 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">활성 유저 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="activeUserWeeklyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 신규 유저 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">신규 유저 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="newUserWeeklyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 탈퇴 유저 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">탈퇴 유저 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="deletedUserWeeklyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 신규 식당 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">신규 식당 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="restaurantWeeklyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 리뷰 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">리뷰 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="reviewWeeklyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 식당 예약 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">식당 예약 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="reservationWeeklyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 식당 예약 취소 통계 -->
+          <div class="col-lg-6">
+            <div class="card shadow mb-6">
+              <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary text-center">식당 예약 취소 통계</h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-bar">
+                  <canvas id="cancelledResWeeklyChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

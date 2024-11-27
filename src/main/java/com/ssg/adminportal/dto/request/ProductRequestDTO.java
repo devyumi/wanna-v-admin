@@ -24,24 +24,24 @@ public class ProductRequestDTO {
     private String name;
 
     @NotEmpty(message = "Please enter the required product thumbnail.")
-    private List<String> image;
+    private String image;
 
     @NotNull(message = "Please enter the required product cost price.")
-    @Positive(message = "Selling price must be a positive number.")
+    @Positive(message = "Cost price must be a positive number.")
     private Double costPrice;
 
     @NotNull(message = "Please enter the required product selling price.")
     @Positive(message = "Selling price must be a positive number.")
     private Double sellingPrice;
 
-    @Positive(message = "Selling price must be a positive number.")
+    @Positive(message = "Discount rate must be a positive number.")
     private Integer discountRate;
 
     @NotNull(message = "Please enter the required product category.")
     private Category category;
 
     @NotNull(message = "Please enter the required product stock.")
-    @Positive(message = "Selling price must be a positive number.")
+    @Positive(message = "Product stock must be a positive number.")
     private Integer stock;
 
     @NotEmpty(message = "Please enter the required product description.")
