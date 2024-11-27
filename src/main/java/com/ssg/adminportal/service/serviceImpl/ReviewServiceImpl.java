@@ -5,6 +5,7 @@ import com.ssg.adminportal.config.ClovaConfig;
 import com.ssg.adminportal.domain.Review;
 import com.ssg.adminportal.dto.request.ReviewRequestDTO;
 import com.ssg.adminportal.dto.response.ReviewResponseDTO;
+import com.ssg.adminportal.dto.response.SentimentResponseDTO;
 import com.ssg.adminportal.exception.CustomException;
 import com.ssg.adminportal.repository.ReviewRepository;
 import com.ssg.adminportal.service.ReviewService;
@@ -182,6 +183,12 @@ public class ReviewServiceImpl implements ReviewService {
             }
         }
         throw new CustomException(ErrorCode.SENTIMENT_ANALYSIS_FAILURE);
+    }
+
+
+    @Override
+    public List<SentimentResponseDTO> getSentiment(Long restaurantId) {
+        return reviewRepository.countBySentimentAndRestaurant(restaurantId);
     }
 
 }
