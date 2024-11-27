@@ -12,4 +12,5 @@ public interface ReviewService {
     Review findReview(Long reviewId);
     void updateReviewActiveFalse(Long reviewId, String note);
     void updateReviewActiveTrue(Long reviewId);
+    void updateReviewSentiment();
 }
