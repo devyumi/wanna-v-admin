@@ -81,17 +81,23 @@ public class Product {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:MM:SS")
     private LocalDateTime updatedAt;
 
-    public void update(ProductRequestDTO requestDTO) {
+    public void update(ProductRequestDTO requestDTO, String updateImageUrl, List<String> updateDescriptionUrl) {
         this.name = requestDTO.getName();
-        this.image = requestDTO.getImage();
         this.costPrice = requestDTO.getCostPrice();
         this.sellingPrice = requestDTO.getSellingPrice();
         this.discountRate = requestDTO.getDiscountRate();
         this.finalPrice = requestDTO.getFinalPrice();
         this.category = requestDTO.getCategory();
         this.stock = requestDTO.getStock();
-        this.description = requestDTO.getDescription();
         this.isActive = requestDTO.getIsActive();
         this.updatedAt = requestDTO.getUpdatedAt();
+
+        if (updateImageUrl != null) {
+            this.image = updateImageUrl;
+        }
+
+        if (updateDescriptionUrl != null) {
+            this.description = updateDescriptionUrl;
+        }
     }
 }

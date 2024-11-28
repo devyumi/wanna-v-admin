@@ -1,12 +1,17 @@
 package com.ssg.adminportal.service.serviceImpl;
 
 import com.ssg.adminportal.common.ErrorCode;
+import com.ssg.adminportal.config.NcpConfig;
+import com.ssg.adminportal.domain.Admin;
 import com.ssg.adminportal.domain.Product;
 import com.ssg.adminportal.dto.request.ProductListRequestDTO;
+import com.ssg.adminportal.dto.FileDTO;
 import com.ssg.adminportal.dto.request.ProductRequestDTO;
 import com.ssg.adminportal.dto.response.ProductResponseDTO;
 import com.ssg.adminportal.exception.CustomException;
+import com.ssg.adminportal.repository.AdminRepository;
 import com.ssg.adminportal.repository.ProductRepository;
+import com.ssg.adminportal.service.FileService;
 import com.ssg.adminportal.service.ProductService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +27,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final AdminRepository adminRepository;
+    private final FileService fileService;
+    private final NcpConfig ncpConfig;
+
 
     /**
      * 상품 전체 조회
@@ -62,19 +71,35 @@ public class ProductServiceImpl implements ProductService {
      * @param requestDTO
      */
     @Transactional
-    public void createProduct(ProductRequestDTO requestDTO) {
+    public void createProduct(Long adminId, ProductRequestDTO requestDTO) {
+        String imageUrl = null;
+        List<String> descriptionUrls = null;
+        if (!requestDTO.getImage().isEmpty() && !requestDTO.getDescription().get(0).isEmpty()) {
+            FileDTO imageFile = fileService.uploadFile(requestDTO.getImage(),
+                ncpConfig.getProductPath());
+            imageUrl = imageFile.getUploadFileUrl();
+
+            // 설명 파일 업로드 및 List<String>으로 변환
+        List<FileDTO> descriptionFiles = fileService.uploadFiles(requestDTO.getDescription(),
+            ncpConfig.getProductPath());
+        descriptionUrls = fileService.convertImageUrlsToJson(descriptionFiles);
+        }
+
+        Admin admin = adminRepository.findById(adminId)
+            .orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
 
         productRepository.save(Product.builder()
             .name(requestDTO.getName())
-            .image(requestDTO.getImage())
+            .image(imageUrl)
             .costPrice(requestDTO.getCostPrice())
             .sellingPrice(requestDTO.getSellingPrice())
             .discountRate(requestDTO.getDiscountRate())
             .finalPrice(requestDTO.getFinalPrice())
             .category(requestDTO.getCategory())
             .stock(requestDTO.getStock())
-            .description(requestDTO.getDescription())
+            .description(descriptionUrls)
             .isActive(requestDTO.getIsActive())
+            .createdById(admin)
             .createdAt(requestDTO.getCreatedAt())
             .build());
     }
@@ -87,11 +112,27 @@ public class ProductServiceImpl implements ProductService {
      */
     @Transactional
     public void modifyProduct(Long productId, ProductRequestDTO requestDTO) {
+
+        String updateImageUrl = null;
+        List<String> updateDescriptionUrl = null;
+
+        if (!requestDTO.getImage().isEmpty()) {
+            FileDTO imageFile = fileService.uploadFile(requestDTO.getImage(),
+                ncpConfig.getProductPath());
+            updateImageUrl = imageFile.getUploadFileUrl();
+        }
+
+        if (!requestDTO.getDescription().get(0).isEmpty()) {
+            List<FileDTO> descriptionFiles = fileService.uploadFiles(requestDTO.getDescription(),
+                ncpConfig.getProductPath());
+            updateDescriptionUrl = fileService.convertImageUrlsToJson(descriptionFiles);
+        }
+
         Product product = productRepository.findById(productId).orElseThrow(
             () -> new CustomException(ErrorCode.NON_EXISTENT_ID)
         );
 
-        product.update(requestDTO);
+        product.update(requestDTO, updateImageUrl, updateDescriptionUrl);
     }
 
 }
