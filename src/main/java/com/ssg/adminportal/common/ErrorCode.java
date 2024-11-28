@@ -1,6 +1,7 @@
 package com.ssg.adminportal.common;
 
 public enum ErrorCode {
+    PRODUCT_NOT_FOUND(404, "Product not found"), // 직원 조회 실패
     INVALID_VALUE(400, "Invalid value provided"),
     NON_EXISTENT_ID(404, "The ID does not exist"),
     INVALID_REQUEST_TYPE(400, "Invalid request type provided"),
