@@ -6,6 +6,7 @@
 >
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/common/upload-box.css">
   <script defer src="/js/product/update.js"></script>
   <title>Product Save Page</title>
 </head>
@@ -22,7 +23,8 @@
                 <li class="breadcrumb-item"><a href="/products" class="text-inherit">상점 관리</a></li>
                 <li class="breadcrumb-item active" aria-current="page">상품 수정</li>
               </ol>
-              <h2 th:text="'# ' + ${product.id}" id="productId" name="productId"  style="margin-top: 25px;"></h2>
+              <h2 th:text="'# ' + ${product.id}" id="productId" name="productId"
+                  style="margin-top: 25px;"></h2>
             </div>
             <div>
               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
@@ -97,18 +99,74 @@
               </div>
             </div>
 
-            <div>
-              <div class="mb-3">
-                <h4 class="mb-3 h5">썸네일</h4>
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="image" name="image">
+            <!-- 상품 이미지 업로드 -->
+            <div class="mb-3">
+              <h4 class="mb-3 h5">
+                상품 이미지
+                <small class="text-muted ms-2">※ 상품 이미지는 1장만 업로드할 수 있습니다.</small>
+              </h4>
+              <div class="card">
+                <div class="d-flex justify-content-center align-items-center">
+                  <h6 class="fw-bold text-center my-3">사진을 추가해주세요.</h6>
+                  <h3>
+                    <label class="ms-1" for="chooseImage">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                           fill="currentColor" class="bi bi-plus-square ms-2" viewBox="0 0 16 16"
+                           style="color: #5AAB6F">
+                        <path
+                            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path
+                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                      </svg>
+                    </label>
+                  </h3>
+                </div>
+                <div class="input-group image-upload-container mb-3">
+                  <div class="upload-box">
+                    <div id="drop-image" class="drag-file">
+                      <input class="file" id="chooseImage" name="image" type="file" multiple
+                             onchange="dropFile.handleProductImgFiles(this.files)"
+                             accept="image/png, image/jpeg, image/gif">
+                    </div>
+                    <div id="image-previews" class="preview-container"><!-- 미리보기 표시 영역 --></div>
+                  </div>
                 </div>
               </div>
-              <div class="mb-3">
-                <h4 class="mb-3 h5">상품 설명</h4>
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="description" name="description"
-                  >
+            </div>
+
+            <!-- 상품 설명 이미지 업로드 -->
+            <div class="mb-3">
+              <h4 class="mb-3 h5">
+                상품 설명
+                <small class="text-muted ms-2">※ 상품 설명 이미지는 최대 3장까지 업로드할 수 있습니다.</small>
+              </h4>
+              <div class="card">
+                <div class="d-flex justify-content-center align-items-center">
+                  <h6 class="fw-bold text-center my-3">상품 설명 사진을 추가해주세요.</h6>
+                  <h3>
+                    <label class="ms-1" for="chooseDescription">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                           fill="currentColor" class="bi bi-plus-square ms-2" viewBox="0 0 16 16"
+                           style="color: #5AAB6F">
+                        <path
+                            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path
+                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                      </svg>
+                    </label>
+                  </h3>
+                </div>
+                <div class="input-group image-upload-container mb-3">
+                  <div class="upload-box">
+                    <div id="drop-description" class="drag-file">
+                      <input class="file" id="chooseDescription" name="description" type="file"
+                             multiple
+                             onchange="dropFile.handleDescriptionFiles(this.files)"
+                             accept="image/png, image/jpeg, image/gif">
+                    </div>
+                    <div id="description-previews" class="preview-container">
+                      <!-- 미리보기 표시 영역 --></div>
+                  </div>
                 </div>
               </div>
             </div>
