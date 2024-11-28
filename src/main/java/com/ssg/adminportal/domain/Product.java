@@ -5,7 +5,6 @@ import com.ssg.adminportal.common.Category;
 import com.ssg.adminportal.dto.request.ProductRequestDTO;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,7 +54,7 @@ public class Product {
 
     @Column(nullable = false, columnDefinition = "json")
     @JdbcTypeCode(SqlTypes.JSON)
-    private List<String> description;
+    private String description;
 
     @Column(name = "is_active", nullable = false)
     @ColumnDefault("0")
@@ -83,14 +82,14 @@ public class Product {
 
     public void update(ProductRequestDTO requestDTO) {
         this.name = requestDTO.getName();
-        this.image = requestDTO.getImage();
+        this.image = "requestDTO.getImage()";
         this.costPrice = requestDTO.getCostPrice();
         this.sellingPrice = requestDTO.getSellingPrice();
         this.discountRate = requestDTO.getDiscountRate();
         this.finalPrice = requestDTO.getFinalPrice();
         this.category = requestDTO.getCategory();
         this.stock = requestDTO.getStock();
-        this.description = requestDTO.getDescription();
+        this.description = "requestDTO.getDescription(";
         this.isActive = requestDTO.getIsActive();
         this.updatedAt = requestDTO.getUpdatedAt();
     }

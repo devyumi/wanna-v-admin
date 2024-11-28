@@ -1,11 +1,16 @@
 package com.ssg.adminportal.service.serviceImpl;
 
 import com.ssg.adminportal.common.ErrorCode;
+import com.ssg.adminportal.config.NcpConfig;
+import com.ssg.adminportal.domain.Admin;
 import com.ssg.adminportal.domain.Product;
+import com.ssg.adminportal.dto.FileDTO;
 import com.ssg.adminportal.dto.request.ProductRequestDTO;
 import com.ssg.adminportal.dto.response.ProductResponseDTO;
 import com.ssg.adminportal.exception.CustomException;
+import com.ssg.adminportal.repository.AdminRepository;
 import com.ssg.adminportal.repository.ProductRepository;
+import com.ssg.adminportal.service.FileService;
 import com.ssg.adminportal.service.ProductService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +27,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final AdminRepository adminRepository;
+    private final FileService fileService;
+    private final NcpConfig ncpConfig;
+
 
     /**
      * 상품 전체 조회
@@ -56,20 +65,33 @@ public class ProductServiceImpl implements ProductService {
      * @param requestDTO
      */
     @Transactional
-    public void createProduct(ProductRequestDTO requestDTO) {
-        log.info("!!!!!!!!" + requestDTO.toString());
+    public void createProduct(Long adminId, ProductRequestDTO requestDTO) {
+        String imageUrl = null;
+        String descriptionUrl = null;
+        if (!requestDTO.getImage().isEmpty() && !requestDTO.getDescription().get(0).isEmpty()) {
+            FileDTO imageFile = fileService.uploadFile(requestDTO.getImage(),
+                ncpConfig.getProductPath());
+            imageUrl = imageFile.getUploadFileUrl();
+            List<FileDTO> descriptionFiles = fileService.uploadFiles(requestDTO.getDescription(),
+                ncpConfig.getProductPath());
+            descriptionUrl = fileService.convertImageUrlsToJson(descriptionFiles);
+        }
+
+        Admin admin = adminRepository.findById(adminId)
+            .orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
 
         productRepository.save(Product.builder()
             .name(requestDTO.getName())
-            .image(requestDTO.getImage())
+            .image(imageUrl)
             .costPrice(requestDTO.getCostPrice())
             .sellingPrice(requestDTO.getSellingPrice())
             .discountRate(requestDTO.getDiscountRate())
             .finalPrice(requestDTO.getFinalPrice())
             .category(requestDTO.getCategory())
             .stock(requestDTO.getStock())
-            .description(requestDTO.getDescription())
+            .description(descriptionUrl)
             .isActive(requestDTO.getIsActive())
+            .createdById(admin)
             .createdAt(requestDTO.getCreatedAt())
             .build());
     }

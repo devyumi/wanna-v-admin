@@ -77,13 +77,13 @@
                 <label class="form-label">상태</label>
                 <div class="pt-2 pb-2">
                   <label class="form-check form-check-inline">
-                    <input type="radio" id="statusFalse" name="isActive" value="inactive"
+                    <input type="radio" id="statusFalse" name="is-active" value="inactive"
                            class="form-check-input"
                            checked>
                     비활성화
                   </label>
                   <label class="form-check form-check-inline">
-                    <input type="radio" id="statusTrue" name="isActive" value="active"
+                    <input type="radio" id="statusTrue" name="is-active" value="active"
                            class="form-check-input">
                     활성화
                   </label>
@@ -116,7 +116,7 @@
                 <div class="input-group image-upload-container mb-3">
                   <div class="upload-box">
                     <div id="drop-image" class="drag-file">
-                      <input class="file" id="chooseImage" th:name="image" type="file" multiple
+                      <input class="file" id="chooseImage" name="image" type="file" multiple
                              onchange="dropFile.handleProductImgFiles(this.files)"
                              accept="image/png, image/jpeg, image/gif">
                     </div>
@@ -151,11 +151,13 @@
                 <div class="input-group image-upload-container mb-3">
                   <div class="upload-box">
                     <div id="drop-description" class="drag-file">
-                      <input class="file" id="chooseDescription" th:name="image" type="file" multiple
+                      <input class="file" id="chooseDescription" name="description" type="file"
+                             multiple
                              onchange="dropFile.handleDescriptionFiles(this.files)"
                              accept="image/png, image/jpeg, image/gif">
                     </div>
-                    <div id="description-previews" class="preview-container"><!-- 미리보기 표시 영역 --></div>
+                    <div id="description-previews" class="preview-container">
+                      <!-- 미리보기 표시 영역 --></div>
                   </div>
                 </div>
               </div>

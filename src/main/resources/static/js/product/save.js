@@ -100,7 +100,8 @@ document.addEventListener("DOMContentLoaded", function () {
       async function (event) {
         event.preventDefault();
 
-        const formData = new FormData(this);
+        let formData = new FormData(this);
+
         const productData = {
           name: formData.get('name'),
           costPrice: formData.get('cost-price'),
@@ -108,17 +109,27 @@ document.addEventListener("DOMContentLoaded", function () {
           discountRate: formData.get('discount-rate'),
           category: formData.get('category'),
           stock: formData.get('stock'),
-          isActive: formData.get('isActive') === 'active',
-          // image: formData.get('image'),
-          // description: formData.get('description')
-          image: ['이미지'],
-          description: ['설명']
+          isActive: formData.get('is-active') === 'active'
+        }
+
+        formData.append("product", new Blob([JSON.stringify(productData)], {type: "application/json"}));
+
+        // 파일 데이터 추가
+        const imageFile = document.getElementById('chooseImage').files[0];
+        if (imageFile) {
+          formData.append('image', imageFile);
+        }
+
+        const descriptionFiles = document.getElementById(
+            'chooseDescription').files;
+        for (let i = 0; i < descriptionFiles.length; i++) {
+          formData.append('description', descriptionFiles[i]);
         }
 
         try {
-          const response = await axios.post('/api/v1/products', productData, {
+          const response = await axios.post('/api/v1/products', formData, {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'multipart/form-data'
             }
           });
           console.log('상품 등록 성공:', response.data);
@@ -126,7 +137,6 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
           console.error('상품 등록 실패:', error);
           alert('상품 등록에 실패했습니다.');
-          console.log(productData)
         }
-      })
+      });
 })
