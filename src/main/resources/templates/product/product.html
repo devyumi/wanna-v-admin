@@ -26,7 +26,8 @@
           </div>
           <div>
             <button type="button" class="btn btn-primary"
-                    th:onclick="'window.location.href=\'/products/' + ${product.id} + '/update\''">상품 수정
+                    th:onclick="'window.location.href=\'/products/' + ${product.id} + '/update\''">
+              상품 수정
             </button>
           </div>
         </div>
@@ -72,7 +73,12 @@
                 <td class="table-secondary fw-bold">설명</td>
                 <td colspan="4">
                   <div th:each="description : ${product.description}">
-                    <img th:src="@{${description}}" style="width: 150px;" alt="상품 설명 이미지">
+                    <!-- 이미지 클릭 시 모달 열기 -->
+                    <button class="btn" data-bs-toggle="modal"
+                            th:data-bs-target="'#descriptionModal' + ${description.hashCode()}">
+                      <img th:src="@{${description}}" style="max-height: 150px; cursor: pointer;"
+                           alt="상품 설명 이미지">
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -90,6 +96,23 @@
               </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:each="description : ${product.description}">
+      <div id="descriptionModal" th:id="'descriptionModal' + ${description.hashCode()}"
+           class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <img th:src="@{${description}}" style="width: 100%; max-height: 500px;"
+                   alt="상품 설명 이미지">
+            </div>
           </div>
         </div>
       </div>
