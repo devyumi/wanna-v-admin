@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductRestController {
 
     private final ProductService productService;
+    final Long adminId = 1L; // Security 적용 후 삭제 예정
 
     @GetMapping()
     public ResponseEntity<Map<String, Object>> getProductList() {
@@ -52,7 +53,7 @@ public class ProductRestController {
 
     @PostMapping()
     public ResponseEntity<Map<String, String>> createProduct(@RequestBody @Valid ProductRequestDTO requestDTO) {
-        productService.createProduct(requestDTO);
+        productService.createProduct(adminId, requestDTO);
 
         Map<String, String> response = new HashMap<>();
         response.put("status", "success");
