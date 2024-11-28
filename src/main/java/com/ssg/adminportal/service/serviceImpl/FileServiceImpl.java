@@ -11,6 +11,7 @@ import com.ssg.adminportal.service.FileService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -107,19 +108,33 @@ public class FileServiceImpl implements FileService {
      * @param fileDTOS
      * @return
      */
-    public String convertImageUrlsToJson(List<FileDTO> fileDTOS) {
+    public List<String> convertImageUrlsToJson(List<FileDTO> fileDTOS) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             // FileDTO 객체에서 uploadFileUrl만 추출하여 리스트로 저장
-            List<String> fileUrls = fileDTOS.stream()
+            return fileDTOS.stream()
                 .map(FileDTO::getUploadFileUrl)
                 .collect(Collectors.toList());
-            // 리스트를 JSON 형식으로 변환
-            return objectMapper.writeValueAsString(fileUrls);  // JSON 배열 형식으로 반환
         } catch (Exception e) {
             e.printStackTrace();
-            return "[]";  // 오류 시 빈 배열 반환
+            return Collections.emptyList();
         }
     }
+
+    /**
+     * DB에 저장된 JSON 형식을 List<String> 으로 파싱
+     *
+     * @param json
+     * @return
+     */
+    public List<String> parseImageUrlsFromJson(String json) {
+    try {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(List.class, String.class));
+    } catch (Exception e) {
+        e.printStackTrace();
+        return List.of();
+    }
+}
 
 }

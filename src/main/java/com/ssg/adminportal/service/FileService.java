@@ -8,5 +8,6 @@ public interface FileService {
     String getUuidFileName(String fileName);
     FileDTO uploadFile(MultipartFile multipartFile, String filePath);
     List<FileDTO> uploadFiles(List<MultipartFile> multipartFiles, String filePath);
-    String convertImageUrlsToJson(List<FileDTO> fileDTOS);
+    List<String> convertImageUrlsToJson(List<FileDTO> fileDTOS);
+    List<String> parseImageUrlsFromJson(String json);
 }
