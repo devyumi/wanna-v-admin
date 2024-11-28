@@ -24,7 +24,6 @@ public class ProductRequestDTO {
     @NotBlank(message = "Please enter the required product name.")
     private String name;
 
-    @Size(min = 1, max = 1, message = "You can only upload 1 product thumbnail image.")
     private MultipartFile image;
 
     @NotNull(message = "Please enter the required product cost price.")
@@ -64,8 +63,11 @@ public class ProductRequestDTO {
         return this.sellingPrice;
     }
 
-    public void multipartImage(MultipartFile image, List<MultipartFile> description) {
+    public void multipartImage(MultipartFile image) {
         this.image = image;
+    }
+
+    public void multipartDescription(List<MultipartFile> description) {
         this.description = description;
     }
 }

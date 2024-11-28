@@ -67,14 +67,16 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void createProduct(Long adminId, ProductRequestDTO requestDTO) {
         String imageUrl = null;
-        String descriptionUrl = null;
+        List<String> descriptionUrls = null;
         if (!requestDTO.getImage().isEmpty() && !requestDTO.getDescription().get(0).isEmpty()) {
             FileDTO imageFile = fileService.uploadFile(requestDTO.getImage(),
                 ncpConfig.getProductPath());
             imageUrl = imageFile.getUploadFileUrl();
-            List<FileDTO> descriptionFiles = fileService.uploadFiles(requestDTO.getDescription(),
-                ncpConfig.getProductPath());
-            descriptionUrl = fileService.convertImageUrlsToJson(descriptionFiles);
+
+            // 설명 파일 업로드 및 List<String>으로 변환
+        List<FileDTO> descriptionFiles = fileService.uploadFiles(requestDTO.getDescription(),
+            ncpConfig.getProductPath());
+        descriptionUrls = fileService.convertImageUrlsToJson(descriptionFiles);
         }
 
         Admin admin = adminRepository.findById(adminId)
@@ -89,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
             .finalPrice(requestDTO.getFinalPrice())
             .category(requestDTO.getCategory())
             .stock(requestDTO.getStock())
-            .description(descriptionUrl)
+            .description(descriptionUrls)
             .isActive(requestDTO.getIsActive())
             .createdById(admin)
             .createdAt(requestDTO.getCreatedAt())
@@ -104,11 +106,32 @@ public class ProductServiceImpl implements ProductService {
      */
     @Transactional
     public void modifyProduct(Long productId, ProductRequestDTO requestDTO) {
+
+        String updateImageUrl = null;
+        List<String> updateDescriptionUrl = null;
+
+        if (!requestDTO.getImage().isEmpty()) {
+            FileDTO imageFile = fileService.uploadFile(requestDTO.getImage(),
+                ncpConfig.getProductPath());
+            updateImageUrl = imageFile.getUploadFileUrl();
+        }
+
+        if (!requestDTO.getDescription().get(0).isEmpty()) {
+            List<FileDTO> descriptionFiles = fileService.uploadFiles(requestDTO.getDescription(),
+                ncpConfig.getProductPath());
+            updateDescriptionUrl = fileService.convertImageUrlsToJson(descriptionFiles);
+        }
+
         Product product = productRepository.findById(productId).orElseThrow(
             () -> new CustomException(ErrorCode.NON_EXISTENT_ID)
         );
 
-        product.update(requestDTO);
+        log.info("product: " + product);
+        log.info("requestDTO: " + requestDTO);
+        log.info("updateImageUrl: " + updateImageUrl);
+        log.info("updateDescriptionUrl: " + updateDescriptionUrl);
+
+        product.update(requestDTO, updateImageUrl, updateDescriptionUrl);
     }
 
 }
