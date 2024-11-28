@@ -155,22 +155,30 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     formData.append("product",
-        new Blob([JSON.stringify(productData)], {type: "application/json"}));
+        new Blob([JSON.stringify(productUpdateData)],
+            {type: "application/json"}));
 
+    // 상품 이미지가 선택되었을 경우만 formData에 추가
     const imageFile = document.getElementById('chooseImage').files[0];
     if (imageFile) {
-      formData.append('image', imageFile);
+      formData.append('updateImage', imageFile);
+    } else {
+      formData.append('updateImage', null);  // 이미지가 없으면 null로 추가
     }
 
-    const descriptionFiles = document.getElementById(
-        'chooseDescription').files;
-    for (let i = 0; i < descriptionFiles.length; i++) {
-      formData.append('description', descriptionFiles[i]);
+    // 상품 설명 이미지가 선택되었을 경우만 formData에 추가
+    const descriptionFiles = document.getElementById('chooseDescription').files;
+    if (descriptionFiles.length > 0) {
+      for (let i = 0; i < descriptionFiles.length; i++) {
+        formData.append('updateDescription' + i, descriptionFiles[i]);  // 각 파일마다 다른 키
+      }
+    } else {
+      formData.append('updateDescription', null);  // 설명 이미지가 없으면 null로 추가
     }
 
     try {
       const response = await axios.patch(`/api/v1/products/${productId}`,
-          productUpdateData, {
+          formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }

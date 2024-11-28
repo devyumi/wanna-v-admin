@@ -112,7 +112,8 @@ document.addEventListener("DOMContentLoaded", function () {
           isActive: formData.get('is-active') === 'active'
         }
 
-        formData.append("product", new Blob([JSON.stringify(productData)], {type: "application/json"}));
+        formData.append("product", new Blob([JSON.stringify(productData)],
+            {type: "application/json"}));
 
         // 파일 데이터 추가
         const imageFile = document.getElementById('chooseImage').files[0];
@@ -123,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const descriptionFiles = document.getElementById(
             'chooseDescription').files;
         for (let i = 0; i < descriptionFiles.length; i++) {
-          formData.append('description', descriptionFiles[i]);
+          formData.append('description' + i, descriptionFiles[i]);  // 각 파일마다 다른 키
         }
 
         try {

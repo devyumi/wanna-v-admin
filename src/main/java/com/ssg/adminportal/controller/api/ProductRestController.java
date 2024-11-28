@@ -88,8 +88,6 @@ public class ProductRestController {
         if (description != null && !description.isEmpty()) {
             requestDTO.multipartDescription(description);
         }
-        log.info("image: " + image);
-        log.info("description: " + description);
 
         productService.modifyProduct(productId, requestDTO);
 

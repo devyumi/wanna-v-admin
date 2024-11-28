@@ -126,11 +126,6 @@ public class ProductServiceImpl implements ProductService {
             () -> new CustomException(ErrorCode.NON_EXISTENT_ID)
         );
 
-        log.info("product: " + product);
-        log.info("requestDTO: " + requestDTO);
-        log.info("updateImageUrl: " + updateImageUrl);
-        log.info("updateDescriptionUrl: " + updateDescriptionUrl);
-
         product.update(requestDTO, updateImageUrl, updateDescriptionUrl);
     }
 
