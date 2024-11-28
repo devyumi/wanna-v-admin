@@ -1,12 +1,12 @@
 package com.ssg.adminportal.controller.api;
 
 import com.ssg.adminportal.domain.Product;
+import com.ssg.adminportal.dto.request.ProductListRequestDTO;
 import com.ssg.adminportal.dto.request.ProductRequestDTO;
 import com.ssg.adminportal.dto.response.ProductResponseDTO;
 import com.ssg.adminportal.service.ProductService;
 import jakarta.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Log4j2
@@ -29,12 +30,22 @@ public class ProductRestController {
     private final ProductService productService;
 
     @GetMapping()
-    public ResponseEntity<Map<String, Object>> getProductList() {
-        List<ProductResponseDTO> products = productService.getProductList();
+    public ResponseEntity<Map<String, Object>> filterProductList(
+        @RequestParam int page,
+        @RequestParam int size,
+        @RequestParam String sort) {
+
+        ProductListRequestDTO requestDTO = ProductListRequestDTO.builder()
+            .page(page)
+            .size(size)
+            .sort(sort)
+            .build();
+
+        ProductResponseDTO responseDTO = productService.filterProductList(requestDTO);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
-        response.put("data", products);
+        response.put("data", responseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
