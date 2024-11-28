@@ -4,6 +4,7 @@ import com.ssg.adminportal.common.ErrorCode;
 import com.ssg.adminportal.config.NcpConfig;
 import com.ssg.adminportal.domain.Admin;
 import com.ssg.adminportal.domain.Product;
+import com.ssg.adminportal.dto.request.ProductListRequestDTO;
 import com.ssg.adminportal.dto.FileDTO;
 import com.ssg.adminportal.dto.request.ProductRequestDTO;
 import com.ssg.adminportal.dto.response.ProductResponseDTO;
@@ -13,7 +14,6 @@ import com.ssg.adminportal.repository.ProductRepository;
 import com.ssg.adminportal.service.FileService;
 import com.ssg.adminportal.service.ProductService;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Sort;
@@ -36,15 +36,21 @@ public class ProductServiceImpl implements ProductService {
      * 상품 전체 조회
      */
     @Transactional(readOnly = true)
-    public List<ProductResponseDTO> getProductList() {
-        List<Product> products = productRepository.findAll(
+    public List<Product> getProductList() {
+        return productRepository.findAll(
             Sort.by(Direction.DESC, "id"));
+    }
 
-        return products.stream()
-            .map(product -> new ProductResponseDTO(product.getId(), product.getName(),
-                product.getFinalPrice(), product.getCategory(), product.getStock(),
-                product.getIsActive(), product.getCreatedAt()))
-            .collect(Collectors.toList());
+    /**
+     * 상품 조건 필터링 조회
+     */
+    @Transactional(readOnly = true)
+    public ProductResponseDTO filterProductList(ProductListRequestDTO requestDTO) {
+        return ProductResponseDTO.builder()
+            .requestDTO(requestDTO)
+            .products(productRepository.findAll(requestDTO))
+            .total(productRepository.count(requestDTO))
+            .build();
     }
 
     /**

@@ -6,7 +6,7 @@
 >
 <head>
   <meta charset="UTF-8">
-  <script defer type="module" src="/js/product/product.js"></script>
+  <script defer type="module" src="/js/product/products.js"></script>
   <title>Product List Page</title>
 </head>
 <body>
@@ -43,10 +43,11 @@
                      aria-label="Search">
             </form>
             <div class="ms-2">
-              <select class="form-select" id="type" onchange="filtering()">
+              <select class="form-select" id="sort">
                 <option selected value="new">최신순</option>
                 <option value="name">이름순</option>
-                <option value="price">가격순</option>
+                <option value="priceDesc">가격 높은순</option>
+                <option value="priceAsc">가격 낮은순</option>
               </select>
             </div>
           </div>
@@ -66,30 +67,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="product-item" th:each="product : ${products}">
-                  <td class="id">
-                    <a th:href="@{/products/{id}(id=${product.id})}" th:text="${product.id}"></a>
-                  </td>
-                  <td class="name" th:text="${product.name}"></td>
-                  <td class="final-price price" th:data-price="${product.finalPrice}"></td>
-                  <td th:text="${product.category.getName()}"></td>
-                  <td class="stock" th:text="${product.stock}"></td>
-                  <td class="is-active" th:text="${product.isActive ? 'O' : 'X'}"></td>
-                  <td class="create-at" th:text="${product.createdAt}"></td>
-                </tr>
+                <!-- 상품 리스트-->
                 </tbody>
               </table>
             </div>
 
             <div class="border-top d-md-flex justify-content-between align-items-center p-6">
-              <span>Showing 1 to 8 of 12 entries</span>
+              <span id="pagination-info"></span>
               <nav class="mt-2 mt-md-0">
-                <ul class="pagination mb-0 ">
-                  <li class="page-item disabled"><a class="page-link " href="#!">Previous</a></li>
-                  <li class="page-item"><a class="page-link active" href="#!">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#!">Next</a></li>
+                <ul class="pagination mb-0" id="pagination-list">
+                  <li class="page-item" id="previous" style="display: none;"><a class="page-link"
+                                                                                href="#!">Previous</a>
+                  </li>
+                  <!-- 페이지 버튼 -->
+                  <li class="page-item" id="next" style="display: none;"><a class="page-link"
+                                                                            href="#!">Next</a></li>
                 </ul>
               </nav>
             </div>

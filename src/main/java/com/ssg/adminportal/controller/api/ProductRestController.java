@@ -1,6 +1,7 @@
 package com.ssg.adminportal.controller.api;
 
 import com.ssg.adminportal.domain.Product;
+import com.ssg.adminportal.dto.request.ProductListRequestDTO;
 import com.ssg.adminportal.dto.request.ProductRequestDTO;
 import com.ssg.adminportal.dto.response.ProductResponseDTO;
 import com.ssg.adminportal.service.ProductService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,12 +34,22 @@ public class ProductRestController {
     final Long adminId = 1L; // Security 적용 후 삭제 예정
 
     @GetMapping()
-    public ResponseEntity<Map<String, Object>> getProductList() {
-        List<ProductResponseDTO> products = productService.getProductList();
+    public ResponseEntity<Map<String, Object>> filterProductList(
+        @RequestParam int page,
+        @RequestParam int size,
+        @RequestParam String sort) {
+
+        ProductListRequestDTO requestDTO = ProductListRequestDTO.builder()
+            .page(page)
+            .size(size)
+            .sort(sort)
+            .build();
+
+        ProductResponseDTO responseDTO = productService.filterProductList(requestDTO);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
-        response.put("data", products);
+        response.put("data", responseDTO);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
