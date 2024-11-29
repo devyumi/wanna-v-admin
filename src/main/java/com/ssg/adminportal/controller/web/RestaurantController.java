@@ -1,5 +1,7 @@
 package com.ssg.adminportal.controller.web;
 
+import com.ssg.adminportal.common.*;
+import com.ssg.adminportal.service.FileService;
 import com.ssg.adminportal.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
