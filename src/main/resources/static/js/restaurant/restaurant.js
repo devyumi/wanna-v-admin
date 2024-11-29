@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
   new Chart(sentimentChart, {
     type: 'doughnut',
     data: {
-      labels: ['POSITIVE', 'NEGATIVE'],
+      labels: ['긍정', '부정'],
       datasets: [{
         data: [positiveCnt, negativeCnt],
         backgroundColor: ['#36A2EB', '#FF5733'],
