@@ -58,7 +58,8 @@ public class ProductRequestDTO {
 
     public Double getFinalPrice() {
         if (this.sellingPrice != null && this.discountRate != null && this.discountRate > 0) {
-            return this.sellingPrice * (1 - this.discountRate / 100.0);
+            double finalPrice = this.sellingPrice * (1 - this.discountRate / 100.0);
+        return Math.floor(finalPrice / 10) * 10;
         }
         return this.sellingPrice;
     }
