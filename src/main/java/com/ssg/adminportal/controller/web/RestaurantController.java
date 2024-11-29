@@ -3,6 +3,7 @@ package com.ssg.adminportal.controller.web;
 import com.ssg.adminportal.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,66 @@ import java.util.Map;
 @RequestMapping("/restaurants")
 public class RestaurantController {
 
-    private final ReviewService reviewService;
+    @Value("${restaurant.image.dir}")
+    private String restaurantDir;
+
+    @Value("${food.image.dir}")
+    private String foodDir;
+
+    private final RestaurantService restaurantService;
+    private final FileService fileService;
+
+    @ModelAttribute("containFoodTypes")
+    public ContainFoodType[] containFoodTypes() {
+        return ContainFoodType.values();
+    }
+
+    @ModelAttribute("provideServiceTypes")
+    public ProvideServiceType[] provideServiceTypes() {
+        return ProvideServiceType.values();
+    }
+
+    @ModelAttribute("restaurantTypes")
+    public RestaurantType[] restaurantTypes() {
+        return RestaurantType.values();
+    }
+
+    @ModelAttribute("moodTypes")
+    public MoodType[] moodTypes() {
+        return MoodType.values();
+    }
+
+
+    @ModelAttribute("sortConditions")
+    public Map<String, String> sortConditions() {
+        Map<String, String> sortConditions = new HashMap<>();
+        sortConditions.put("NEW", "최신 순");
+        sortConditions.put("RATE", "평점 순");
+        sortConditions.put("LIKE", "좋아요 순");
+        sortConditions.put("REVIEW", "리뷰 순");
+        return sortConditions;
+    }
+
+
+    @ModelAttribute("reservationTimeGaps")
+    public ReservationTimeGap[] reservationGaps() {
+        return ReservationTimeGap.values();
+    }
+
+
+    @ModelAttribute("dayOfWeeks")
+    public List<String> dayOfWeeks() {
+        List<String> dayOfWeeks = new ArrayList<>();
+        dayOfWeeks.add("월요일");
+        dayOfWeeks.add("화요일");
+        dayOfWeeks.add("수요일");
+        dayOfWeeks.add("목요일");
+        dayOfWeeks.add("금요일");
+        dayOfWeeks.add("토요일");
+        dayOfWeeks.add("일요일");
+        return dayOfWeeks;
+    }
+
 
     @GetMapping("/{id}")
     public String getReviewSentiment(@PathVariable Long id, Model model) {
