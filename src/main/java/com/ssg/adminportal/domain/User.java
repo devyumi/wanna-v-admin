@@ -2,6 +2,8 @@ package com.ssg.adminportal.domain;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,6 +43,9 @@ public class User {
     @Column(name="referral_code", length = 6, unique = true)
     private String code;
 
+    @Column(name="chatbot_code", unique = true)
+    private String chatBotCode;
+
     @ColumnDefault("0")
     private Long point;
 
@@ -63,9 +68,12 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime unregisteredAt;
 
-//    @OneToMany(mappedBy = "user")
-//    private List<UserCoupon> userCoupons;
-//
+    @OneToMany(mappedBy = "user")
+    private List<UserCoupon> userCoupons;
+
 //    @OneToMany(mappedBy = "user")
 //    private List<Reservation> reservations;
+
+    @OneToOne(mappedBy = "user")
+    private UserGradeLog userGradeLog;
 }
