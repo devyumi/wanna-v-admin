@@ -6,6 +6,7 @@
 >
 <head>
   <meta charset="UTF-8">
+  <script defer type="module" src="/js/user/users.js"></script>
   <title>User List Page</title>
 </head>
 <body>
@@ -38,15 +39,6 @@
 
                 </form>
               </div>
-              <div class="col-lg-2 col-md-4 col-12">
-                <!-- select -->
-                <select class="form-select">
-                  <option selected>Status</option>
-                  <option value="Success">Success</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Cancel">Cancel</option>
-                </select>
-              </div>
             </div>
           </div>
           <!-- card body -->
@@ -65,15 +57,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="user : ${userList}">
-                  <td th:text="${user.id}"></td>
-                  <td><a th:href="@{/users/{userId}(userId=${user.id})}"
-                         class="text-reset" th:text="${user.username}"></a></td>
-                  <td th:text="${user.email}"></td>
-                  <td th:text="${user.point}"></td>
-                  <td th:text="${user.code}"></td>
-                  <td th:text="${user.consent}"></td>
-                </tr>
+
                 </tbody>
               </table>
             </div>

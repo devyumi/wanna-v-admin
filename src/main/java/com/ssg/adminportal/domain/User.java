@@ -1,5 +1,7 @@
 package com.ssg.adminportal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -67,13 +69,4 @@ public class User {
     @Column(name="unregistered_at")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime unregisteredAt;
-
-    @OneToMany(mappedBy = "user")
-    private List<UserCoupon> userCoupons;
-
-//    @OneToMany(mappedBy = "user")
-//    private List<Reservation> reservations;
-
-    @OneToOne(mappedBy = "user")
-    private UserGradeLog userGradeLog;
 }

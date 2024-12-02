@@ -1,6 +1,7 @@
 package com.ssg.adminportal.controller.web;
 
 import com.ssg.adminportal.domain.Event;
+import com.ssg.adminportal.domain.UserGradeLog;
 import com.ssg.adminportal.service.EventService;
 import com.ssg.adminportal.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,15 @@ public class EventController {
     }
 
     @GetMapping("/create")
-    public String createEvent(Model model){
+    public String createEvent(){
         return "promotion/event/save";
+    }
+
+    @GetMapping("/{eventId}")
+    public String user(@PathVariable Long eventId, Model model) {
+        Event event = eventService.getEvent(eventId);
+        model.addAttribute("event", event);
+        return "promotion/event/event";
     }
 
 }

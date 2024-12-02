@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // dropFile 객체를 전역에서 사용 가능하도록 설정
   window.dropFile = {
     // 상품 이미지 파일 처리 (최대 1장)
-    handleEventImgFiles: function (files) {
-      const previewContainer = document.getElementById("image-previews");
-      previewContainer.innerHTML = '';  // 기존 미리보기 삭제
+    handleEventImgFiles1: function (files) {
+        const previewContainer1 = document.getElementById("image-previews1");
+        previewContainer1.innerHTML = '';  // 기존 미리보기 삭제
 
       if (files.length > 1) {
         alert("이미지는 1장만 업로드할 수 있습니다.");
@@ -19,12 +19,34 @@ document.addEventListener("DOMContentLoaded", function () {
             const img = document.createElement('img');
             img.src = event.target.result;
             img.classList.add('img-thumbnail');
-            previewContainer.appendChild(img);
+            previewContainer1.appendChild(img);
           };
           reader.readAsDataURL(file);
         }
       });
     },
+      handleEventImgFiles2: function (files) {
+          const previewContainer2 = document.getElementById("image-previews2");
+          previewContainer2.innerHTML = '';  // 기존 미리보기 삭제
+
+          if (files.length > 1) {
+              alert("이미지는 1장만 업로드할 수 있습니다.");
+              return;  // 1개 이상의 파일을 선택할 수 없도록 함
+          }
+
+          Array.from(files).forEach(file => {
+              if (file && file.type.startsWith('image')) {
+                  const reader = new FileReader();
+                  reader.onload = function (event) {
+                      const img = document.createElement('img');
+                      img.src = event.target.result;
+                      img.classList.add('img-detail');
+                      previewContainer2.appendChild(img);
+                  };
+                  reader.readAsDataURL(file);
+              }
+          });
+      },
 
     // 드래그 앤 드롭 처리
     setupDragAndDrop: function (dropAreaId, fileInputId, previewContainerId,
@@ -54,14 +76,14 @@ document.addEventListener("DOMContentLoaded", function () {
         fileInput.files = files; // 드래그한 파일을 input에 설정
 
         if (files.length > maxFiles) {
-          alert(`최대 ${maxFiles}개의 파일만 업로드할 수 있습니다.`);
+          alert(`${maxFiles}개 파일만 업로드할 수 있습니다.`);
           return;
         }
 
         if (dropAreaId === "drop-image") {
-          dropFile.handleThumbnailFiles(files);  // 상품 이미지 파일 처리
+          dropFile.handleThumbnailFiles(files);
         } else if (dropAreaId === "drop-description") {
-          dropFile.handleDescriptionFiles(files);  // 설명 이미지 파일 처리
+          dropFile.handleDescriptionFiles(files);
         }
       });
     }
@@ -70,51 +92,40 @@ document.addEventListener("DOMContentLoaded", function () {
   // `DropFile` 초기화 - 드래그 앤 드롭 기능 설정
   dropFile.setupDragAndDrop("drop-image1", "chooseImage1", "image-previews1", 1);
   dropFile.setupDragAndDrop("drop-image2", "chooseImage2", "image-previews2", 1);
-  dropFile.setupDragAndDrop("drop-description", "chooseDescription",
-      "description-previews", 3);  // 설명 이미지는 최대 3개
 
-  document.getElementById("productForm").addEventListener('submit',
+  document.getElementById("eventForm").addEventListener('submit',
       async function (event) {
         event.preventDefault();
 
         let formData = new FormData(this);
 
-        const productData = {
-          name: formData.get('name'),
-          costPrice: formData.get('cost-price'),
-          sellingPrice: formData.get('selling-price'),
-          discountRate: formData.get('discount-rate'),
-          category: formData.get('category'),
-          stock: formData.get('stock'),
-          isActive: formData.get('is-active') === 'active'
+        const eventData = {
+            title: formData.get('title'),
+            startDate: formData.get('startDate'),
+            endDate: formData.get('endDate'),
         }
 
-        formData.append("product", new Blob([JSON.stringify(productData)],
+        formData.append("event", new Blob([JSON.stringify(eventData)],
             {type: "application/json"}));
 
         // 파일 데이터 추가
-        const imageFile = document.getElementById('chooseImage').files[0];
-        if (imageFile) {
-          formData.append('image', imageFile);
-        }
+        const imageFile = document.getElementById('chooseImage1').files[0];
+        if (imageFile)
+          formData.append('thumbnail', imageFile);
 
-        const descriptionFiles = document.getElementById(
-            'chooseDescription').files;
-        for (let i = 0; i < descriptionFiles.length; i++) {
-          formData.append('description' + i, descriptionFiles[i]);  // 각 파일마다 다른 키
-        }
+        const descriptionFile = document.getElementById('chooseImage2').files[0];
+          if (descriptionFile)
+              formData.append('detail', descriptionFile);
 
         try {
-          const response = await axios.post('/api/v1/products', formData, {
+          const response = await axios.post('/api/v1/events', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
           });
-          console.log('상품 등록 성공:', response.data);
-          alert('상품이 등록되었습니다.');
+          alert('이벤트가 등록되었습니다.');
         } catch (error) {
-          console.error('상품 등록 실패:', error);
-          alert('상품 등록에 실패했습니다.');
+          alert('이벤트 등록에 실패했습니다.');
         }
       });
 })

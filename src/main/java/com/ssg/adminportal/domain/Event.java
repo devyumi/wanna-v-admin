@@ -48,7 +48,4 @@ public class Event {
     @Column(name="updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "event")
-    private List<Coupon> coupons;
 }
