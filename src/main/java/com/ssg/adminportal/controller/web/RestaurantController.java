@@ -1,7 +1,14 @@
 package com.ssg.adminportal.controller.web;
 
 import com.ssg.adminportal.common.*;
+import com.ssg.adminportal.domain.Restaurant;
+import com.ssg.adminportal.domain.Review;
+import com.ssg.adminportal.dto.FileDTO;
+import com.ssg.adminportal.dto.request.FoodSaveDTO;
+import com.ssg.adminportal.dto.request.RestaurantSaveDTO;
+import com.ssg.adminportal.dto.request.RestaurantUpdateDTO;
 import com.ssg.adminportal.service.FileService;
+import com.ssg.adminportal.service.RestaurantService;
 import com.ssg.adminportal.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +38,7 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
     private final FileService fileService;
+    private final ReviewService reviewService;
 
     @ModelAttribute("containFoodTypes")
     public ContainFoodType[] containFoodTypes() {
@@ -93,21 +101,21 @@ public class RestaurantController {
 
     @GetMapping("/save")
     public String saveRestaurant(Model model) {
-        model.addAttribute("restaurantSaveDto", new RestaurantSaveDto());
+        model.addAttribute("restaurantSaveDto", new RestaurantSaveDTO());
         return "restaurant/admin-saveForm";
     }
 
     @PostMapping("/save")
     @ResponseBody
-    public String saveRestaurantPost(@ModelAttribute("restaurantSaveDto") RestaurantSaveDto restaurantSaveDto, RedirectAttributes redirectAttributes) {
+    public String saveRestaurantPost(@ModelAttribute("restaurantSaveDto") RestaurantSaveDTO restaurantSaveDto, RedirectAttributes redirectAttributes) {
         log.info("restaurant = {}" , restaurantSaveDto.getRestaurantImages());
-        log.info("food = {}", restaurantSaveDto.getFoodSaveDtoList());
+        log.info("food = {}", restaurantSaveDto.getFoodSaveDTOList());
 
 
         List<MultipartFile> restaurantImages = restaurantSaveDto.getRestaurantImages();
         List<MultipartFile> foodImages = new ArrayList<>();
-        List<FoodSaveDto> foodSaveDtoList = restaurantSaveDto.getFoodSaveDtoList();
-        for (FoodSaveDto foodSaveDto : foodSaveDtoList) {
+        List<FoodSaveDTO> foodSaveDTOList = restaurantSaveDto.getFoodSaveDTOList();
+        for (FoodSaveDTO foodSaveDto : foodSaveDTOList) {
             foodImages.add(foodSaveDto.getFoodImage());
         }
 
@@ -124,13 +132,13 @@ public class RestaurantController {
         List<FileDTO> foodImagesFileDto = fileService.uploadFiles(foodImages, foodDir);
         List<String> foodImagesUrl = foodImagesFileDto.stream().map(FileDTO::getUploadFileUrl).toList();
         for (String foodImageUrl : foodImagesUrl) {
-            foodSaveDtoList.forEach(foodSaveDto -> {
-                foodSaveDto.setFoodImageUrl(foodImageUrl);
+            foodSaveDTOList.forEach(foodSaveDTO -> {
+                foodSaveDTO.setFoodImageUrl(foodImageUrl);
             });
         };
 
         log.info("restaurantSaveDto = {}" , restaurantSaveDto);
-        log.info("foodSaveDtoList = {}" , restaurantSaveDto.getFoodSaveDtoList());
+        log.info("foodSaveDtoList = {}" , restaurantSaveDto.getFoodSaveDTOList());
 
         Long saveId = restaurantService.save(restaurantSaveDto);
         redirectAttributes.addAttribute("saveId", saveId);
@@ -141,7 +149,7 @@ public class RestaurantController {
     @GetMapping("/{id}/update")
     public String updateRestaurant(@PathVariable("id") Long id ,  Model model) {
         Restaurant restaurant = restaurantService.findOne(id);
-        RestaurantUpdateDto restaurantUpdateDto = new RestaurantUpdateDto(restaurant.getName() , restaurant.getBusinessNum() , restaurant.getRestaurantTypes() , restaurant.getContainFoodTypes() , restaurant.getProvideServiceTypes() , restaurant.getMoodTypes() , restaurant.getAddress().getRoadAddress() , restaurant.getAddress().getLandLotAddress() , restaurant.getAddress().getZipCode() , restaurant.getAddress().getDetailAddress() , restaurant.getCanPark() , restaurant.getReservationTimeGap() , restaurant.getIsPenalty());
+        //RestaurantUpdateDTO restaurantUpdateDto = new RestaurantUpdateDTO(restaurant.getName() , restaurant.getBusinessNum() , restaurant.getRestaurantTypes() , restaurant.getContainFoodTypes() , restaurant.getProvideServiceTypes() , restaurant.getMoodTypes() , restaurant.getAddress().getRoadAddress() , restaurant.getAddress().getLandLotAddress() , restaurant.getAddress().getZipCode() , restaurant.getAddress().getDetailAddress() , restaurant.getCanPark() , restaurant.getReservationTimeGap() , restaurant.getIsPenalty());
         model.addAttribute("restaurant", restaurant);
         return "restaurant/admin-updateForm";
     }

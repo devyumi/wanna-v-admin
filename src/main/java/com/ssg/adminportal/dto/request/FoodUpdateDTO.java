@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class FoodUpdateDto {
+public class FoodUpdateDTO {
     private String name;
     private Integer price;
     private MultipartFile foodImage; //음식 사진 폼에서 꺼내기

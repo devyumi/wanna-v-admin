@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RestaurantUpdateDto {
+public class RestaurantUpdateDTO {
   private String restaurantName;
   private String businessNum;
   private Set<String> restaurantTypes = new HashSet<>();
@@ -43,9 +43,9 @@ public class RestaurantUpdateDto {
   /**
    * Food DTO
    */
-  private List<FoodUpdateDto> foodSaveDtoList = new ArrayList<>();
+  private List<FoodUpdateDTO> foodSaveDtoList = new ArrayList<>();
 
-  public RestaurantUpdateDto(String name, String businessNum, Set<String> restaurantTypes, Set<String> containFoodTypes, Set<String> provideServiceTypes, Set<String> moodTypes, String roadAddress, String landLotAddress, String zipCode, String detailAddress, Boolean canPark, int reservationTimeGap, Boolean isPenalty) {
+  public RestaurantUpdateDTO(String name, String businessNum, Set<String> restaurantTypes, Set<String> containFoodTypes, Set<String> provideServiceTypes, Set<String> moodTypes, String roadAddress, String landLotAddress, String zipCode, String detailAddress, Boolean canPark, String reservationTimeGap, Boolean isPenalty) {
     this.restaurantName = name;
     this.businessNum = businessNum;
     this.restaurantTypes = restaurantTypes;
@@ -57,7 +57,7 @@ public class RestaurantUpdateDto {
     this.zipcode = zipCode;
     this.detailAddress = detailAddress;
     this.canPark = canPark;
-    //this.reservationTimeGap = reservationTimeGap;
+    this.reservationTimeGap = reservationTimeGap;
     this.isPenalty = isPenalty;
   }
 }

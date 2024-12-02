@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class FoodSaveDto {
+public class FoodSaveDTO {
 
   private String name;
   private Integer price;

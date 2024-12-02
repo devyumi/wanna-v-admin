@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-public class RestaurantSaveDto {
+public class RestaurantSaveDTO {
 
   private String restaurantName;
   private String contact;
@@ -44,7 +44,7 @@ public class RestaurantSaveDto {
   /**
    * Food DTO
    */
-  private List<FoodSaveDto> foodSaveDtoList = new ArrayList<>();
+  private List<FoodSaveDTO> foodSaveDTOList = new ArrayList<>();
 
 
 

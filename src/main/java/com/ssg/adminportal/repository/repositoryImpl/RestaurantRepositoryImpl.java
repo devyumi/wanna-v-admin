@@ -1,31 +1,32 @@
-package please_do_it.yumi.repository;
-
-import static please_do_it.yumi.domain.QFood.food;
-import static please_do_it.yumi.domain.QLikes.likes;
-import static please_do_it.yumi.domain.QRestaurant.restaurant;
-import static please_do_it.yumi.domain.QReview.review;
+package com.ssg.adminportal.repository.repositoryImpl;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssg.adminportal.common.BusinessStatus;
+import com.ssg.adminportal.domain.Restaurant;
+import com.ssg.adminportal.dto.request.RestaurantAdminSearchCond;
+import com.ssg.adminportal.dto.request.RestaurantSearchCond;
+import com.ssg.adminportal.repository.RestaurantRepository;
 import jakarta.persistence.EntityManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
-import please_do_it.yumi.constant.BusinessStatus;
 
-import please_do_it.yumi.domain.Restaurant;
-import please_do_it.yumi.dto.RestaurantAdminSearchCond;
-import please_do_it.yumi.dto.RestaurantSearchCond;
+import static com.ssg.adminportal.domain.QFood.food;
+import static com.ssg.adminportal.domain.QLikes.likes;
+import static com.ssg.adminportal.domain.QRestaurant.restaurant;
+import static com.ssg.adminportal.domain.QReview.review;
+
 
 @Repository
-public class RestaurantRepository {
+public class RestaurantRepositoryImpl implements RestaurantRepository {
 
   private final EntityManager em;
   private final JPAQueryFactory query;
@@ -33,7 +34,7 @@ public class RestaurantRepository {
 
 
   @Autowired
-  public RestaurantRepository(EntityManager em){
+  public RestaurantRepositoryImpl(EntityManager em){
     this.em=em;
     this.query = new JPAQueryFactory(em);
   }
