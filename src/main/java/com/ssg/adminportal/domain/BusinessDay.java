@@ -40,7 +40,7 @@ public class BusinessDay {
   private LocalTime breakEndTime; //브레이크 댄스 타임 종료 시간
 
   @DateTimeFormat(pattern = "HH:mm" , iso = ISO.TIME)
-  @Column(name = "last_order_time")
+  @Column(name = "last_order")
   private LocalTime lastOrderTime; //라스트 오더 시간
 
   @Column(name = "is_day_off")
