@@ -47,7 +47,6 @@ public class ReviewController {
             return "redirect:/reviews/{id}";
         }
         reviewService.updateReviewActiveFalse(id, reviewUpdateStatusDTO.getNote());
-        log.info("{}반 리뷰 숨김 완료", id);
         redirectAttributes.addFlashAttribute("alertMessage", "숨김 처리 되었습니다.");
         return "redirect:/reviews/{id}";
     }
@@ -55,7 +54,6 @@ public class ReviewController {
     @PostMapping("/{id}/update-true")
     public String updateReviewTrue(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         reviewService.updateReviewActiveTrue(id);
-        log.info("{}번 리뷰 게시 완료", id);
         redirectAttributes.addAttribute("id", id);
         redirectAttributes.addFlashAttribute("alertMessage", "게시 처리 되었습니다.");
         return "redirect:/reviews/{id}";

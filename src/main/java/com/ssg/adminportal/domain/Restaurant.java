@@ -64,7 +64,7 @@ public class Restaurant {
   private LocalDate updatedAt; //수정일
 
   @Column(name = "reservation_time_gap")
-  private int reservationTimeGap;
+  private Integer reservationTimeGap;
 
   @Column(name = "is_penalty")
   private Boolean isPenalty;
