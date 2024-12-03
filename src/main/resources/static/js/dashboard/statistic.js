@@ -41,13 +41,18 @@ document.addEventListener('DOMContentLoaded', function () {
               size: 8,    // 라벨 글꼴 크기
               // weight: 'bold'
             },
-            formatter: (value) => `${value.toLocaleString()}원` // 값 포맷팅
+            formatter: (value) => `${value.toLocaleString()}` // 값 포맷팅
           }
         },
         scales: {
           y: {
             beginAtZero: true,  // y축이 0에서 시작하도록 설정
-            suggestedMax: Math.max(...salesValues) * 1.1
+            suggestedMax: Math.max(...salesValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}원`; // y축 값 포맷팅
+              }
+            }
           }
         }
       },
@@ -94,7 +99,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...activeUserMonthlyValues) * 1.1
+            suggestedMax: Math.max(...activeUserMonthlyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}명`;
+              }
+            }
           }
         }
       },
@@ -140,7 +150,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...newUserMonthlyValues) * 1.1
+            suggestedMax: Math.max(...newUserMonthlyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}명`;
+              }
+            }
           }
         }
       },
@@ -187,7 +202,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...deletedUserMonthlyValues) * 1.1
+            suggestedMax: Math.max(...deletedUserMonthlyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}명`;
+              }
+            }
           }
         }
       },
@@ -234,7 +254,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...restaurantMonthlyValues) * 1.1
+            suggestedMax: Math.max(...restaurantMonthlyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}개`;
+              }
+            }
           }
         }
       },
@@ -304,7 +329,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...reviewMonthlyValues) * 1.1
+            suggestedMax: Math.max(...reviewMonthlyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}개`;
+              }
+            }
           }
         }
       },
@@ -350,7 +380,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...reservationMonthlyValues) * 1.1
+            suggestedMax: Math.max(...reservationMonthlyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}건`;
+              }
+            }
           }
         }
       },
@@ -396,7 +431,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...cancelledResMonthlyValues) * 1.1
+            suggestedMax: Math.max(...cancelledResMonthlyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}건`;
+              }
+            }
           }
         }
       },
@@ -445,13 +485,18 @@ document.addEventListener('DOMContentLoaded', function () {
               size: 8,    // 라벨 글꼴 크기
               // weight: 'bold'
             },
-            formatter: (value) => `${value.toLocaleString()}원` // 값 포맷팅
+            formatter: (value) => `${value.toLocaleString()}` // 값 포맷팅
           }
         },
         scales: {
           y: {
             beginAtZero: true,  // y축이 0에서 시작하도록 설정
-            suggestedMax: Math.max(...salesValues) * 1.1 // 가장 큰 값에 10% 여유 추가
+            suggestedMax: Math.max(...salesValues) * 1.1, // 가장 큰 값에 10% 여유 추가
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}명`;
+              }
+            }
           }
         }
       },
@@ -498,7 +543,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...activeUserWeeklyValues) * 1.1
+            suggestedMax: Math.max(...activeUserWeeklyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}명`;
+              }
+            }
           }
         }
       },
@@ -544,7 +594,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...newUserWeeklyValues) * 1.1
+            suggestedMax: Math.max(...newUserWeeklyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}명`;
+              }
+            }
           }
         }
       },
@@ -591,7 +646,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...deletedUserWeeklyValues) * 1.1
+            suggestedMax: Math.max(...deletedUserWeeklyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}명`;
+              }
+            }
           }
         }
       },
@@ -638,7 +698,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...restaurantWeeklyValues) * 1.1
+            suggestedMax: Math.max(...restaurantWeeklyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}개`;
+              }
+            }
           }
         }
       },
@@ -708,7 +773,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...reviewWeeklyValues) * 1.1
+            suggestedMax: Math.max(...reviewWeeklyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}개`;
+              }
+            }
           }
         }
       },
@@ -754,7 +824,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...reservationWeeklyValues) * 1.1
+            suggestedMax: Math.max(...reservationWeeklyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}건`;
+              }
+            }
           }
         }
       },
@@ -800,7 +875,12 @@ document.addEventListener('DOMContentLoaded', function () {
         scales: {
           y: {
             beginAtZero: true,
-            suggestedMax: Math.max(...cancelledResWeeklyValues) * 1.1
+            suggestedMax: Math.max(...cancelledResWeeklyValues) * 1.1,
+            ticks: {
+              callback: function(value) {
+                return `${value.toLocaleString()}건`;
+              }
+            }
           }
         }
       },

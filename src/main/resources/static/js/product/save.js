@@ -133,8 +133,8 @@ document.addEventListener("DOMContentLoaded", function () {
               'Content-Type': 'multipart/form-data'
             }
           });
-          console.log('상품 등록 성공:', response.data);
           alert('상품이 등록되었습니다.');
+          window.location.href = '/products';
         } catch (error) {
           console.error('상품 등록 실패:', error);
           alert('상품 등록에 실패했습니다.');

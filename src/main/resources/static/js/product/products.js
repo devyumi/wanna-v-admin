@@ -1,3 +1,4 @@
+import { updatePagination, changePage } from "../common/pagination.js";
 import { formatPriceElements } from "../common/format.js";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -51,59 +52,17 @@ document.addEventListener('DOMContentLoaded', function () {
         tbody.appendChild(row);
       });
 
-      updatePagination(searchData.page, last, total, searchData.size, start, end);
+      const changePageCallback = changePage(searchData.page, function(page) {
+        searchData.page = page;
+        productList(searchData);
+      });
+
+      updatePagination(searchData.page, last, total, searchData.size, start, end, changePageCallback);
 
     } catch (error) {
       console.error('상품 목록 조회 실패:', error);
       alert('상품 목록 조회에 실패했습니다.');
     }
-  }
-
-  function changePage(page) {
-    if (page === 'prev' && searchData.page > 1) {
-      searchData.page -= 1;
-    } else if (page === 'next' && searchData.page < searchData.last) {
-      searchData.page += 1;
-    } else if (typeof page === 'number') {
-      searchData.page = page;
-    }
-    productList(searchData);
-  }
-
-  function updatePagination(currentPage, lastPage, total, size, start, end) {
-    const pagination = document.querySelector('.pagination');
-    const paginationInfo = document.getElementById('pagination-info');
-
-    paginationInfo.textContent = `Showing ${start} to ${end} of ${total} entries`;
-
-    let pages = '';
-    for (let i = 1; i <= lastPage; i++) {
-      pages += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-                <a class="page-link" href="#!" data-page="${i}">${i}</a>
-              </li>`;
-    }
-
-    pagination.innerHTML = `
-      <li class="page-item ${currentPage > 1 ? '' : 'disabled'}">
-        <a class="page-link" href="#!" data-page="prev">Previous</a>
-      </li>
-      ${pages}
-      <li class="page-item ${currentPage < lastPage ? '' : 'disabled'}">
-        <a class="page-link" href="#!" data-page="next">Next</a>
-      </li>
-    `;
-
-    const pageLinks = pagination.querySelectorAll('.page-link');
-    pageLinks.forEach(link => {
-      link.addEventListener('click', function (event) {
-        const page = event.target.getAttribute('data-page');
-        if (page === 'prev' || page === 'next') {
-          changePage(page);
-        } else {
-          changePage(Number(page));
-        }
-      });
-    });
   }
 
   productList(searchData);
