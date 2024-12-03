@@ -38,7 +38,6 @@ public class TagController {
             return "redirect:/reviews/tags";
         }
         tagService.saveTag(tagSaveDTO);
-        log.info("태그 추가 완료");
         redirectAttributes.addFlashAttribute("alertMessage", "추가 되었습니다.");
         return "redirect:/reviews/tags";
     }
@@ -53,7 +52,6 @@ public class TagController {
             return "redirect:/reviews/tags";
         }
         tagService.updateTag(id, tagSaveDTO);
-        log.info("{}번 태그 수정 완료", id);
         redirectAttributes.addFlashAttribute("alertMessage", "수정 되었습니다.");
         return "redirect:/reviews/tags";
     }
@@ -61,7 +59,6 @@ public class TagController {
     @PostMapping("/{id}/delete")
     public String deleteTag(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         tagService.deleteTag(id);
-        log.info("{}번 태그 삭제 완료", id);
         redirectAttributes.addFlashAttribute("alertMessage", "삭제 되었습니다.");
         return "redirect:/reviews/tags";
     }
