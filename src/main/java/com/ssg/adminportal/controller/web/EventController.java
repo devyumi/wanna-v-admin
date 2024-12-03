@@ -1,9 +1,7 @@
 package com.ssg.adminportal.controller.web;
 
 import com.ssg.adminportal.domain.Event;
-import com.ssg.adminportal.domain.UserGradeLog;
 import com.ssg.adminportal.service.EventService;
-import com.ssg.adminportal.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;

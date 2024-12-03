@@ -4,14 +4,10 @@ import com.ssg.adminportal.common.ErrorCode;
 import com.ssg.adminportal.config.NcpConfig;
 import com.ssg.adminportal.domain.Admin;
 import com.ssg.adminportal.domain.Event;
-import com.ssg.adminportal.domain.Product;
-import com.ssg.adminportal.domain.User;
 import com.ssg.adminportal.dto.FileDTO;
 import com.ssg.adminportal.dto.request.EventRequestDTO;
-import com.ssg.adminportal.dto.request.ProductRequestDTO;
-import com.ssg.adminportal.dto.request.UserListRequestDTO;
+import com.ssg.adminportal.dto.request.PageListRequestDTO;
 import com.ssg.adminportal.dto.response.EventListResponseDTO;
-import com.ssg.adminportal.dto.response.UserListResponseDTO;
 import com.ssg.adminportal.exception.CustomException;
 import com.ssg.adminportal.repository.AdminRepository;
 import com.ssg.adminportal.repository.EventRepository;
@@ -42,12 +38,12 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventListResponseDTO getPageAll(UserListRequestDTO userListRequestDTO) {
-        Pageable pageable = PageRequest.of(userListRequestDTO.getPage() - 1, userListRequestDTO.getSize());
+    public EventListResponseDTO getPageAll(PageListRequestDTO pageListRequestDTO) {
+        Pageable pageable = PageRequest.of(pageListRequestDTO.getPage() - 1, pageListRequestDTO.getSize());
 
         Page<Event> eventPage = eventRepository.findAll(pageable);
         return EventListResponseDTO.builder()
-                .requestDTO(userListRequestDTO)
+                .requestDTO(pageListRequestDTO)
                 .events(eventPage.getContent())
                 .total(eventRepository.countAllEvents())
                 .build();

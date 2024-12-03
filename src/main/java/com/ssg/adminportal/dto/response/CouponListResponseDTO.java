@@ -1,6 +1,7 @@
 package com.ssg.adminportal.dto.response;
 
-import com.ssg.adminportal.domain.Event;
+import com.ssg.adminportal.domain.Coupon;
+import com.ssg.adminportal.dto.request.CouponListRequestDTO;
 import com.ssg.adminportal.dto.request.PageListRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,20 +13,22 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventListResponseDTO {
+public class CouponListResponseDTO {
     private Integer page;
     private Integer size;
     private Integer total;
     private Integer last;
     private Integer start;
     private Integer end;
-    private List<Event> events;
+    private String type;
+    private List<Coupon> coupons;
     @Builder
-    public EventListResponseDTO(PageListRequestDTO requestDTO, List<Event> events, Integer total) {
+    public CouponListResponseDTO(CouponListRequestDTO requestDTO, List<Coupon> coupons, Integer total, String type) {
         this.page = requestDTO.getPage();
         this.size = requestDTO.getSize();
-        this.events = events;
+        this.coupons = coupons;
         this.total = total;
+        this.type = type;
         this.last = (int) Math.ceil(total / (double) size);
         this.start = (page - 1) / 10 * 10 + 1;
         this.end = (last == 0) ? 1 : Math.min(start + 9, last);

@@ -27,13 +27,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             events.forEach(event => {
                 const row = document.createElement('tr');
-                row.classList.add('event-item');
 
                 row.innerHTML = `
-                  <td>${event.id}</td>
-                  <td><a href="/events/${event.id}">${event.title}</a></td>
-                  <td>${event.startDate}</td>
-                  <td>${event.endDate}</td>
+                  <td class="text-align: center">${event.id}</td>
+                  <td class="text-align: center"><a href="/events/${event.id}">${event.title}</a></td>
+                  <td class="text-align: center">${event.startDate}</td>
+                  <td class="text-align: center">${event.endDate}</td>
                   `;
 
                 tbody.appendChild(row);
@@ -47,8 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
             updatePagination(searchData.page, last, total, searchData.size, start, end, changePageCallback);
 
         } catch (error) {
-            console.error('유저 조회 실패:', error);
-            alert('유저 조회에 실패했습니다.');
+            console.error('이벤트 조회 실패:', error);
+            alert('이벤트 조회에 실패했습니다.');
         }
     }
 

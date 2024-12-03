@@ -6,115 +6,83 @@
 >
 <head>
   <meta charset="UTF-8">
-  <script defer src="/js/product/update.js"></script>
-  <title>Product Save Page</title>
+  <script defer src="/js/promotion/coupon/save.js"></script>
+  <title>Coupon Save Page</title>
 </head>
 <body>
 <main layout:fragment="main-content" th:class="main-container">
   <div class="container">
-    <!-- row -->
-    <div class="row mb-5">
-      <div class="col-md-12">
-        <!-- page header -->
-        <h2>쿠폰 목록</h2>
+      <div class="row mb-8">
+        <div class="col-md-12">
+          <h2>쿠폰 등록</h2>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/events" class="text-inherit">쿠폰 관리</a></li>
+            <li class="breadcrumb-item active" aria-current="page">쿠폰 등록</li>
+          </ol>
+          <div style="display: flex; justify-content: flex-end;">
+            <button id="saveCouponButton" class="btn btn-primary">등록</button>
+          </div>
+        </div>
       </div>
-    </div>
-    <!-- row -->
-    <div class="row">
-      <div class="col-xl-12 col-12 mb-5">
-        <!-- card -->
-        <div class="card h-100 card-lg">
-          <div class=" p-6 ">
-            <div class="row justify-content-between">
-              <div class="col-md-4 col-12 mb-2 mb-md-0">
-                <!-- form -->
-                <form class="d-flex" role="search">
-                  <input class="form-control" type="search" placeholder="Search"
-                         aria-label="Search">
-                </form>
-              </div>
-              <div class="col-lg-2 col-md-4 col-12">
-                <form action="" class="d-flex align-items-center mb-2" style="gap: 10px;">
-                  <!-- select -->
-                  <select class="form-select">
-                    <option selected>Status</option>
-                    <option value="Success">Success</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Cancel">Cancel</option>
-                  </select>
-                </form>
+      <div class="row">
+        <div class="card mb-6 card-lg">
+          <div class="card-body p-6">
+            <div class="row">
+              <div class="mb-3">
+                <label class="form-label">쿠폰 이름</label>
+                <input type="text" name="name" class="form-control">
               </div>
             </div>
-            <!-- card body -->
-            <div class="card-body p-0">
-              <!-- table responsive -->
-              <div class="table-responsive">
-                <table
-                    class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
-                  <thead class="bg-light">
-                  <tr>
-                    <th class="text-center">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkAll1">
-                        <label class="form-check-label" for="checkAll1"></label>
-                      </div>
-                    </th>
-                    <th class="text-center">ID</th>
-                    <th class="text-center">쿠폰 코드</th>
-                    <th class="text-center">쿠폰 타입</th>
-                    <th class="text-center">정액</th>
-                    <th class="text-center">정률</th>
-                    <th class="text-center">활성화 여부</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr class="text-center">
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkAll2">
-                        <label class="form-check-label" for="checkAll2"></label>
-                      </div>
-                    </td>
-                    <td>1</td>
-                    <td><a href="#" class="text-reset">FC#1007</a></td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>활성화</td>
-                  </tr>
-                  <tr class="text-center">
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkAll3">
-                        <label class="form-check-label" for="checkAll3"></label>
-                      </div>
-                    </td>
-                    <td>1</td>
-                    <td><a href="#" class="text-reset">FC#1006</a></td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>비활성화</td>
-                  </tr>
-                  </tbody>
-                </table>
+            <div class="row">
+              <div class="mb-3">
+                <label class="form-label">이벤트</label>
+                <select class="form-select" name="eventId">
+                  <option value="">선택 안함</option>
+                  <option th:each="event : ${events}"
+                          th:value="${event.id}"
+                          th:text="${event.title}"></option>
+                </select>
               </div>
             </div>
-            <div class="border-top d-md-flex justify-content-center align-items-center p-6">
-              <nav class="mt-2 mt-md-0">
-                <ul class="pagination mb-0 ">
-                  <li class="page-item disabled"><a class="page-link " href="#!">Previous</a></li>
-                  <li class="page-item"><a class="page-link active" href="#!">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#!">Next</a></li>
-                </ul>
-              </nav>
+            <div class="row">
+              <div class="mb-3">
+                <label class="form-label">쿠폰 타입</label>
+                <select class="form-select" id="couponTypeSelect" name="type">
+                  <option value="FIXED">정액</option>
+                  <option value="PERCENTAGE">정률</option>
+                </select>
+              </div>
+            </div>
+            <div class="row" id="fixedAmountRow" style="display: none;">
+              <div class="mb-3">
+                <label class="form-label">정액</label>
+                <input type="number" name="amount" class="form-control">
+              </div>
+            </div>
+            <div class="row" id="percentageRateRow" style="display: none;">
+              <div class="mb-3">
+                <label class="form-label">정률</label>
+                <input type="number" name="rate" class="form-control">
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3">
+                <label class="form-label">활성화 여부</label>
+                <select class="form-select" name="active">
+                  <option value="true">활성화</option>
+                  <option value="false">비활성화</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3">
+                <label class="form-label">만료 시간</label>
+                <input type="datetime-local" name="endDate" class="form-control">
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   </div>
 </main>
 </body>

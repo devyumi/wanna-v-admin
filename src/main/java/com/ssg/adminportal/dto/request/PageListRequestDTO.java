@@ -9,15 +9,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserListRequestDTO {
+public class PageListRequestDTO {
 
     @Builder.Default
     private Integer page = 1;
 
     @Builder.Default
     private Integer size = 10;
-
-    private String username;
 
     public Integer getOffset() {
         return (page - 1) * size;

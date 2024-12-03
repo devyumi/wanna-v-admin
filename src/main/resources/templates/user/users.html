@@ -16,11 +16,11 @@
     <div class="row mb-5">
       <div class="col-md-12">
         <!-- page header -->
-        <h2>유저 목록</h2>
+        <h2>회원 목록</h2>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item">유저 관리</li>
-            <li class="breadcrumb-item active" aria-current="page">유저 목록</li>
+            <li class="breadcrumb-item">회원 관리</li>
+            <li class="breadcrumb-item active" aria-current="page">회원 목록</li>
           </ol>
         </nav>
       </div>
@@ -34,10 +34,10 @@
             <div class="row justify-content-between">
               <div class="col-md-4 col-12 mb-2 mb-md-0">
                 <!-- form -->
-                <form class="d-flex" role="search">
-                  <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-
-                </form>
+                <div class="input-group">
+                  <input id="searchInput" class="form-control" placeholder="이름 입력">
+                  <button id="searchButton" type="button" class="btn btn-primary">검색</button>
+                </div>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@
             <!-- table responsive -->
             <div class="table-responsive">
               <table class="table table-centered table-hover text-nowrap table-borderless mb-0">
-                <thead class="bg-light">
+                <thead class="bg-light" style="text-align: center">
                 <tr>
                   <th>ID</th>
                   <th>소셜 닉네임</th>

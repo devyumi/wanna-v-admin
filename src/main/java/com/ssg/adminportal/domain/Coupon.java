@@ -33,7 +33,11 @@ public class Coupon {
     @JoinColumn(name="updated_by_id")
     private Admin updatedBy;
 
-    private String code;
+    private String name;
+    private Integer code;
+
+    @Column(name = "end_date", nullable = false)
+    private LocalDateTime endDate;
 
     @Enumerated(EnumType.STRING)
     private Type type;

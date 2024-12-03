@@ -1,5 +1,6 @@
 package com.ssg.adminportal.controller.api;
 
+import com.ssg.adminportal.dto.request.PageListRequestDTO;
 import com.ssg.adminportal.dto.request.UserListRequestDTO;
 import com.ssg.adminportal.dto.response.UserListResponseDTO;
 import com.ssg.adminportal.service.UserService;
@@ -22,12 +23,12 @@ public class UserRestController {
 
     @GetMapping()
     public ResponseEntity<Map<String, Object>> userList(
-        @RequestParam int page,
-        @RequestParam int size) {
+        @RequestParam int page, @RequestParam int size, @RequestParam String username) {
 
         UserListRequestDTO requestDTO = UserListRequestDTO.builder()
             .page(page)
             .size(size)
+            .username(username)
             .build();
 
         UserListResponseDTO responseDTO = userService.getPageAll(requestDTO);

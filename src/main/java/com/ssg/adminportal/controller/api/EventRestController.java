@@ -1,12 +1,9 @@
 package com.ssg.adminportal.controller.api;
 
 import com.ssg.adminportal.dto.request.EventRequestDTO;
-import com.ssg.adminportal.dto.request.ProductRequestDTO;
-import com.ssg.adminportal.dto.request.UserListRequestDTO;
+import com.ssg.adminportal.dto.request.PageListRequestDTO;
 import com.ssg.adminportal.dto.response.EventListResponseDTO;
-import com.ssg.adminportal.dto.response.UserListResponseDTO;
 import com.ssg.adminportal.service.EventService;
-import com.ssg.adminportal.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Log4j2
@@ -33,7 +29,7 @@ public class EventRestController {
         @RequestParam int page,
         @RequestParam int size) {
 
-        UserListRequestDTO requestDTO = UserListRequestDTO.builder()
+        PageListRequestDTO requestDTO = PageListRequestDTO.builder()
             .page(page)
             .size(size)
             .build();

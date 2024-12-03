@@ -4,12 +4,14 @@ document.addEventListener('DOMContentLoaded', function () {
     let searchData = {
         page: 1,
         size: 10,
+        username: '',
     };
 
     async function userList(searchData) {
         const params = new URLSearchParams({
             page: searchData.page,
             size: searchData.size,
+            username: searchData.username,
         });
 
         try {
@@ -30,14 +32,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 row.classList.add('user-item');
 
                 row.innerHTML = `
-                  <td class="id">${user.id}</td>
-                  <td>
+                  <td style="text-align: center">${user.id}</td>
+                  <td style="text-align: center">
                   <a href="/users/${user.id}">${user.username}</a>
                   </td>
-                  <td class="id">${user.email}</td>
-                  <td class="id">${user.point}</td>
-                  <td class="id">${user.code}</td>
-                  <td class="id">${user.consent}</td>
+                  <td style="text-align: center">${user.email}</td>
+                  <td style="text-align: center">${user.point}</td>
+                  <td style="text-align: center">${user.code}</td>
+                  <td style="text-align: center">${user.consent}</td>
                   `;
 
                 tbody.appendChild(row);
@@ -55,6 +57,13 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('유저 조회에 실패했습니다.');
         }
     }
+
+    document.getElementById('searchButton').addEventListener('click', () => {
+        const searchInput = document.getElementById('searchInput').value.trim();
+        searchData.username = searchInput;
+        searchData.page = 1;
+        userList(searchData);
+    });
 
     userList(searchData);
 });

@@ -6,8 +6,32 @@
 >
 <head>
   <meta charset="UTF-8">
-  <script defer src="/js/product/update.js"></script>
-  <title>Product Save Page</title>
+  <script th:inline="javascript">
+      const couponId = [[${coupon.coupon.id}]]
+      async function submitForm() {
+          const form = document.getElementById('couponForm');
+          const formData = new FormData(form);
+
+          try {
+              const response = await axios.post(`/api/v1/coupons/${couponId}`, formData, {
+                  headers: {
+                      'Content-Type': 'multipart/form-data',
+                  },
+              });
+
+              if (response.data.success) {
+                  alert(response.data.message);
+              } else {
+                  alert(response.data.message);
+              }
+          } catch (error) {
+              console.error('수정 중 오류 발생:', error);
+              alert('서버와의 통신에 실패했습니다. 다시 시도해주세요.');
+          }
+      }
+  </script>
+  <script defer type="module" src="/js/promotion/coupon/coupon.js"></script>
+  <title>Coupon Detail Page</title>
 </head>
 <body>
 <main layout:fragment="main-content" th:class="main-container">
@@ -16,11 +40,16 @@
     <!-- row -->
     <div class="row mb-8">
       <div class="col-md-12">
-        <div class="d-md-flex justify-content-between align-items-center">
           <!-- page header -->
           <h2>쿠폰 상세 조회</h2>
-          <!-- button -->
-          <form action="" class="btn btn-primary">수정</form>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="/coupons" class="text-inherit">쿠폰 관리</a></li>
+              <li class="breadcrumb-item active" aria-current="page">쿠폰 상세 조회</li>
+            </ol>
+          </nav>
+        <div style="display: flex; justify-content: flex-end;">
+          <button type="submit" class="btn btn-primary" onclick="submitForm()">수정</button>
         </div>
       </div>
     </div>
@@ -32,45 +61,67 @@
         <div class="card-body p-6 ">
           <div class="row">
             <!-- input -->
-            <div class="mb-3 mt-5">
-              <label class="form-label">쿠폰 코드</label>
-              <input type="text" class="form-control" readonly>
-            </div>
-            <div class="mb-3 mt-5">
-              <label class="form-label">타입</label>
-              <input type="text" class="form-control" required>
-            </div>
-            <div class="mb-3 mt-5">
-              <label class="form-label">정액</label>
-              <input type="text" class="form-control" id="fixed">
-            </div>
-            <div class="mb-3 mt-5">
-              <label class="form-label">정률</label>
-              <input type="text" class="form-control" id="percentage">
-            </div>
-            <div class="mb-3 mt-5">
-              <label class="form-label">활성화 여부</label>
-              <select>
-                <option></option>
-                <option></option>
-              </select>
-            </div>
-            <div class="mb-3 mt-5 col-lg-6">
-              <label class="form-label">최초 생성자</label>
-              <input type="text" class="form-control" readonly>
-            </div>
-            <div class="mb-3 mt-5 col-lg-6">
-              <label class="form-label">최종 수정자</label>
-              <input type="text" class="form-control" readonly>
-            </div>
-            <div class="mb-3 mt-5 col-lg-6">
-              <label class="form-label">최초 등록 시각</label>
-              <input type="text" class="form-control" readonly>
-            </div>
-            <div class="mb-3 mt-5 col-lg-6">
-              <label class="form-label">최종 수정 시각</label>
-              <input type="text" class="form-control" readonly>
-            </div>
+              <div class="mb-3 mt-5">
+                <label class="form-label">쿠폰 이름</label>
+                <input type="text" class="form-control" th:value="${coupon.coupon.name}">
+              </div>
+              <div class="mb-3 mt-5">
+                <label class="form-label">쿠폰 코드</label>
+                <input type="text" class="form-control" th:value="${coupon.coupon.code}">
+              </div>
+              <div class="mb-3 mt-5">
+                <label class="form-label">타입</label>
+                <input type="text" class="form-control" th:value="${coupon.coupon.type}">
+              </div>
+              <div class="mb-3 mt-5" th:if="${coupon.coupon.discountAmount != null}">
+                <label class="form-label">정액</label>
+                <input type="text" class="form-control" th:value="${coupon.coupon.discountAmount}">
+              </div>
+              <div class="mb-3 mt-5" th:if="${coupon.coupon.discountRate != null}">
+                <label class="form-label">정률</label>
+                <input type="text" class="form-control" th:value="${coupon.coupon.discountRate}">
+              </div>
+            <form th:action="@{/api/v1/coupons/${coupon.coupon.id}}" method="post" id="couponForm">
+              <div class="mb-3 mt-5">
+                <label class="form-label">활성화 여부</label>
+                <select class="form-select" th:value="${coupon.coupon.active}">
+                  <option th:value="true" th:selected="${coupon.coupon.active == true}">활성화</option>
+                  <option th:value="false" th:selected="${coupon.coupon.active == false}">비활성화</option>
+                </select>
+              </div>
+            </form>
+              <div class="mb-3 mt-5">
+                <label class="form-label">이벤트</label>
+                <select class="form-select">
+                  <option th:value="${coupon.coupon.event.id}" th:text="${coupon.coupon.event.title}" selected></option>
+                  <option th:each="event : ${coupon.events}"
+                          th:if="${event.id != coupon.coupon.event.id}"
+                          th:value="${event.id}"
+                          th:text="${event.title}">
+                  </option>
+                </select>
+              </div>
+
+              <div class="mb-3 mt-5">
+                <label class="form-label">만료 시간</label>
+                <input type="text" class="form-control" id="endAt" th:value="${coupon.coupon.endDate}">
+              </div>
+              <div class="mb-3 mt-5 col-lg-6">
+                <label class="form-label">최초 생성자</label>
+                <input type="text" class="form-control" th:value="${coupon.coupon.createdBy.name}">
+              </div>
+              <div class="mb-3 mt-5 col-lg-6">
+                <label class="form-label">최종 수정자</label>
+                <input type="text" class="form-control" th:value="${coupon.coupon.updatedBy != null ? coupon.coupon.updatedBy.name : ''}">
+              </div>
+              <div class="mb-3 mt-5 col-lg-6">
+                <label class="form-label">최초 등록 시각</label>
+                <input type="text" class="form-control" id="createdAt" th:value="${coupon.coupon.createdAt}">
+              </div>
+              <div class="mb-3 mt-5 col-lg-6">
+                <label class="form-label">최종 수정 시각</label>
+                <input type="text" class="form-control" id="updatedAt" th:value="${coupon.coupon.updatedAt != null ? coupon.coupon.updatedAt : ''}">
+              </div>
           </div>
         </div>
       </div>
