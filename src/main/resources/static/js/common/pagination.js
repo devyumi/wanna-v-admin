@@ -1,4 +1,5 @@
-export function updatePagination(currentPage, lastPage, total, size, start, end, changePageCallback) {
+export function updatePagination(currentPage, lastPage, total, size, start, end,
+    changePageCallback) {
   const pagination = document.querySelector('.pagination');
   const paginationInfo = document.getElementById('pagination-info');
 
@@ -21,18 +22,27 @@ export function updatePagination(currentPage, lastPage, total, size, start, end,
 
   pagination.innerHTML = `
     <li class="page-item ${currentPage > 1 ? '' : 'disabled'}">
-      <a class="page-link" href="#!" data-page="prev">Previous</a>
+      <a class="page-link" href="#!" data-page="prev">
+        <i class="bi bi-chevron-left"></i>
+      </a>
     </li>
     ${pages}
     <li class="page-item ${currentPage < lastPage ? '' : 'disabled'}">
-      <a class="page-link" href="#!" data-page="next">Next</a>
+      <a class="page-link" href="#!" data-page="next">
+        <i class="bi bi-chevron-right"></i>
+      </a>
     </li>
   `;
 
   const pageLinks = pagination.querySelectorAll('.page-link');
   pageLinks.forEach(link => {
     link.addEventListener('click', function (event) {
-      const page = event.target.getAttribute('data-page');
+      const targetLink = event.target.closest('.page-link');
+      if (!targetLink) {
+        return;
+      }
+
+      const page = targetLink.getAttribute('data-page');
       if (page === 'prev' || page === 'next') {
         changePageCallback(page);
       } else {
@@ -43,7 +53,7 @@ export function updatePagination(currentPage, lastPage, total, size, start, end,
 }
 
 export function changePage(currentPage, setPageCallback) {
-  return function(page) {
+  return function (page) {
     if (page === 'prev' && currentPage > 1) {
       setPageCallback(currentPage - 1);
     } else if (page === 'next') {
