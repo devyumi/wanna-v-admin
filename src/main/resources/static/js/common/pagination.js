@@ -4,11 +4,19 @@ export function updatePagination(currentPage, lastPage, total, size, start, end,
 
   paginationInfo.textContent = `Showing ${start} to ${end} of ${total} entries`;
 
+  const maxVisiblePages = 10; // 최대 보여줄 페이지 번호 개수
+  let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+  let endPage = Math.min(lastPage, startPage + maxVisiblePages - 1);
+
+  if (endPage - startPage + 1 < maxVisiblePages) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+
   let pages = '';
-  for (let i = 1; i <= lastPage; i++) {
+  for (let i = startPage; i <= endPage; i++) {
     pages += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-              <a class="page-link" href="#!" data-page="${i}">${i}</a>
-            </li>`;
+                <a class="page-link" href="#!" data-page="${i}">${i}</a>
+              </li>`;
   }
 
   pagination.innerHTML = `
