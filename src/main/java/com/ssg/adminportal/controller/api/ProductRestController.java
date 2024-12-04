@@ -37,12 +37,14 @@ public class ProductRestController {
     public ResponseEntity<Map<String, Object>> filterProductList(
         @RequestParam int page,
         @RequestParam int size,
-        @RequestParam String sort) {
+        @RequestParam String sort,
+        @RequestParam String keyword) {
 
         ProductListRequestDTO requestDTO = ProductListRequestDTO.builder()
             .page(page)
             .size(size)
             .sort(sort)
+            .keyword(keyword)
             .build();
 
         ProductResponseDTO responseDTO = productService.filterProductList(requestDTO);

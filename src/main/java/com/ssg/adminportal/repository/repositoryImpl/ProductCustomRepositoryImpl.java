@@ -38,18 +38,22 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
     }
 
 
-    public JPAQuery<?> processWhere(JPAQuery<?> query, ProductListRequestDTO requestDTO) {
-        if (requestDTO.getSort() == null) {
-            query.orderBy(product.id.desc());
-        } else if (requestDTO.getSort().equals("new")) {
-            query.orderBy(product.id.desc());
-        } else if (requestDTO.getSort().equals("name")) {
-            query.orderBy(product.name.asc());
-        } else if (requestDTO.getSort().equals("priceDesc")) {
-            query.orderBy(product.finalPrice.desc());
-        } else if (requestDTO.getSort().equals("priceAsc")) {
-            query.orderBy(product.finalPrice.asc());
+    public void processWhere(JPAQuery<?> query, ProductListRequestDTO requestDTO) {
+        if (requestDTO.getKeyword() == "" || requestDTO.getKeyword() == null) {
+            if (requestDTO.getSort() == null) {
+                query.orderBy(product.id.desc());
+            } else if (requestDTO.getSort().equals("new")) {
+                query.orderBy(product.id.desc());
+            } else if (requestDTO.getSort().equals("name")) {
+                query.orderBy(product.name.asc());
+            } else if (requestDTO.getSort().equals("priceDesc")) {
+                query.orderBy(product.finalPrice.desc());
+            } else if (requestDTO.getSort().equals("priceAsc")) {
+                query.orderBy(product.finalPrice.asc());
+            }
+        } else {
+            query.where(product.name.contains(requestDTO.getKeyword()))
+                .orderBy(product.id.desc());
         }
-        return query;
     }
 }

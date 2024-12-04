@@ -19,6 +19,8 @@ public class ProductListRequestDTO {
     @Builder.Default
     private Integer size = 10;
 
+    private String keyword;
+
     public Integer getOffset() {
         return (page - 1) * size;
     }
