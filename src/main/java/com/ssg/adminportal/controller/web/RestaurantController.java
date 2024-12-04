@@ -111,7 +111,7 @@ public class RestaurantController {
 
         List<MultipartFile> restaurantImages = restaurantSaveDto.getRestaurantImages();
         List<MultipartFile> foodImages = new ArrayList<>();
-        List<FoodSaveDTO> foodSaveDtoList = restaurantSaveDto.getFoodSaveDTOList();
+        List<FoodSaveDTO> foodSaveDtoList = restaurantSaveDto.getFoodSaveDtoList();
         for (FoodSaveDTO foodSaveDto : foodSaveDtoList) {
             foodImages.add(foodSaveDto.getFoodImage());
         }
