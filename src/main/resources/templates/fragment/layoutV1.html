@@ -36,17 +36,17 @@
 
 
 <!-- Favicon icon-->
-<link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon/favicon.ico" th:href="@{/assets/images/favicon/favicon.ico}">
 
 
 <!-- Libs CSS -->
-<link href="../assets/libs/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-<link href="../assets/libs/feather-webfont/dist/feather-icons.css" rel="stylesheet">
-<link href="../assets/libs/simplebar/dist/simplebar.min.css" rel="stylesheet">
+<link href="../assets/libs/bootstrap-icons/font/bootstrap-icons.css" th:href="@{/assets/libs/bootstrap-icons/font/bootstrap-icons.css}" rel="stylesheet">
+<link href="../assets/libs/feather-webfont/dist/feather-icons.css" th:href="@{/assets/libs/feather-webfont/dist/feather-icons.css}" rel="stylesheet">
+<link href="../assets/libs/simplebar/dist/simplebar.min.css" th:href="@{/assets/libs/simplebar/dist/simplebar.min.css}" rel="stylesheet">
 
 
 <!-- Theme CSS -->
-<link rel="stylesheet" href="../assets/css/theme.min.css">
+<link rel="stylesheet" href="../assets/css/theme.min.css" th:href="@{/assets/css/theme.min.css}">
 
 
     <title>Dashboard</title>
@@ -148,7 +148,7 @@
                                         <li class="nav-item ">
                                             <a class="nav-link " href="/restaurants">
                                                 <div class="d-flex align-items-center">
-                                                    <span class="nav-link-icon"> <img src="/assets/images/admin-icon/admin-restaurant.png" style="width:1rem;height:1rem"></span>
+                                                    <span class="nav-link-icon"> <img src="/assets/images/admin-restaurant.png" th:src="@{/assets/images/admin-restaurant.png}" style="width:1rem;height:1rem"></span>
                                                     <span class="nav-link-text">식당 관리</span>
                                                 </div>
                                             </a>
@@ -374,14 +374,14 @@
     </div>
 
     <!-- Libs JS -->
-<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/libs/simplebar/dist/simplebar.min.js"></script>
+<script src="../assets/libs/jquery/dist/jquery.min.js" th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js" th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" ></script>
+<script src="../assets/libs/simplebar/dist/simplebar.min.js" th:src="@{/assets/libs/simplebar/dist/simplebar.min.js}"></script>
 
 <!-- Theme JS -->
-<script src="../assets/js/theme.min.js"></script>
-    <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-    <script src="../assets/js/vendors/chart.js"></script>
+<script src="../assets/js/theme.min.js" th:src="@{/assets/js/theme.min.js}"></script>
+    <script src="../assets/libs/apexcharts/dist/apexcharts.min.js" th:src="@{/assets/libs/apexcharts/dist/apexcharts.min.js}"></script>
+    <script src="../assets/js/vendors/chart.js" th:src="@{/assets/js/vendors/chart.js}"></script>
 
 </body>
 

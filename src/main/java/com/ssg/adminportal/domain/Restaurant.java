@@ -70,6 +70,9 @@ public class Restaurant {
   private Boolean isPenalty;
 
 
+  @OneToMany(mappedBy = "restaurant")
+  private List<Seat> seats = new ArrayList<>();
+
   @Enumerated(EnumType.STRING)
   @Column(name = "business_status")
   private BusinessStatus businessStatus; //영업 상태 : 영업 중 , 영업 종료 , 브레이크타임

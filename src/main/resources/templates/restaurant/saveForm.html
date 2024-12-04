@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{fragment/admin-layout.html :: layout(~{::main})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{fragment/layoutV1.html :: layout(~{::main})}" xmlns:th="http://www.thymeleaf.org">
 
 
 <main>
@@ -22,7 +22,7 @@
             <div>
               <h2>식당 등록</h2>
               <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="/admin/restaurants" th:href="@{/admin/restaurants}" class="text-inherit">식당 관리</a></li>
+                <li class="breadcrumb-item"><a href="/admin/restaurants" th:href="@{/restaurants}" class="text-inherit">식당 관리</a></li>
                 <li class="breadcrumb-item active" aria-current="page">식당 등록</li>
               </ol>
             </div>
@@ -277,15 +277,15 @@
                   </div>
                   <div class="col-3">
                     <label class="form-label">이름</label>
-                    <input th:field="*{foodSaveDtoList[0].name}"  class="form-control" >
+                    <input th:field="*{foodSaveDTOList[0].name}"  class="form-control" >
                   </div>
                   <div class="col-3">
                     <label class="form-label ">가격</label>
-                    <input type="number" th:field="*{foodSaveDtoList[0].price}" class="form-control" >
+                    <input type="number" th:field="*{foodSaveDTOList[0].price}" class="form-control" >
                   </div>
                   <div class="col-3">
                     <label class="form-label">음식 사진</label>
-                    <input type="file" th:field="*{foodSaveDtoList[0].foodImage}" class="form-control" >
+                    <input type="file" th:field="*{foodSaveDTOList[0].foodImage}" class="form-control" >
                   </div>
                 </div>
               </div>

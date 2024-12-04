@@ -17,10 +17,10 @@ public class NcpConfig {
     private final String endPoint = "https://kr.object.ncloudstorage.com";
     private final String regionName = "kr-standard";
 
-    @Value("${spring.s3.access-key}")
+    @Value("${spring.s3.access_key}")
     private String accessKey;
 
-    @Value("${spring.s3.secret-key}")
+    @Value("${spring.s3.secret_key}")
     private String secretKey;
 
     @Value("${spring.s3.bucket}")
