@@ -26,14 +26,20 @@ public class CouponRestController {
 
     @GetMapping()
     public ResponseEntity<Map<String, Object>> couponList(
-        @RequestParam int page,
-        @RequestParam int size,
-        @RequestParam(defaultValue = "") String type) {
+        @RequestParam int page, @RequestParam int size,
+        @RequestParam String type, @RequestParam String active) {
+
+        Boolean activeValue = null;
+        if ("true".equalsIgnoreCase(active))
+            activeValue = true;
+        else if ("false".equalsIgnoreCase(active))
+            activeValue = false;
 
         CouponListRequestDTO requestDTO = CouponListRequestDTO.builder()
             .page(page)
             .size(size)
             .type(type)
+            .active(activeValue)
             .build();
 
         CouponListResponseDTO responseDTO = couponService.getAll(requestDTO);
@@ -65,12 +71,18 @@ public class CouponRestController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Map<String, Object>> createCoupon(@RequestBody CouponSaveRequestDTO coupon) {
+    public ResponseEntity<String> createCoupon(@RequestBody CouponSaveRequestDTO coupon) {
+
+        if (coupon.getType().equals(""))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("쿠폰 타입을 선택하세요.");
 
         Long adminId = 1L;
 
-        couponService.createCoupon(adminId, coupon);
-
-        return null;
+        try {
+            couponService.createCoupon(adminId, coupon);
+            return ResponseEntity.status(HttpStatus.OK).body("쿠폰이 정상적으로 등록되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("쿠폰 등록 중 오류가 발생했습니다.");
+        }
     }
 }

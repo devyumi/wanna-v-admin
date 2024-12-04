@@ -18,4 +18,8 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
 
     @Query("SELECT COUNT(c) FROM Coupon c")
     int countAllEvents();
+
+    Page<Coupon> findAllByActive(Boolean active,Pageable pageable);
+
+    Page<Coupon> findAllByTypeAndActive(Type type,Boolean active,Pageable pageable);
 }

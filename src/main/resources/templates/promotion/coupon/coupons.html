@@ -12,10 +12,8 @@
 <body>
 <main layout:fragment="main-content" th:class="main-container">
   <div class="container">
-    <!-- row -->
     <div class="row mb-5">
       <div class="col-md-12">
-        <!-- page header -->
         <h2>쿠폰 목록</h2>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb mb-0">
@@ -29,27 +27,31 @@
                 onclick="window.location.href='/coupons/create'">쿠폰 등록</button>
       </div>
     </div>
-    <!-- row -->
     <div class="row">
       <div class="col-xl-12 col-12 mb-5">
-        <!-- card -->
         <div class="card h-100 card-lg">
           <div class=" p-6 ">
             <div class="row justify-content-between">
               <div class="col-lg-2 col-md-4 col-12">
-                <form action="" class="d-flex align-items-center mb-2" style="gap: 10px;">
-                  <!-- select -->
-                  <select class="form-select" id="typeFilter">
-                    <option value="">전체</option>
-                    <option value="PERCENTAGE">정률 쿠폰</option>
-                    <option value="FIXED">정액 쿠폰</option>
-                  </select>
+                <form action="" class="d-flex align-items-center mb-2" style="gap: 30px;">
+                  <div class="col-md-8">
+                    <select class="form-select" id="typeFilter">
+                      <option value="">전체</option>
+                      <option value="PERCENTAGE">정률 쿠폰</option>
+                      <option value="FIXED">정액 쿠폰</option>
+                    </select>
+                  </div>
+                  <div class="col-md-9">
+                    <select class="form-select" id="activeFilter">
+                      <option value="">활성화 여부</option>
+                      <option value="false">비활성화</option>
+                      <option value="true">활성화</option>
+                    </select>
+                  </div>
                 </form>
               </div>
             </div>
-            <!-- card body -->
             <div class="card-body p-0">
-              <!-- table responsive -->
               <div class="table-responsive">
                 <table
                     class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">

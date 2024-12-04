@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserListResponseDTO getPageAll(UserListRequestDTO userListRequestDTO) {
-        Pageable pageable = PageRequest.of(userListRequestDTO.getPage() - 1, userListRequestDTO.getSize());
+        Pageable pageable = PageRequest.of(userListRequestDTO.getPage() - 1, userListRequestDTO.getSize(), Sort.by(Sort.Order.asc("id")));
 
         Page<User> userPage;
 

@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         page: 1,
         size: 10,
         type: '',
+        active: '',
     };
 
     async function couponList(searchData) {
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
             page: searchData.page,
             size: searchData.size,
             type: searchData.type,
+            active: searchData.active,
         });
 
         try {
@@ -22,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             const { total, last, start, end } = response.data.data;
             const coupons = response.data.data.coupons;
-
 
             const tbody = document.querySelector('tbody');
             tbody.innerHTML = '';
@@ -59,6 +60,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const typeFilter = document.getElementById('typeFilter');
     typeFilter.addEventListener('change', function () {
         searchData.type = this.value;
+        searchData.page = 1;
+        couponList(searchData);
+    });
+
+    const activeFilter = document.getElementById('activeFilter');
+    activeFilter.addEventListener('change', function () {
+        searchData.active = this.value;
         searchData.page = 1;
         couponList(searchData);
     });

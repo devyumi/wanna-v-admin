@@ -34,7 +34,7 @@ public class EventRestController {
             .size(size)
             .build();
 
-        EventListResponseDTO responseDTO = eventService.getPageAll(requestDTO);
+        EventListResponseDTO responseDTO = eventService.getAll(requestDTO);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");

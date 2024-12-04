@@ -12,10 +12,8 @@
 <body>
 <main layout:fragment="main-content" th:class="main-container">
   <div class="container">
-    <!-- row -->
     <div class="row mb-5">
       <div class="col-md-12">
-        <!-- page header -->
         <h2>이벤트 관리</h2>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb mb-0">
@@ -29,35 +27,19 @@
         </div>
       </div>
     </div>
-    <!-- row -->
     <div class="row">
       <div class="col-xl-12 col-12 mb-5">
-        <!-- card -->
         <div class="card h-100 card-lg">
           <div class=" p-6 ">
             <div class="row justify-content-between">
               <div class="col-md-4 col-12 mb-2 mb-md-0">
-                <!-- form -->
                 <form class="d-flex" role="search">
                   <input class="form-control" type="search" placeholder="Search" aria-label="Search">
 
                 </form>
               </div>
-              <div class="col-lg-2 col-md-4 col-12">
-                <form action="" class="d-flex align-items-center mb-2" style="gap: 10px;">
-                  <!-- select -->
-                  <select class="form-select">
-                    <option selected>Status</option>
-                    <option value="Success">Success</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Cancel">Cancel</option>
-                  </select>
-                </form>
-              </div>
             </div>
-            <!-- card body -->
             <div class="card-body p-0">
-              <!-- table responsive -->
               <div class="table-responsive">
                 <table class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
                   <thead class="bg-light">

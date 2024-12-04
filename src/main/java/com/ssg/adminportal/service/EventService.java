@@ -8,9 +8,9 @@ import com.ssg.adminportal.dto.response.EventListResponseDTO;
 import java.util.List;
 
 public interface EventService {
-    List<Event> getAll();
+    List<Event> getAllCoupon();
 
-    EventListResponseDTO getPageAll(PageListRequestDTO pageListRequestDTO);
+    EventListResponseDTO getAll(PageListRequestDTO pageListRequestDTO);
 
     Event getEvent(Long eventId);
 

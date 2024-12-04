@@ -13,7 +13,6 @@
 <body>
 <main layout:fragment="main-content" th:class="main-container">
   <div class="container">
-    <!-- row -->
     <div class="row mb-8">
       <div class="col-md-12">
         <h2>회원 상세 조회</h2>
@@ -25,17 +24,13 @@
         </nav>
       </div>
     </div>
-    <!-- row -->
     <div class="row">
-      <!-- card -->
       <div class="card mb-6 card-lg">
-        <!-- card body -->
         <div class="card-body p-6 ">
           <div class="mb-3 d-flex justify-content-center">
             <img th:src="@{${user.user.profile}}" class="profile"/>
           </div>
           <div class="row">
-            <!-- input -->
             <div class="mb-3 col-lg-6 mt-5">
               <label class="form-label">소셜 닉네임</label>
               <input type="text" class="form-control" th:value="${user.user.username}" readonly>

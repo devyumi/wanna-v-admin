@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CouponListRequestDTO {
+public class AdminListRequestDTO {
 
     @Builder.Default
     private Integer page = 1;
@@ -17,9 +17,9 @@ public class CouponListRequestDTO {
     @Builder.Default
     private Integer size = 10;
 
-    private String type;
+    private String role;
 
-    private Boolean active;
+    private String name;
 
     public Integer getOffset() {
         return (page - 1) * size;

@@ -36,7 +36,7 @@ public class CouponController {
 
     @GetMapping("/create")
     public String createCoupon(Model model){
-        List<Event> events = eventService.getAll();
+        List<Event> events = eventService.getAllCoupon();
         model.addAttribute("events", events);
         return "promotion/coupon/save";
     }

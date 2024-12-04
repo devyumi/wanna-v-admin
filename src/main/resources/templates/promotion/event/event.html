@@ -12,12 +12,9 @@
 </head>
 <body>
 <main layout:fragment="main-content" th:class="main-container">
-  <!-- container -->
   <div class="container">
-    <!-- row -->
     <div class="row mb-8">
       <div class="col-md-12">
-          <!-- page header -->
           <h2>이벤트 상세 조회</h2>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
@@ -25,18 +22,13 @@
               <li class="breadcrumb-item active" aria-current="page">이벤트 상세 조회</li>
             </ol>
           </nav>
-          <!-- button -->
 <!--          <form action="" class="btn btn-primary">수정</form>-->
       </div>
     </div>
-    <!-- row -->
     <div class="row">
-      <!-- card -->
       <div class="card mb-6 card-lg">
-        <!-- card body -->
         <div class="card-body p-6 ">
           <div class="row">
-            <!-- input -->
             <div class="mb-3 mt-5">
               <label class="form-label">제목</label>
               <input type="text" class="form-control" th:value="${event.title}">

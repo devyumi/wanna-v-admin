@@ -14,9 +14,11 @@ import com.ssg.adminportal.repository.CouponRepository;
 import com.ssg.adminportal.repository.EventRepository;
 import com.ssg.adminportal.service.CouponService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,7 @@ import java.util.List;
 import java.util.Random;
 
 @Service
+@Log4j2
 @Transactional
 @RequiredArgsConstructor
 public class CouponServiceImpl implements CouponService {
@@ -35,22 +38,27 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public CouponListResponseDTO getAll(CouponListRequestDTO couponListRequestDTO) {
-        Pageable pageable = PageRequest.of(couponListRequestDTO.getPage() - 1, couponListRequestDTO.getSize());
-
+        Pageable pageable = PageRequest.of(couponListRequestDTO.getPage() - 1, couponListRequestDTO.getSize(), Sort.by(Sort.Order.asc("id")));
         Page<Coupon> couponPage;
 
-        if (couponListRequestDTO.getType().isEmpty())
+        String type = couponListRequestDTO.getType();
+        Boolean active = couponListRequestDTO.getActive();
+
+        if (type.isEmpty() && active == null)
             couponPage = couponRepository.findAll(pageable);
-        else {
-            Type type = Type.valueOf(couponListRequestDTO.getType());
-            couponPage = couponRepository.findAllByType(type, pageable);
-        }
+        else if (type.isEmpty())
+            couponPage = couponRepository.findAllByActive(active, pageable);
+        else if (active == null)
+            couponPage = couponRepository.findAllByType(Type.valueOf(type), pageable);
+        else
+            couponPage = couponRepository.findAllByTypeAndActive(Type.valueOf(type), active, pageable);
 
         return CouponListResponseDTO.builder()
                 .requestDTO(couponListRequestDTO)
                 .coupons(couponPage.getContent())
-                .total(couponRepository.countAllEvents())
-                .type(couponListRequestDTO.getType())
+                .total((int) couponPage.getTotalElements())
+                .type(type)
+                .active(active)
                 .build();
     }
 
@@ -94,7 +102,10 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public void createCoupon(Long adminId, CouponSaveRequestDTO coupon) {
-        Event event = eventRepository.findById(Long.valueOf(coupon.getEventId())).orElse(null);
+        Event event = null;
+
+        if (coupon.getEventId() != null)
+            event = eventRepository.findById(coupon.getEventId()).orElse(null);
 
         Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new IllegalArgumentException("회원이 없습니다."));
 
@@ -115,7 +126,7 @@ public class CouponServiceImpl implements CouponService {
                 LocalDateTime.now(),
                 null
         );
-
+        log.info(3);
         couponRepository.save(saveCoupon);
     }
 
