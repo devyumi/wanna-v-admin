@@ -1,5 +1,5 @@
-import { updatePagination, changePage } from "../common/pagination.js";
-import { formatPriceElements } from "../common/format.js";
+import {updatePagination, changePage} from "../common/pagination.js";
+import {formatPriceElements} from "../common/format.js";
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let searchData = {
     page: 1,
     size: 10,
-    sort: document.getElementById('sort').value
+    sort: document.getElementById('sort').value,
+    keyword: ''
   };
 
   async function productList(searchData) {
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
       page: searchData.page,
       size: searchData.size,
       sort: searchData.sort,
+      keyword: searchData.keyword || ''
     });
 
     try {
@@ -52,12 +54,15 @@ document.addEventListener('DOMContentLoaded', function () {
         tbody.appendChild(row);
       });
 
-      const changePageCallback = changePage(searchData.page, function(page) {
-        searchData.page = page;
-        productList(searchData);
+      const changePageCallback = changePage(searchData.page, function (page) {
+        if (searchData.page !== page) {
+          searchData.page = page;
+          productList(searchData);
+        }
       });
 
-      updatePagination(searchData.page, last, total, searchData.size, start, end, changePageCallback);
+      updatePagination(searchData.page, last, total, searchData.size, start,
+          end, changePageCallback);
 
     } catch (error) {
       console.error('상품 목록 조회 실패:', error);
@@ -66,6 +71,16 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   productList(searchData);
+
+  document.getElementById('search-input').addEventListener('keypress',
+      function (event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          searchData.keyword = event.target.value;
+          searchData.page = 1;
+          productList(searchData);
+        }
+      })
 
   document.getElementById('sort').addEventListener('change', (event) => {
     searchData.sort = event.target.value;
