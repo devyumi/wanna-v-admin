@@ -6,72 +6,110 @@
 >
 <head>
   <meta charset="UTF-8">
-  <script defer src="/js/product/update.js"></script>
-  <title>Product Save Page</title>
+  <script defer src="/js/promotion/event/save.js"></script>
+  <link rel="stylesheet" href="/css/common/upload-box.css">
+  <title>Event Save Page</title>
 </head>
 <body>
 <main layout:fragment="main-content" th:class="main-container">
   <div class="container">
-    <!-- row -->
-    <div class="row mb-8">
-      <div class="col-md-12">
-        <div class="d-md-flex justify-content-between align-items-center">
-          <!-- page header -->
-          <h2>이벤트 등록</h2>
-          <!-- button -->
-          <form action="post" class="btn btn-primary">등록</form>
+    <form id="eventForm">
+      <div class="row mb-8">
+        <div class="col-md-12">
+            <h2>이벤트 등록</h2>
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="/events" class="text-inherit">이벤트 관리</a></li>
+              <li class="breadcrumb-item active" aria-current="page">이벤트 등록</li>
+            </ol>
+          <div style="display: flex; justify-content: flex-end;">
+            <button type="submit" class="btn btn-primary">등록</button>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- row -->
-    <div class="row">
-      <!-- card -->
-      <div class="card mb-6 card-lg">
-        <!-- card body -->
-        <div class="card-body p-6 ">
-          <div class="row">
-            <!-- input -->
-            <div class="mb-3">
-              <label class="form-label">이벤트 제목</label>
-              <input type="text" class="form-control">
-            </div>
-            <div class="mb-3" id="formArea">
-              <label class="form-label">쿠폰</label>
-              <select class="form-select">
-                <option selected>Status</option>
-                <option value="Success">Success</option>
-                <option value="Pending">Pending</option>
-                <option value="Cancel">Cancel</option>
-              </select>
-            </div>
-
-            <div class="mb-3 col-lg 6">
-              <label class="form-label">이벤트 시작 날짜</label>
-              <input type="date" name="startDate" class="form-control">
-            </div>
-            <!-- input -->
-            <div class="mb-3 col-lg 6">
-              <label class="form-label">이벤트 종료 날짜</label>
-              <input type="date" name="endDate" class="form-control">
-            </div>
-            <div>
-              <div class="mb-3 col-lg-12 mt-5">
-                <h4 class="mb-3 h5">썸네일</h4>
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile01">
+      <div class="row">
+        <div class="card mb-6 card-lg">
+          <div class="card-body p-6 ">
+            <div class="row">
+              <div class="mb-3">
+                <label class="form-label">이벤트 제목</label>
+                <input type="text" name="title" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">썸네일 이미지
+                  <small class="text-muted ms-2">※ 썸네일 이미지는 1장만 업로드할 수 있습니다.</small>
+                </label>
+                <div class="card">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <h6 class="fw-bold text-center my-3">사진을 추가해주세요.</h6>
+                    <h3>
+                      <label class="ms-1" for="chooseImage1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                             fill="currentColor" class="bi bi-plus-square ms-2" viewBox="0 0 16 16"
+                             style="color: #5AAB6F">
+                          <path
+                                  d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                          <path
+                                  d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                      </label>
+                    </h3>
+                  </div>
+                  <div class="input-group image-upload-container mb-3">
+                    <div class="upload-box">
+                      <div id="drop-image1" class="drag-file">
+                        <input class="file" id="chooseImage1" name="thumbnail" type="file" multiple
+                               onchange="dropFile.handleEventImgFiles1(this.files)"
+                               accept="image/png, image/jpeg, image/gif">
+                      </div>
+                      <div id="image-previews1" class="preview-container"> </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="mb-3 col-lg-12 mt-5">
-                <h4 class="mb-3 h5">이벤트 내용</h4>
-                <div class="input-group mb-3">
-                  <input type="file" class="form-control" id="inputGroupFile02">
+              <div class="mb-3">
+                <label class="form-label">이벤트 내용
+                  <small class="text-muted ms-2">※ 이벤트 내용은 1장만 업로드할 수 있습니다.</small>
+                </label>
+                <div class="card">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <h6 class="fw-bold text-center my-3">사진을 추가해주세요.</h6>
+                    <h3>
+                      <label class="ms-1" for="chooseImage2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                             fill="currentColor" class="bi bi-plus-square ms-2" viewBox="0 0 16 16"
+                             style="color: #5AAB6F">
+                          <path
+                                  d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                          <path
+                                  d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                      </label>
+                    </h3>
+                  </div>
+                  <div class="input-group image-upload-container mb-3">
+                    <div class="upload-box">
+                      <div id="drop-image2" class="drag-file">
+                        <input class="file" id="chooseImage2" name="detail" type="file" multiple
+                               onchange="dropFile.handleEventImgFiles2(this.files)"
+                               accept="image/png, image/jpeg, image/gif">
+                      </div>
+                      <div id="image-previews2" class="preview-container"> </div>
+                    </div>
+                  </div>
                 </div>
+              <div class="mb-3 col-lg 6">
+                <label class="form-label">이벤트 시작 날짜</label>
+                <input type="date" name="startDate" class="form-control">
+              </div>
+              <div class="mb-3 col-lg 6">
+                <label class="form-label">이벤트 종료 날짜</label>
+                <input type="date" name="endDate" class="form-control">
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </main>
 </body>

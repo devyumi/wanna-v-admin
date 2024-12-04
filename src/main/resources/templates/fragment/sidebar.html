@@ -24,12 +24,30 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="/users">
+              <a
+                      class="nav-link collapsed"
+                      href="#"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navCategoriesUsers"
+                      aria-expanded="false"
+                      aria-controls="navCategoriesUsers"
+              >
                 <div class="d-flex align-items-center">
-                  <span class="nav-link-icon"> <i class="bi bi-person"></i></span>
+                  <span class="nav-link-icon"> <i class="bi bi-chat-right-text"></i></span>
                   <span class="nav-link-text">회원 관리</span>
                 </div>
               </a>
+              <div id="navCategoriesUsers" class="collapse" data-bs-parent="#sideNavbar">
+                <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/users"> 회원 목록 </a>
+                  </li>
+                  <!-- Nav item -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="/admins"> 관리자 목록 </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/restaurants">
@@ -89,7 +107,7 @@
                   </li>
                   <!-- Nav item -->
                   <li class="nav-item">
-                    <a class="nav-link" href="/coupon"> 쿠폰 관리 </a>
+                    <a class="nav-link" href="/coupons"> 쿠폰 관리 </a>
                   </li>
                 </ul>
               </div>
@@ -130,12 +148,30 @@
             </li>
             <li class="nav-item mt-6 mb-3"></li>
             <li class="nav-item">
-              <a class="nav-link" href="/users">
+              <a
+                      class="nav-link collapsed"
+                      href="#"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navUsers"
+                      aria-expanded="false"
+                      aria-controls="navUsers"
+              >
                 <div class="d-flex align-items-center">
-                  <span class="nav-link-icon"> <i class="bi bi-cart"></i></span>
+                  <span class="nav-link-icon"> <i class="bi bi-chat-right-text"></i></span>
                   <span class="nav-link-text">회원 관리</span>
                 </div>
               </a>
+              <div id="navUsers" class="collapse" data-bs-parent="#sideNavbar">
+                <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/users"> 회원 목록 </a>
+                  </li>
+                  <!-- Nav item -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="/admins"> 관리자 목록 </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/restaurants">
@@ -195,7 +231,7 @@
                   </li>
                   <!-- Nav item -->
                   <li class="nav-item">
-                    <a class="nav-link" href="/coupon"> 쿠폰 관리 </a>
+                    <a class="nav-link" href="/coupons"> 쿠폰 관리 </a>
                   </li>
                 </ul>
               </div>

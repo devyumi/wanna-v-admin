@@ -1,7 +1,11 @@
 package com.ssg.adminportal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,6 +45,9 @@ public class User {
     @Column(name="referral_code", length = 6, unique = true)
     private String code;
 
+    @Column(name="chatbot_code", unique = true)
+    private String chatBotCode;
+
     @ColumnDefault("0")
     private Long point;
 
@@ -62,10 +69,4 @@ public class User {
     @Column(name="unregistered_at")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime unregisteredAt;
-
-//    @OneToMany(mappedBy = "user")
-//    private List<UserCoupon> userCoupons;
-//
-//    @OneToMany(mappedBy = "user")
-//    private List<Reservation> reservations;
 }

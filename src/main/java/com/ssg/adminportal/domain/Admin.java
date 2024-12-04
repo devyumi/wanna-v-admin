@@ -1,5 +1,6 @@
 package com.ssg.adminportal.domain;
 
+import com.ssg.adminportal.common.Role;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,9 @@ public class Admin {
 
     @Column(length = 10, nullable = false)
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
