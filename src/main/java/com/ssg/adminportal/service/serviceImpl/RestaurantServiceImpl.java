@@ -39,7 +39,7 @@ public class RestaurantServiceImpl implements RestaurantService {
             restaurantSaveDto.getBreakEndTimes(), restaurantSaveDto.getLastOrderTimes(),
             restaurantSaveDto.getIsDayOffList());
 
-
+    System.out.println("businessDays = " + businessDays);
     /**
      * 식당 이미지 저장(음식은 그냥 dto에 있던 거 저장하면 됨)
      */
@@ -56,6 +56,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     List<Food> foods = restaurantSaveDto.getFoodSaveDtoList()
             .stream().map(foodSaveDto -> new Food(foodSaveDto.getName(), foodSaveDto.getFoodImageUrl(), foodSaveDto.getPrice())).toList();
 
+    
+    
     //저장 !
     Restaurant restaurant = Restaurant.createRestaurant(restaurantSaveDto.getBusinessNum(),
             restaurantSaveDto.getRestaurantName(), restaurantSaveDto.getContact(), restaurantSaveDto.getDescription()

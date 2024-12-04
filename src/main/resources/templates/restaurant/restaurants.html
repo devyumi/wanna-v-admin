@@ -1,21 +1,7 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}"
->
-<head>
-  <meta charset="UTF-8">
-  <title>Restaurant List Page</title>
-</head>
-<body>
-<main layout:fragment="main-content" th:class="main-container">
-=======
 <html th:replace="~{fragment/layoutV1.html :: layout(~{::main})}" xmlns:th="http://www.thymeleaf.org">
 
-<main>
->>>>>>> 2275c0e (feat: 수정 컨트롤러 완성)
+<main style="margin-top: 7%; margin-left: 5rem">
 
   <style>
 
@@ -41,6 +27,12 @@ th, td {
           <!-- page header -->
           <h2>식당 관리</h2>
           <!-- breacrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/restaurants" class="text-inherit">식당 관리</a></li>
+            <li class="breadcrumb-item active" aria-current="page">식당 목록</li>
+          </ol>
+        </nav>
       </div>
     </div>
 
@@ -122,10 +114,20 @@ th, td {
                     <td style="text-align: center" th:text="${restaurant.businessNum}">349-78-38591</td>
                     <td style="text-align: center"><span  th:each="restaurantType : ${restaurant.restaurantTypes}" class="me-1" th:text="${restaurantType}">다이어트 , 샐러드</span></td>
                     <td style="text-align: center" th:text="${restaurant.createdAt}">2024/12/12</td>
+
+
                   </tr>
+
+
                 </tbody>
               </table>
             </div>
+
+
+
+
+
+
             <div class="border-top d-md-flex justify-content-between align-items-center p-6">
 
               <nav class="mt-2 mt-md-0">
@@ -168,5 +170,5 @@ th, td {
 </script>
 
 </main>
-</body>
+
 </html>
