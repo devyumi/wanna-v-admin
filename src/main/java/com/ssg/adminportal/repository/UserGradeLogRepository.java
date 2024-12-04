@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserGradeLogRepository extends JpaRepository<UserGradeLog, Long> {
-    @Query("SELECT u FROM UserGradeLog u WHERE u.id = :userId ORDER BY u.updateAt DESC")
+    @Query("SELECT u FROM UserGradeLog u WHERE u.id = :userId ORDER BY u.createdAt DESC LIMIT 1")
     UserGradeLog findByUserId(Long userId);
 }
