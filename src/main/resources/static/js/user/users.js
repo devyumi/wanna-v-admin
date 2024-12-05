@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   <td style="text-align: center">${user.email}</td>
                   <td style="text-align: center">${user.point}</td>
                   <td style="text-align: center">${user.code}</td>
-                  <td style="text-align: center">${user.consent}</td>
+                  <td style="text-align: center">${user.consent ? 'O' : 'X'}</td>
                   `;
 
                 tbody.appendChild(row);
