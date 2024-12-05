@@ -12,6 +12,7 @@ import com.ssg.adminportal.dto.FileDTO;
 import com.ssg.adminportal.dto.request.*;
 import com.ssg.adminportal.service.FileService;
 import com.ssg.adminportal.service.RestaurantService;
+import com.ssg.adminportal.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +35,7 @@ public class RestaurantController {
     private String foodDir;
 
     private final RestaurantService restaurantService;
+    private final ReviewService reviewService;
     private final FileService fileService;
 
 
@@ -244,6 +246,7 @@ public class RestaurantController {
     @GetMapping("/{id}")
     public String getAdminRestaurant(@PathVariable("id") Long id, Model model) {
         model.addAttribute("restaurant", restaurantService.findOne(id));
+        model.addAttribute("sentiment", reviewService.getSentiment(id));
         return "restaurant/restaurant";
     }
 
