@@ -29,10 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 const row = document.createElement('tr');
 
                 row.innerHTML = `
-                  <td class="text-align: center">${event.id}</td>
-                  <td class="text-align: center"><a href="/events/${event.id}">${event.title}</a></td>
-                  <td class="text-align: center">${event.startDate}</td>
-                  <td class="text-align: center">${event.endDate}</td>
+                  <td style="text-align: center;">${event.id}</td>
+                  <td style="text-align: center;"><a href="/events/${event.id}">${event.title}</a></td>
+                  <td style="text-align: center;">${event.startDate}</td>
+                  <td style="text-align: center;">${event.endDate}</td>
                   `;
 
                 tbody.appendChild(row);
