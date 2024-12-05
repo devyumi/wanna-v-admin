@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                   <td style="text-align: center;">${coupon.type}</td>
                   <td style="text-align: center;">${coupon.discountAmount ? coupon.discountAmount : ''}</td>
                   <td style="text-align: center;">${coupon.discountRate ? coupon.discountRate : ''}</td>
-                  <td style="text-align: center;">${coupon.active}</td>              
+                  <td style="text-align: center;">${coupon.active ? 'O' : 'X'}</td>              
                   `;
 
                 tbody.appendChild(row);

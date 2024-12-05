@@ -78,7 +78,7 @@
             </div>
             <div class="mb-3 col-lg-6">
               <label class="form-label">탈퇴 여부</label>
-              <input type="text" class="form-control" th:value="${user.user.unregistered}" readonly>
+              <input type="text" class="form-control" th:value="${user.user.unregistered ? 'O' : 'X'}" readonly>
             </div>
             <div class="mb-3 col-lg-6">
               <label class="form-label">추천인 코드</label>
