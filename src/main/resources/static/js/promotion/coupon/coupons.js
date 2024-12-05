@@ -32,13 +32,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 const row = document.createElement('tr');
 
                 row.innerHTML = `
-                  <td class="text-align: center">${coupon.id}</td>
-                  <td class="text-align: center"><a href="/coupons/${coupon.id}">${coupon.name}</a></td>
-                  <td class="text-align: center">${coupon.code}</td>
-                  <td class="text-align: center">${coupon.type}</td>
-                  <td class="text-align: center">${coupon.discountAmount ? coupon.discountAmount : ''}</td>
-                  <td class="text-align: center">${coupon.discountRate ? coupon.discountRate : ''}</td>
-                  <td class="text-align: center">${coupon.active}</td>              
+                  <td style="text-align: center;">${coupon.id}</td>
+                  <td style="text-align: center;"><a href="/coupons/${coupon.id}">${coupon.name}</a></td>
+                  <td style="text-align: center;">${coupon.code}</td>
+                  <td style="text-align: center;">${coupon.type}</td>
+                  <td style="text-align: center;">${coupon.discountAmount ? coupon.discountAmount : ''}</td>
+                  <td style="text-align: center;">${coupon.discountRate ? coupon.discountRate : ''}</td>
+                  <td style="text-align: center;">${coupon.active ? 'O' : 'X'}</td>              
                   `;
 
                 tbody.appendChild(row);
