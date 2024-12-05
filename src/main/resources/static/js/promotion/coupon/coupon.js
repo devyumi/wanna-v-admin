@@ -1,8 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const endAtInput = document.getElementById('endAt');
-    const endDate = new Date(endAtInput.value);
-    endAtInput.value = endDate.toLocaleString();
-
     const createdAtInput = document.getElementById('createdAt');
     const date = new Date(createdAtInput.value);
     createdAtInput.value = date.toLocaleString();

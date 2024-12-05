@@ -37,7 +37,7 @@ public class Coupon {
     private Integer code;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDateTime endDate;
+    private String endDate;
 
     @Enumerated(EnumType.STRING)
     private Type type;

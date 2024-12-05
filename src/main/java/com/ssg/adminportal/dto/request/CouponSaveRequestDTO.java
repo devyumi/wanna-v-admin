@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Builder
 @NoArgsConstructor
@@ -19,5 +17,5 @@ public class CouponSaveRequestDTO {
     private Integer amount;
     private Integer rate;
     private Boolean active;
-    private LocalDateTime endDate;
+    private String endDate;
 }
