@@ -1,12 +1,5 @@
 package com.ssg.adminportal.service.serviceImpl;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.TextStyle;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
 import com.ssg.adminportal.common.BusinessStatus;
 import com.ssg.adminportal.domain.BusinessDay;
 import com.ssg.adminportal.domain.Food;
@@ -22,6 +15,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.TextStyle;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 @Transactional(readOnly = true)
 @Service
@@ -39,7 +39,7 @@ public class RestaurantServiceImpl implements RestaurantService {
             restaurantSaveDto.getBreakEndTimes(), restaurantSaveDto.getLastOrderTimes(),
             restaurantSaveDto.getIsDayOffList());
 
-
+    System.out.println("businessDays = " + businessDays);
     /**
      * 식당 이미지 저장(음식은 그냥 dto에 있던 거 저장하면 됨)
      */
@@ -53,20 +53,27 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 
     //음식 사진은 한 음식 당 한 사진만이 할당되니 이미 컨트롤러 부에서 String 값의 Url정보를 dto에 담아서 던졌으므로 그냥 그대로 할당해주면 됨 ㅇㅇ
-    List<Food> foods = restaurantSaveDto.getFoodSaveDTOList()
+    List<Food> foods = restaurantSaveDto.getFoodSaveDtoList()
             .stream().map(foodSaveDto -> new Food(foodSaveDto.getName(), foodSaveDto.getFoodImageUrl(), foodSaveDto.getPrice())).toList();
 
+    
+    
     //저장 !
     Restaurant restaurant = Restaurant.createRestaurant(restaurantSaveDto.getBusinessNum(),
             restaurantSaveDto.getRestaurantName(), restaurantSaveDto.getContact(), restaurantSaveDto.getDescription()
             , restaurantSaveDto.getMoodTypes(), restaurantSaveDto.getContainFoodTypes(), restaurantSaveDto.getProvideServiceTypes(),
             restaurantSaveDto.getRestaurantTypes(), storeRestaurantImagesUrl, restaurantSaveDto.getRoadNameAddress(),
-            restaurantSaveDto.getLandLotAddress(), restaurantSaveDto.getZipcode(), restaurantSaveDto.getDetailsAddress(),
+            restaurantSaveDto.getLandLotAddress(), restaurantSaveDto.getZipcode(), restaurantSaveDto.getDetailAddress(),
             restaurantSaveDto.getCanPark(), realReservationTimeGap, restaurantSaveDto.getIsPenalty(), businessDays, foods);
     restaurant.changeBusinessStatus(BusinessStatus.OPEN);
 
     return restaurantRepository.save(restaurant);
   }
+
+
+ /* public List<Restaurant> searchRestaurants(String search){
+    return restaurantRepository.findAllBySearchBar(search);
+  }*/
 
   private static int getRealReservationTimeGap(String restaurantSaveDto) {
     String reservationTimeGap = restaurantSaveDto;
@@ -85,9 +92,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     return realReservationTimeGap;
   }
 
-  private static String getStoreRestaurantImagesUrl(List<String> restaurantSaveDto) {
+  private static String getStoreRestaurantImagesUrl(List<String> changeRestaurantsImagesUrl) {
     String storeRestaurantImagesUrl = "";
-    List<String> restaurantImagesUrl = restaurantSaveDto;
+    List<String> restaurantImagesUrl = changeRestaurantsImagesUrl;
     for (String restaurantImageUrl : restaurantImagesUrl) {
       storeRestaurantImagesUrl = String.join(",", restaurantImageUrl);
     }
@@ -122,9 +129,9 @@ public class RestaurantServiceImpl implements RestaurantService {
   public List<Restaurant> findSimilarRestaurants(Long id){
     Restaurant ownerRestaurant = findOne(id);
     RestaurantSearchCond restaurantSearchCond = getRestaurantSearchCond(
-            ownerRestaurant);
+        ownerRestaurant);
     List<Restaurant> similarRestaurants = restaurantRepository.findSimilarRestaurantsAll(
-            restaurantSearchCond);
+        restaurantSearchCond);
     return setRestaurantDefaultInfo(similarRestaurants);
   }
 
@@ -141,8 +148,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     return restaurantSearchCond;
   }
 
-  public List<Restaurant> findRestaurants(RestaurantSearchCond restaurantSearchCond){
-    List<Restaurant> restaurants = restaurantRepository.findAll(restaurantSearchCond);
+  public List<Restaurant> findRestaurants(RestaurantSearchCond restaurantSearchCond , String search){
+    List<Restaurant> restaurants = restaurantRepository.findAll(restaurantSearchCond , search);
     return setRestaurantDefaultInfo(restaurants);
   }
 
@@ -162,40 +169,51 @@ public class RestaurantServiceImpl implements RestaurantService {
 
   public BusinessDay findToday(Restaurant restaurant){
     String todayDayOfWeek = restaurant.getBusinessDays().stream()
-            .map(BusinessDay::getDayOfWeek)
-            .filter(dayOfWeek -> dayOfWeek.equals(
-                    LocalDateTime.now().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN)))
-            .findAny().get();
+        .map(BusinessDay::getDayOfWeek)
+        .filter(dayOfWeek -> dayOfWeek.equals(
+            LocalDateTime.now().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREAN)))
+        .findAny().get();
     BusinessDay todayBusinessDay = restaurant.getBusinessDays().stream().filter(businessDay -> businessDay.getDayOfWeek().equals(todayDayOfWeek)).findAny().get();
     return todayBusinessDay;
   }
 
 
+  //변경 감지 !
   @Transactional
-  public void updateRestaurant(Long id , RestaurantUpdateDTO restaurantUpdateDto) {
-    //새로 만들어줬음 , 이걸로 통으로 변경
+  public void updateRestaurant(RestaurantUpdateDTO restaurantUpdateDto) {
+    Long id = restaurantUpdateDto.getId();
+    Restaurant updateRestaurant = findOne(id);
+
+    /**
+     * 식당 이미지
+     */
+    List<String> restaurantImagesUrl = restaurantUpdateDto.getRestaurantImagesUrl();
+    String storeRestaurantImagesUrl = getStoreRestaurantImagesUrl(restaurantImagesUrl);
+
+
+      /**
+       * String => 숫자
+     */
+    int realReservationTimeGap = getRealReservationTimeGap(restaurantUpdateDto.getReservationTimeGap());
+
+
     List<BusinessDay> businessDays = BusinessDay.createBusinessDays(
             restaurantUpdateDto.getOpenTimes(),
             restaurantUpdateDto.getCloseTimes(), restaurantUpdateDto.getBreakStartTimes(),
-            restaurantUpdateDto.getBreakEndTimes(), restaurantUpdateDto.getLastOrderTimes(),
+            restaurantUpdateDto.getBreakEndTimes(), restaurantUpdateDto.getLastOrders(),
             restaurantUpdateDto.getIsDayOffList());
 
-    // 새로 만들어줬음 , 이걸로 통으로 변경
-    List<Food> foods = restaurantUpdateDto.getFoodSaveDtoList().stream().map(
-            foodSaveDto -> new Food(foodSaveDto.getName(), foodSaveDto.getFoodImageUrl(),
-                    foodSaveDto.getPrice())).toList();
-
-    String storeRestaurantImagesUrl = getStoreRestaurantImagesUrl(restaurantUpdateDto.getRestaurantImagesUrl());
+    List<Food> foods = restaurantUpdateDto.getFoodUpdateDTOList()
+            .stream().map(foodUpdateDto -> new Food(foodUpdateDto.getName(), foodUpdateDto.getFoodImageUrl(), foodUpdateDto.getPrice())).toList();
 
 
-    int realReservationTimeGap = getRealReservationTimeGap(restaurantUpdateDto.getReservationTimeGap());
-
-    Restaurant updateRestaurant = findOne(id);
-    updateRestaurant.changeRestaurant(restaurantUpdateDto.getBusinessNum() , restaurantUpdateDto.getRestaurantName(),
-            restaurantUpdateDto.getMoodTypes(), restaurantUpdateDto.getContainFoodTypes(), restaurantUpdateDto.getProvideServiceTypes(),
-            restaurantUpdateDto.getRestaurantTypes(), storeRestaurantImagesUrl, restaurantUpdateDto.getRoadNameAddress(), restaurantUpdateDto.getLandLotAddress(),
-            restaurantUpdateDto.getZipcode(),restaurantUpdateDto.getDetailAddress(), restaurantUpdateDto.getCanPark(),
-            realReservationTimeGap, restaurantUpdateDto.getIsPenalty() ,  businessDays, foods);
+    updateRestaurant.changeRestaurant(restaurantUpdateDto.getDescription() , restaurantUpdateDto.getContact(),
+            restaurantUpdateDto.getBusinessNum() , restaurantUpdateDto.getRestaurantName() ,
+            restaurantUpdateDto.getMoodTypes() , restaurantUpdateDto.getContainFoodTypes() ,
+            restaurantUpdateDto.getProvideServiceTypes() , restaurantUpdateDto.getRestaurantTypes() ,
+            storeRestaurantImagesUrl , restaurantUpdateDto.getRoadNameAddress() , restaurantUpdateDto.getLandLotAddress() ,
+            restaurantUpdateDto.getZipcode() , restaurantUpdateDto.getDetailAddress() , restaurantUpdateDto.getCanPark() , realReservationTimeGap , restaurantUpdateDto.getIsPenalty(),
+            businessDays , foods);
 
   }
 
@@ -204,7 +222,7 @@ public class RestaurantServiceImpl implements RestaurantService {
   @Scheduled(cron = "0 */30 * * * *")
   public void updateBusinessStatus(){
     LocalDateTime now = LocalDateTime.now();
-    List<Restaurant> restaurants = restaurantRepository.findAll(new RestaurantSearchCond());
+    List<Restaurant> restaurants = restaurantRepository.findAll(new RestaurantSearchCond() , null);
     //다 계산해주는 거니까 여기서 그냥 모든 상태를 이 메서드 안에서 동시에 업데이트 해주는 것!
 
     //아니네 휴무일 계산은 마지막에 해줘야하네
@@ -224,7 +242,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
 
         if ((now.toLocalTime().isAfter(openTime) && now.toLocalTime().isBefore(breakStartTime))
-                || (now.toLocalTime().isAfter(breakEndTime) && now.toLocalTime().isBefore(closeTime))) {
+            || (now.toLocalTime().isAfter(breakEndTime) && now.toLocalTime().isBefore(closeTime))) {
           restaurant.changeBusinessStatus(BusinessStatus.OPEN);
         }
 

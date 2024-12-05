@@ -1,39 +1,29 @@
 package com.ssg.adminportal.controller.web;
 
-import com.ssg.adminportal.common.ContainFoodType;
-import com.ssg.adminportal.common.MoodType;
-import com.ssg.adminportal.common.ProvideServiceType;
-import com.ssg.adminportal.common.ReservationTimeGap;
-import com.ssg.adminportal.common.RestaurantType;
+import java.time.LocalTime;
+import java.util.*;
+
+import com.ssg.adminportal.common.*;
+import com.ssg.adminportal.domain.BusinessDay;
+import com.ssg.adminportal.domain.Food;
 import com.ssg.adminportal.domain.Restaurant;
 import com.ssg.adminportal.domain.Review;
 import com.ssg.adminportal.dto.FileDTO;
-import com.ssg.adminportal.dto.request.FoodSaveDTO;
-import com.ssg.adminportal.dto.request.RestaurantAdminSearchCond;
-import com.ssg.adminportal.dto.request.RestaurantSaveDTO;
+import com.ssg.adminportal.dto.request.*;
 import com.ssg.adminportal.service.FileService;
 import com.ssg.adminportal.service.RestaurantService;
 import com.ssg.adminportal.service.ReviewService;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Slf4j
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/restaurants")
 public class RestaurantController {
@@ -45,8 +35,9 @@ public class RestaurantController {
     private String foodDir;
 
     private final RestaurantService restaurantService;
-    private final FileService fileService;
     private final ReviewService reviewService;
+    private final FileService fileService;
+
 
     @ModelAttribute("containFoodTypes")
     public ContainFoodType[] containFoodTypes() {
@@ -68,6 +59,7 @@ public class RestaurantController {
         return MoodType.values();
     }
 
+
     @ModelAttribute("sortConditions")
     public Map<String, String> sortConditions() {
         Map<String, String> sortConditions = new HashMap<>();
@@ -78,10 +70,12 @@ public class RestaurantController {
         return sortConditions;
     }
 
+
     @ModelAttribute("reservationTimeGaps")
     public ReservationTimeGap[] reservationGaps() {
         return ReservationTimeGap.values();
     }
+
 
     @ModelAttribute("dayOfWeeks")
     public List<String> dayOfWeeks() {
@@ -96,20 +90,13 @@ public class RestaurantController {
         return dayOfWeeks;
     }
 
-    @GetMapping()
-    public String getAdminRestaurants(
-        @ModelAttribute("restaurantAdminSearchCond") RestaurantAdminSearchCond restaurantAdminSearchCond,
-        Model model) {
-        model.addAttribute("restaurants",
-            restaurantService.findRestaurantsAdmin(restaurantAdminSearchCond));
-        return "restaurant/restaurants";
-    }
 
-    @GetMapping("/{id}")
-    public String getReviewSentiment(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("restaurant", restaurantService.findOne(id));
-        model.addAttribute("sentiment", reviewService.getSentiment(id));
-        return "restaurant/restaurant";
+    @ModelAttribute("adminSortConditions")
+    public Map<String , String> adminSortConditions(){
+        Map<String, String> adminSortConditions = new HashMap<>();
+        adminSortConditions.put("NEW", "최신 순");
+        adminSortConditions.put("REGISTER", "등록 순");
+        return adminSortConditions;
     }
 
 
@@ -120,65 +107,154 @@ public class RestaurantController {
     }
 
     @PostMapping("/save")
-    @ResponseBody
-    public String saveRestaurantPost(
-        @ModelAttribute("restaurantSaveDto") RestaurantSaveDTO restaurantSaveDto,
-        RedirectAttributes redirectAttributes) {
+    public String saveRestaurantPost(@ModelAttribute("restaurantSaveDto") RestaurantSaveDTO restaurantSaveDto, RedirectAttributes redirectAttributes) {
+
+
 
         List<MultipartFile> restaurantImages = restaurantSaveDto.getRestaurantImages();
         List<MultipartFile> foodImages = new ArrayList<>();
-        List<FoodSaveDTO> foodSaveDTOList = restaurantSaveDto.getFoodSaveDTOList();
-        for (FoodSaveDTO foodSaveDto : foodSaveDTOList) {
+        List<FoodSaveDTO> foodSaveDtoList = restaurantSaveDto.getFoodSaveDtoList();
+        for (FoodSaveDTO foodSaveDto : foodSaveDtoList) {
             foodImages.add(foodSaveDto.getFoodImage());
         }
 
         /**
          * 식당 스토리지 저장 + DB에 스토리지 Url 저장
          */
-        List<FileDTO> restaurantImagesFileDto = fileService.uploadFiles(restaurantImages,
-            restaurantDir);
-        List<String> restaurantImagesUrl = restaurantImagesFileDto.stream()
-            .map(FileDTO::getUploadFileUrl).toList();
+        List<FileDTO> restaurantImagesFileDto = fileService.uploadFiles(restaurantImages, restaurantDir);
+        List<String> restaurantImagesUrl = restaurantImagesFileDto.stream().map(FileDTO::getUploadFileUrl).toList();
         restaurantSaveDto.setRestaurantImagesUrl(restaurantImagesUrl);
 
         /**
          * 음식 스토리지 저장 + DB에 스토리지 Url 저장
          */
         List<FileDTO> foodImagesFileDto = fileService.uploadFiles(foodImages, foodDir);
-        List<String> foodImagesUrl = foodImagesFileDto.stream().map(FileDTO::getUploadFileUrl)
-            .toList();
+        List<String> foodImagesUrl = foodImagesFileDto.stream().map(FileDTO::getUploadFileUrl).toList();
         for (String foodImageUrl : foodImagesUrl) {
-            foodSaveDTOList.forEach(foodSaveDTO -> {
-                foodSaveDTO.setFoodImageUrl(foodImageUrl);
+            foodSaveDtoList.forEach(foodSaveDto -> {
+                foodSaveDto.setFoodImageUrl(foodImageUrl);
             });
-        }
-        ;
+        };
+
+
 
         Long saveId = restaurantService.save(restaurantSaveDto);
         redirectAttributes.addAttribute("saveId", saveId);
-        return "success";
+        return "redirect:/restaurants/{saveId}";
     }
 
+
     @GetMapping("/{id}/update")
-    public String updateRestaurant(@PathVariable("id") Long id, Model model) {
+    public String updateRestaurant(@PathVariable("id") Long id ,  Model model) {
         Restaurant restaurant = restaurantService.findOne(id);
-        //RestaurantUpdateDTO restaurantUpdateDto = new RestaurantUpdateDTO(restaurant.getName() , restaurant.getBusinessNum() , restaurant.getRestaurantTypes() , restaurant.getContainFoodTypes() , restaurant.getProvideServiceTypes() , restaurant.getMoodTypes() , restaurant.getAddress().getRoadAddress() , restaurant.getAddress().getLandLotAddress() , restaurant.getAddress().getZipCode() , restaurant.getAddress().getDetailAddress() , restaurant.getCanPark() , restaurant.getReservationTimeGap() , restaurant.getIsPenalty());
-        model.addAttribute("restaurant", restaurant);
+
+
+        // Set Restaurant DTO
+
+        RestaurantUpdateDTO restaurantUpdateDto = RestaurantUpdateDTO.builder().id(id).contact(restaurant.getContact()).description(restaurant.getDescription())
+                .restaurantName(restaurant.getName()).restaurantTypes(restaurant.getRestaurantTypes())
+                .restaurantImagesUrl(Arrays.asList(restaurant.getRestaurantImages())).businessNum(restaurant.getBusinessNum())
+                .containFoodTypes(restaurant.getContainFoodTypes()).provideServiceTypes(restaurant.getProvideServiceTypes()).moodTypes(restaurant.getMoodTypes())
+                .detailAddress(restaurant.getAddress().getDetailAddress()).landLotAddress(restaurant.getAddress().getLandLotAddress())
+                .roadNameAddress(restaurant.getAddress().getRoadAddress()).canPark(restaurant.getCanPark()).isPenalty(restaurant.getIsPenalty())
+                .reservationTimeGap(convertReservationTimeGapToString(restaurant.getReservationTimeGap())).build();
+
+
+        // Set BusinessDay DTO
+
+        List<BusinessDay> businessDays = restaurant.getBusinessDays();
+        List<LocalTime> openTimes = businessDays.stream().map(BusinessDay::getOpenTime).toList();
+        List<LocalTime> closeTimes = businessDays.stream().map(BusinessDay::getCloseTime).toList();
+        List<LocalTime> breakStartTimes = businessDays.stream().map(BusinessDay::getBreakStartTime).toList();
+        List<LocalTime> breakEndTimes = businessDays.stream().map(BusinessDay::getBreakEndTime).toList();
+        List<LocalTime> lastOrders = businessDays.stream().map(BusinessDay::getLastOrderTime).toList();
+        List<String> stringDayOffList = new ArrayList<>();
+        businessDays.stream().map(BusinessDay::getIsDayOff).forEach(isDayOff -> {
+            String[] dayOfWeeks = {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};
+            for (String dayOfWeek : dayOfWeeks) {
+                if (isDayOff){
+                    stringDayOffList.add(dayOfWeek);
+                }
+            }
+            restaurantUpdateDto.setDayOfWeeks(Arrays.stream(dayOfWeeks).toList());
+        });
+
+        restaurantUpdateDto.setOpenTimes(openTimes);
+        restaurantUpdateDto.setCloseTimes(closeTimes);
+        restaurantUpdateDto.setBreakStartTimes(breakStartTimes);
+        restaurantUpdateDto.setBreakEndTimes(breakEndTimes);
+        restaurantUpdateDto.setLastOrders(lastOrders);
+        restaurantUpdateDto.setIsDayOffList(stringDayOffList);
+
+
+        // Set Food DTO
+
+        List<Food> foods = restaurant.getFoods();
+        restaurantUpdateDto.setFoodUpdateDTOList(foods.stream().map(food -> new FoodUpdateDTO(food.getName(), food.getPrice(), food.getImage())).toList());
+
+        model.addAttribute("restaurantUpdateDto", restaurantUpdateDto);
         return "restaurant/updateForm";
     }
 
-    private Map<Integer, List<Review>> getReviewsByRating(Long id) {
-        List<Review> reviewsByOneRating = restaurantService.findReviewsByRating(id, 1);
-        List<Review> reviewsByTwoRating = restaurantService.findReviewsByRating(id, 2);
-        List<Review> reviewsByThreeRating = restaurantService.findReviewsByRating(id, 3);
-        List<Review> reviewsByFourRating = restaurantService.findReviewsByRating(id, 4);
-        List<Review> reviewsByFiveRating = restaurantService.findReviewsByRating(id, 5);
-        Map<Integer, List<Review>> reviewsByRating = new HashMap<>();
-        reviewsByRating.put(1, reviewsByOneRating);
-        reviewsByRating.put(2, reviewsByTwoRating);
-        reviewsByRating.put(3, reviewsByThreeRating);
-        reviewsByRating.put(4, reviewsByFourRating);
-        reviewsByRating.put(5, reviewsByFiveRating);
-        return reviewsByRating;
+    @PostMapping("/{id}/update")
+    public String updateRestaurant(@ModelAttribute("restaurantUpdateDto") RestaurantUpdateDTO restaurantUpdateDto , RedirectAttributes redirectAttributes) {
+
+        List<MultipartFile> restaurantImages = restaurantUpdateDto.getRestaurantImages();
+        List<MultipartFile> foodImages = new ArrayList<>();
+        List<FoodUpdateDTO> foodUpdateDtoList = restaurantUpdateDto.getFoodUpdateDTOList();
+        for (FoodUpdateDTO foodUpdateDto : foodUpdateDtoList) {
+            foodImages.add(foodUpdateDto.getFoodImage());
+        }
+
+        /**
+         * 식당 스토리지 저장 + DB에 스토리지 Url 저장
+         */
+        List<FileDTO> restaurantImagesFileDto = fileService.uploadFiles(restaurantImages, restaurantDir);
+        List<String> restaurantImagesUrl = restaurantImagesFileDto.stream().map(FileDTO::getUploadFileUrl).toList();
+        restaurantUpdateDto.setRestaurantImagesUrl(restaurantImagesUrl);
+
+        /**
+         * 음식 스토리지 저장 + DB에 스토리지 Url 저장
+         */
+        List<FileDTO> foodImagesFileDto = fileService.uploadFiles(foodImages, foodDir);
+        List<String> foodImagesUrl = foodImagesFileDto.stream().map(FileDTO::getUploadFileUrl).toList();
+        for (String foodImageUrl : foodImagesUrl) {
+            foodUpdateDtoList.forEach(foodUpdateDto -> {
+                foodUpdateDto.setFoodImageUrl(foodImageUrl);
+            });
+        };
+
+        restaurantService.updateRestaurant(restaurantUpdateDto);
+        redirectAttributes.addAttribute("updateId" , restaurantUpdateDto.getId());
+        return "redirect:/restaurants/{updateId}";
+
     }
+
+
+    private static String convertReservationTimeGapToString(Integer reservationTimeGap) {
+        String convertReservationTimeGapToString = switch (reservationTimeGap) {
+            case 30 -> "HALF";
+            case 60 -> "ONE";
+            case 120 -> "TWO";
+            default -> "";
+        };
+        return convertReservationTimeGapToString;
+    }
+
+
+
+    @GetMapping("/{id}")
+    public String getAdminRestaurant(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("restaurant", restaurantService.findOne(id));
+        model.addAttribute("sentiment", reviewService.getSentiment(id));
+        return "restaurant/restaurant";
+    }
+
+    @GetMapping
+    public String getAdminRestaurants(@ModelAttribute("restaurantAdminSearchCond") RestaurantAdminSearchCond restaurantAdminSearchCond , Model model) {
+        model.addAttribute("restaurants", restaurantService.findRestaurantsAdmin(restaurantAdminSearchCond));
+        return "restaurant/restaurants";
+    }
+    //UrlResource 자체가 필요 없음 , 어차피 Url직접 웹에서 링크로 조회해서 띄우는 것임 ㅇㅇ 내 서버로 들어와서 DB에 접근해서 띄우는 게 아닌 !
+
 }

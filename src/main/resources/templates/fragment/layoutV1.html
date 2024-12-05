@@ -36,17 +36,17 @@
 
 
 <!-- Favicon icon-->
-<link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon/favicon.ico" th:href="@{/assets/images/favicon/favicon.ico}">
 
 
 <!-- Libs CSS -->
-<link href="../assets/libs/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-<link href="../assets/libs/feather-webfont/dist/feather-icons.css" rel="stylesheet">
-<link href="../assets/libs/simplebar/dist/simplebar.min.css" rel="stylesheet">
+<link href="../assets/libs/bootstrap-icons/font/bootstrap-icons.css" th:href="@{/assets/libs/bootstrap-icons/font/bootstrap-icons.css}" rel="stylesheet">
+<link href="../assets/libs/feather-webfont/dist/feather-icons.css" th:href="@{/assets/libs/feather-webfont/dist/feather-icons.css}" rel="stylesheet">
+<link href="../assets/libs/simplebar/dist/simplebar.min.css" th:href="@{/assets/libs/simplebar/dist/simplebar.min.css}" rel="stylesheet">
 
 
 <!-- Theme CSS -->
-<link rel="stylesheet" href="../assets/css/theme.min.css">
+<link rel="stylesheet" href="../assets/css/theme.min.css" th:href="@{/assets/css/theme.min.css}">
 
 
     <title>Dashboard</title>
@@ -56,317 +56,302 @@
     <!-- main -->
     <div>
         <nav class="navbar navbar-expand-lg navbar-glass wrapper">
-    <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center w-100">
-            <div class="d-flex align-items-center">
-
-                <a class="text-inherit d-block d-xl-none me-4" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                aria-controls="offcanvasExample">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-text-indent-right" viewBox="0 0 16 16">
-                    <path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm10.646 2.146a.5.5 0 0 1 .708.708L11.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zM2 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
-                  </svg>
-            </a>
-
-                <form role="search">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                </form>
-            </div>
-            <div>
-                <ul class="list-unstyled d-flex align-items-center mb-0 ms-5 ms-lg-0">
-
-
-        <li class="dropdown ms-4">
-            <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="/assets/images/admin-icon/admin-user.png" style="width:1rem;height:1rem">
-            </a>
-
-            <div class="dropdown-menu dropdown-menu-end p-0">
-
-                <ul class="list-unstyled px-2 py-3">
-
-                    <li>
-                        <a class="dropdown-item" href="#!">
-                           홈
+            <div class="container-fluid">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <div class="d-flex align-items-center">
+                        <a
+                                class="text-inherit d-block d-xl-none me-4"
+                                data-bs-toggle="offcanvas"
+                                href="#offcanvasSidebar"
+                                role="button"
+                                aria-controls="offcanvasSidebar"
+                        >
+                            <i class="bi bi-text-indent-right" style="font-size: 32px;"></i>
                         </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#!">
-                        마이페이지
-                        </a>
-
-                    </li>
-                </ul>
-                <div class="border-top px-5 py-3">
-                    <a href="/logout">로그아웃</a>
+                        <form role="search">
+                            <input class="form-control" type="search" placeholder="Search" aria-label="Search"/>
+                        </form>
+                    </div>
+                    <div>
+                        <ul class="list-unstyled d-flex align-items-center mb-0 ms-5 ms-lg-0">
+                            <li class="dropdown ms-4">
+                                <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person" style="font-size: 25px;"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end p-0">
+                                    <ul class="list-unstyled px-2 py-3">
+                                        <li>
+                                            <a class="dropdown-item" href="#!"> 홈 </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#!"> 마이페이지 </a>
+                                        </li>
+                                    </ul>
+                                    <div class="border-top px-5 py-3">
+                                        <a href="/logout">로그아웃</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
-
-
             </div>
-
-        </li>
-        </ul>
-
-    </div>
-
-    </div>
-    </div>
-</nav>
+        </nav>
 
         <div class=""> <!-- class="main-wrapper" 삭제-->
             <!-- navbar vertical -->
-            
-            <nav class="navbar-vertical-nav d-none d-xl-block ">
+
+            <nav class="navbar-vertical-nav d-none d-xl-block">
                 <div class="navbar-vertical">
-                                <div class="px-4 py-5">
-                                    <a href="../index.html" class="navbar-brand">
-                                        <img src="../assets/images/logo/freshcart-logo.svg" alt="">
-                                    </a>
-                                </div>
-                                <div class="navbar-vertical-content flex-grow-1" data-simplebar="">
-                                    <ul class="navbar-nav flex-column" id="sideNavbar">
+                    <div class="px-4 py-5">
+                        <a href="/" class="navbar-brand">
+                            <img src="/media/logo/removebg-logo-horizontal.svg" style="width: 160px" alt=""/>
+                        </a>
+                    </div>
+                    <div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+                        <ul class="navbar-nav flex-column" id="sideNavbar">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon"> <i class="bi bi-house"></i></span>
+                                        <span class="nav-link-text">대시보드</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item mt-6 mb-3">
+                                <hr/>
+                            </li>
 
-                                        <li class="nav-item ">
-                                            <a class="nav-link  active " href="/" >
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-icon"> <i class="bi bi-house"></i></span>
-                                                    <span class="nav-link-text">대시보드</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item mt-6 mb-3">
-
-                                                <hr>
-                                        <li class="nav-item ">
-                                            <a class="nav-link "  href="/users">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-icon"> <i class="bi bi-person"></i></span>
-                                                    <span class="nav-link-text">회원 관리</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item ">
-                                            <a class="nav-link " href="/restaurants">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-icon"> <img src="/assets/images/admin-icon/admin-restaurant.png" style="width:1rem;height:1rem"></span>
-                                                    <span class="nav-link-text">식당 관리</span>
-                                                </div>
-                                            </a>
-                                        </li>
+                            <li class="nav-item">
+                                <a
+                                        class="nav-link collapsed"
+                                        href="#"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#navCategoriesUsers"
+                                        aria-expanded="false"
+                                        aria-controls="navCategoriesUsers"
+                                >
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon"> <i class="bi bi-chat-right-text"></i></span>
+                                        <span class="nav-link-text">회원 관리</span>
+                                    </div>
+                                </a>
+                                <div id="navCategoriesUsers" class="collapse" data-bs-parent="#sideNavbar">
+                                    <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link   collapsed " href="#"
-                                                data-bs-toggle="collapse" data-bs-target="#navCategoriesReviews" aria-expanded="false"
-                                                aria-controls="navCategoriesReviews">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-icon"> <i class="bi bi-chat-right-text"></i></span>
-                                                    <span class="nav-link-text">리뷰 관리</span>
-                                                </div>
-                                            </a>
-                                            <div id="navCategoriesReviews" class="collapse "
-                                                data-bs-parent="#sideNavbar">
-                                                <ul class="nav flex-column">
-                                                    <li class="nav-item ">
-                                                        <a class="nav-link "
-                                                            href="/reviews">
-                                                            리뷰 목록
-                                                        </a>
-                                                    </li>
-                                                    <!-- Nav item -->
-                                                    <li class="nav-item ">
-                                                        <a class="nav-link "
-                                                            href="/reviews/tags">
-                                                            리뷰 태그
-
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <a class="nav-link" href="/users"> 회원 목록 </a>
                                         </li>
-
-
+                                        <!-- Nav item -->
                                         <li class="nav-item">
-                                            <a class="nav-link   collapsed " href="#"
-                                               data-bs-toggle="collapse" data-bs-target="#navCategoriesPromotion" aria-expanded="false"
-                                               aria-controls="navCategoriesPromotion">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-icon"> <i class="bi bi-gift"></i></span>
-                                                    <span class="nav-link-text">프로모션 관리</span>
-                                                </div>
-                                            </a>
-                                            <div id="navCategoriesPromotion" class="collapse "
-                                                 data-bs-parent="#sideNavbar">
-                                                <ul class="nav flex-column">
-                                                    <li class="nav-item ">
-                                                        <a class="nav-link "
-                                                           href="/events">
-                                                            이벤트 관리
-                                                        </a>
-                                                    </li>
-                                                    <!-- Nav item -->
-                                                    <li class="nav-item ">
-                                                        <a class="nav-link "
-                                                           href="/coupon">
-                                                            쿠폰 관리
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <a class="nav-link" href="/admins"> 관리자 목록 </a>
                                         </li>
-
-                                        <li class="nav-item ">
-                                            <a class="nav-link " href="/products">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-icon"> <i class="bi bi-cart"></i></span>
-                                                    <span class="nav-link-text">상점 관리</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item ">
-                                            <a class="nav-link " href="/community">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-icon"> <i class="bi bi-people-fill"></i></span>
-                                                    <span class="nav-link-text">커뮤니티 관리</span>
-                                                </div>
-                                            </a>
-                                        </li>
-
-
                                     </ul>
-
-
                                 </div>
-                            </div>
-                            </nav>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/restaurants">
+                                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                          <img src="/assets/images/admin-restaurant.png" th:src="@{/assets/images/admin-restaurant.png}" style="width:1.3rem;height:1.3rem">
+
+                      </span>
+                                        <span class="nav-link-text">식당 관리</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a
+                                        class="nav-link collapsed"
+                                        href="#"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#navCategoriesReviews"
+                                        aria-expanded="false"
+                                        aria-controls="navCategoriesReviews"
+                                >
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon"> <i class="bi bi-chat-right-text"></i></span>
+                                        <span class="nav-link-text">리뷰 관리</span>
+                                    </div>
+                                </a>
+                                <div id="navCategoriesReviews" class="collapse" data-bs-parent="#sideNavbar">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/reviews"> 리뷰 목록 </a>
+                                        </li>
+                                        <!-- Nav item -->
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/reviews/tags"> 리뷰 태그 </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a
+                                        class="nav-link collapsed"
+                                        href="#"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#navCategoriesPromotion"
+                                        aria-expanded="false"
+                                        aria-controls="navCategoriesPromotion"
+                                >
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon"> <i class="bi bi-gift"></i></span>
+                                        <span class="nav-link-text">프로모션 관리</span>
+                                    </div>
+                                </a>
+                                <div id="navCategoriesPromotion" class="collapse" data-bs-parent="#sideNavbar">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/events"> 이벤트 관리 </a>
+                                        </li>
+                                        <!-- Nav item -->
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/coupons"> 쿠폰 관리 </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/products">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon"> <i class="bi bi-cart"></i></span>
+                                        <span class="nav-link-text">상점 관리</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
 
 
 
-                            <nav class="navbar-vertical-nav offcanvas offcanvas-start navbar-offcanvac" tabindex="-1" id="offcanvasExample" >
-                                <div class="navbar-vertical">
-                                                <div class="px-4 py-5 d-flex justify-content-between align-items-center">
-                                                    <a href="../index.html" class="navbar-brand">
-                                                        <img src="../assets/images/logo/freshcart-logo.svg" alt="">
-                                                    </a>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                                </div>
-                                                <div class="navbar-vertical-content flex-grow-1" data-simplebar="">
-                                                    <ul class="navbar-nav flex-column">
-                                                        <li class="nav-item ">
-                                                            <a class="nav-link  active " href="/" >
-                                                                <div class="d-flex align-items-center">
-                                                                    <span class="nav-link-icon"> <i class="bi bi-house"></i></span>
-                                                                    <span>대시보드</span>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item mt-6 mb-3">
-                                                        <li class="nav-item ">
-                                                            <a class="nav-link "  href="/users">
-                                                                <div class="d-flex align-items-center">
-                                                                    <span class="nav-link-icon"> <i class="bi bi-cart"></i></span>
-                                                                    <span class="nav-link-text">회원 관리</span>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item ">
-                                                            <a class="nav-link " href="/restaurants">
-                                                                <div class="d-flex align-items-center">
-                                                                    <span class="nav-link-icon"> <img src="/assets/images/admin-icon/admin-restaurant.png" style="width:1rem;height:1rem"></span>
-                                                                    <span class="nav-link-text">식당 관리</span>
+            <nav class="navbar-vertical-nav offcanvas offcanvas-start navbar-offcanvac" tabindex="-1"
+                 id="offcanvasSidebar">
+                <div class="navbar-vertical">
+                    <div class="px-4 py-5 d-flex justify-content-between align-items-center">
+                        <a href="/" class="navbar-brand">
+                            <img src="/media/logo/removebg-logo-horizontal.svg" style="width: 160px;" alt=""/>
+                        </a>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+                        <ul class="navbar-nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon"> <i class="bi bi-house"></i></span>
+                                        <span>대시보드</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item mt-6 mb-3"></li>
+                            <li class="nav-item">
+                                <a
+                                        class="nav-link collapsed"
+                                        href="#"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#navUsers"
+                                        aria-expanded="false"
+                                        aria-controls="navUsers"
+                                >
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon"> <i class="bi bi-chat-right-text"></i></span>
+                                        <span class="nav-link-text">회원 관리</span>
+                                    </div>
+                                </a>
+                                <div id="navUsers" class="collapse" data-bs-parent="#sideNavbar">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/users"> 회원 목록 </a>
+                                        </li>
+                                        <!-- Nav item -->
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/admins"> 관리자 목록 </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/restaurants">
+                                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                          <img src="/assets/images/admin-restaurant.png" th:src="@{/assets/images/admin-restaurant.png}" style="width:1.3rem;height:1.3rem">
 
-                                                                </div>
-                                                            </a>
-                                                        </li>
+                      </span>
+                                        <span class="nav-link-text">식당 관리</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a
+                                        class="nav-link collapsed"
+                                        href="#"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#navReviews"
+                                        aria-expanded="false"
+                                        aria-controls="navReviews"
+                                >
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon"> <i class="bi bi-chat-right-text"></i></span>
+                                        <span class="nav-link-text">리뷰 관리</span>
+                                    </div>
+                                </a>
+                                <div id="navReviews" class="collapse" data-bs-parent="#sideNavbar">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/reviews"> 리뷰 목록 </a>
+                                        </li>
+                                        <!-- Nav item -->
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/reviews/tags"> 리뷰 태그 </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
-                                                        <li class="nav-item">
-                                                            <a class="nav-link   collapsed " href="#"
-                                                                data-bs-toggle="collapse" data-bs-target="#navReviews" aria-expanded="false"
-                                                                aria-controls="navReviews">
-                                                                <div class="d-flex align-items-center">
-                                                                    <span class="nav-link-icon"> <i class="bi bi-chat-right-text"></i></span>
-                                                                    <span class="nav-link-text">리뷰 관리</span>
-                                                                </div>
-                                                            </a>
-                                                            <div id="navReviews" class="collapse "
-                                                                data-bs-parent="#sideNavbar">
-                                                                <ul class="nav flex-column">
-                                                                    <li class="nav-item ">
-                                                                        <a class="nav-link "
-                                                                            href="/reviews">
-                                                                            리뷰 목록
-                                                                        </a>
-                                                                    </li>
-                                                                    <!-- Nav item -->
-                                                                    <li class="nav-item ">
-                                                                        <a class="nav-link "
-                                                                            href="/reviews/tags">
-                                                                            리뷰 태그
+                            <li class="nav-item">
+                                <a
+                                        class="nav-link collapsed"
+                                        href="#"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#navPromotion"
+                                        aria-expanded="false"
+                                        aria-controls="navPromotion"
+                                >
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon"> <i class="bi bi-gift"></i></span>
+                                        <span class="nav-link-text">프로모션 관리</span>
+                                    </div>
+                                </a>
+                                <div id="navPromotion" class="collapse" data-bs-parent="#sideNavbar">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/events"> 이벤트 관리 </a>
+                                        </li>
+                                        <!-- Nav item -->
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/coupons"> 쿠폰 관리 </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </li>
-
-
-
-
-                                                        <li class="nav-item">
-                                                            <a class="nav-link   collapsed " href="#"
-                                                                data-bs-toggle="collapse" data-bs-target="#navPromotion" aria-expanded="false"
-                                                                aria-controls="navPromotion">
-                                                                <div class="d-flex align-items-center">
-                                                                    <span class="nav-link-icon"> <i class="bi bi-gift"></i></span>
-                                                                    <span class="nav-link-text">프로모션 관리</span>
-                                                                </div>
-                                                            </a>
-                                                            <div id="navPromotion" class="collapse "
-                                                                data-bs-parent="#sideNavbar">
-                                                                <ul class="nav flex-column">
-                                                                    <li class="nav-item ">
-                                                                        <a class="nav-link "
-                                                                            href="/events">
-                                                                            이벤트 관리
-                                                                        </a>
-                                                                    </li>
-                                                                    <!-- Nav item -->
-                                                                    <li class="nav-item ">
-                                                                        <a class="nav-link "
-                                                                            href="/coupon">
-                                                                            쿠폰 관리
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </li>
-
-
-
-
-
-                                                        <li class="nav-item ">
-                                                            <a class="nav-link " href="/products">
-                                                                <div class="d-flex align-items-center">
-                                                                    <span class="nav-link-icon"> <i class="bi bi-cart"></i></span>
-                                                                    <span class="nav-link-text">상점 관리</span>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-
-                                                        <li class="nav-item ">
-                                                            <a class="nav-link " href="/community">
-                                                                <div class="d-flex align-items-center">
-                                                                    <span class="nav-link-icon"> <i class="bi bi-people-fill"></i></span>
-                                                                    <span class="nav-link-text">커뮤니티 관리</span>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-
-
-                                                    </ul>
-                                                </div>
-                                            </div>
-
-                                            </nav>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/products">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon"> <i class="bi bi-cart"></i></span>
+                                        <span class="nav-link-text">상점 관리</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
 
                         <div th:insert="${content}" style="margin-top:5rem;margin-left:10rem"></div>
 
@@ -374,14 +359,14 @@
     </div>
 
     <!-- Libs JS -->
-<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/libs/simplebar/dist/simplebar.min.js"></script>
+<script src="../assets/libs/jquery/dist/jquery.min.js" th:src="@{/assets/libs/jquery/dist/jquery.min.js}"></script>
+<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js" th:src="@{/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js}" ></script>
+<script src="../assets/libs/simplebar/dist/simplebar.min.js" th:src="@{/assets/libs/simplebar/dist/simplebar.min.js}"></script>
 
 <!-- Theme JS -->
-<script src="../assets/js/theme.min.js"></script>
-    <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-    <script src="../assets/js/vendors/chart.js"></script>
+<script src="../assets/js/theme.min.js" th:src="@{/assets/js/theme.min.js}"></script>
+    <script src="../assets/libs/apexcharts/dist/apexcharts.min.js" th:src="@{/assets/libs/apexcharts/dist/apexcharts.min.js}"></script>
+    <script src="../assets/js/vendors/chart.js" th:src="@{/assets/js/vendors/chart.js}"></script>
 
 </body>
 

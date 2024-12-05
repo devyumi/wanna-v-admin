@@ -14,7 +14,7 @@ public interface RestaurantRepository {
 
     Optional<Restaurant> findById(Long id);
 
-    List<Restaurant> findAll(RestaurantSearchCond restaurantSearchCond);
+    List<Restaurant> findAll(RestaurantSearchCond restaurantSearchCond , String search);
 
     List<Restaurant> findAllAdmin(RestaurantAdminSearchCond restaurantAdminSearchCond);
 

@@ -1,8 +1,10 @@
 package com.ssg.adminportal.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssg.adminportal.common.BusinessStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import java.time.LocalDate;
@@ -30,7 +32,7 @@ public class Restaurant {
   private String contact; //연락처
 
   @Transient
-  @NumberFormat(pattern = "#,###.##")
+  @NumberFormat(pattern = "#,###.#")
   private Double averageRating;
 
   @Transient
@@ -56,18 +58,27 @@ public class Restaurant {
 
   private String description; //설명
 
+  @OneToMany(mappedBy = "restaurant")
+  private List<Seat> seats = new ArrayList<>();
+
+
 
   @Column(name = "created_at")
+  @DateTimeFormat(pattern = "yyyy-mm-dd")
   private LocalDate createdAt; //생성일
 
   @Column(name = "updated_at")
+  @DateTimeFormat(pattern = "yyyy-mm-dd")
   private LocalDate updatedAt; //수정일
 
+
   @Column(name = "reservation_time_gap")
-  private Integer reservationTimeGap;
+  private int reservationTimeGap;
 
   @Column(name = "is_penalty")
   private Boolean isPenalty;
+
+//  private Point point;
 
 
   @Enumerated(EnumType.STRING)
@@ -79,19 +90,24 @@ public class Restaurant {
 
 
   @OneToMany(mappedBy = "restaurant")
+  @JsonIgnore
   private List<Review> reviews = new ArrayList<>(); //해당 식당에서 작성한 사용자들의 리뷰를 담을  것임
 
 
   //오직 Restaurant 부모에게만 Food는 의존되므로 cascade , orphanRemoval 걸었음 , cascade , orphanRemoval 특징 : 리포지토리 없어도 됨 즉 em.perist(BusinessDay)하지 않아도 연쇄적으로 알아서 저장됨 , 생명주기가 전부 rESTAURANT에 의존되었기 때문!
   @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private List<BusinessDay> businessDays = new ArrayList<>();
 
 
   //오직 Restaurant 부모에게만 Food는 의존되므로 cascade , orphanRemoval 걸었음 ,
   @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private List<Food> foods = new ArrayList<>();
 
+
   @OneToMany(mappedBy = "restaurant")
+  @JsonIgnore
   private List<Likes> likes = new ArrayList<>();
 
 
@@ -215,7 +231,7 @@ public class Restaurant {
   }
 
   //수정 메서드
-  public void changeRestaurant(String businessNum, String restaurantName, Set<String> moodTypes,
+  public void changeRestaurant(String description , String contact, String businessNum, String restaurantName, Set<String> moodTypes,
       Set<String> containFoodTypes, Set<String> provideServiceTypes, Set<String> restaurantTypes,
       String image, String roadNameAddress, String landLotAddress, String zipcode,
       String detailsAddress, Boolean canPark, int reservationTimeGap,

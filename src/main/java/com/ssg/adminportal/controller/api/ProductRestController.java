@@ -31,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductRestController {
 
     private final ProductService productService;
-    final Long adminId = 1L; // Security 적용 후 삭제 예정
+    Long adminId = 1L; // Security 적용 후 삭제 예정
 
     @GetMapping()
     public ResponseEntity<Map<String, Object>> filterProductList(

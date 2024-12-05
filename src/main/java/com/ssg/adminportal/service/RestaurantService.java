@@ -24,12 +24,12 @@ public interface RestaurantService {
 
     List<Restaurant> findSimilarRestaurants(Long id);
 
-    List<Restaurant> findRestaurants(RestaurantSearchCond restaurantSearchCond);
+    List<Restaurant> findRestaurants(RestaurantSearchCond restaurantSearchCond, String search);
 
 
     BusinessDay findToday(Restaurant restaurant);
 
-    void updateRestaurant(Long id , RestaurantUpdateDTO restaurantUpdateDto);
+    void updateRestaurant(RestaurantUpdateDTO restaurantUpdateDto);
 
     void updateBusinessStatus();
 

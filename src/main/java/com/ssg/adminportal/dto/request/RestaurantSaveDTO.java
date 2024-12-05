@@ -24,7 +24,7 @@ public class RestaurantSaveDTO {
   private String roadNameAddress;
   private String landLotAddress;
   private String zipcode;
-  private String detailsAddress;
+  private String detailAddress;
   private Boolean canPark;
   private String reservationTimeGap;
   private Boolean isPenalty;
@@ -44,7 +44,7 @@ public class RestaurantSaveDTO {
   /**
    * Food DTO
    */
-  private List<FoodSaveDTO> foodSaveDTOList = new ArrayList<>();
+  private List<FoodSaveDTO> foodSaveDtoList = new ArrayList<>();
 
 
 
