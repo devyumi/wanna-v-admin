@@ -32,10 +32,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 const row = document.createElement('tr');
 
                 row.innerHTML = `
-                  <td class="text-align: center">${admin.id}</td>
-                  <td class="text-align: center"><a href="/admins/${admin.id}">${admin.name}</a></td>
-                  <td class="text-align: center">${admin.username}</td>                
-                  <td class="text-align: center">${admin.role}</td>                            
+                  <td style="text-align: center;">${admin.id}</td>
+                  <td style="text-align: center;"><a href="/admins/${admin.id}">${admin.name}</a></td>
+                  <td style="text-align: center;">${admin.username}</td>                
+                  <td style="text-align: center;">${admin.role}</td>                            
                   `;
 
                 tbody.appendChild(row);
