@@ -43,3 +43,10 @@ out/
 #/gradle/
 /src/test/
 /src/main/generated/
+
+### Custom ###
+gradle/wrapper
+.gitattributes
+gradlew
+gradlew.bat
+settings.gradle
