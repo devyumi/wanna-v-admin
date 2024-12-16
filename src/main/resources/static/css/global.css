@@ -1,0 +1,14 @@
+main {
+  padding: 30px;
+  margin-top: 72px;
+  margin-left: 280px;
+}
+
+@media (max-width: 1200px) {
+  main {
+    padding: 30px;
+    margin-top: 72px;
+    margin-left: 0;
+    transition: margin-left 0.3s ease-in-out;
+  }
+}

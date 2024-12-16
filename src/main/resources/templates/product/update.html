@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/common/upload-box.css">
+  <script defer src="/js/product/update.js"></script>
+  <title>Product Save Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
+  <div class="container">
+    <form id="productUpdateForm">
+      <div class="row mb-8">
+        <div class="col-md-12">
+          <div class="d-md-flex justify-content-between align-items-center">
+            <div>
+              <h2>상품 수정</h2>
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/products" class="text-inherit">상점 관리</a></li>
+                <li class="breadcrumb-item active" aria-current="page">상품 수정</li>
+              </ol>
+              <h2 th:text="'# ' + ${product.id}" id="productId" name="productId"
+                  style="margin-top: 25px;"></h2>
+            </div>
+            <div>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                상품 수정
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="card mb-6 card-lg">
+          <div class="card-body p-6 ">
+            <div class="row mb-3">
+              <div class="col-12">
+                <label class="form-label">상품명</label>
+                <input type="text" id="name" name="name" class="form-control"
+                       th:value="${product.name}" required>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="form-label">원가</label>
+                <input type="number" id="costPrice" name="cost-price" class="form-control"
+                       th:value="${product.costPrice}" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label">판매가</label>
+                <input type="number" id="sellingPrice" name="selling-price" class="form-control"
+                       th:value="${product.sellingPrice}" required>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="form-label">할인율</label>
+                <input type="number" id="discountRate" name="discount-rate" class="form-control"
+                       th:value="${product.discountRate}">
+              </div>
+              <div class="col-6" id="formArea">
+                <label class="form-label">카테고리</label>
+                <select id="category" name="category" class="form-select" required>
+                  <option value="MK" th:selected="${product.category == 'MK'}">밀키트</option>
+                  <option value="C" th:selected="${product.category == 'C'}">화장품</option>
+                  <option value="S" th:selected="${product.category == 'S'}">간식</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <label class="form-label">재고</label>
+                <input type="number" id="stock" name="stock" class="form-control"
+                       th:value="${product.stock}" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label">상태</label>
+                <div class="pt-2 pb-2">
+                  <label class="form-check form-check-inline">
+                    <input type="radio" id="statusFalse" name="isActive" value="inactive"
+                           class="form-check-input"
+                           th:checked="${product.isActive == false}">
+                    비활성화
+                  </label>
+                  <label class="form-check form-check-inline">
+                    <input type="radio" id="statusTrue" name="isActive" value="active"
+                           class="form-check-input"
+                           th:checked="${product.isActive == true}">
+                    활성화
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 상품 이미지 업로드 -->
+            <div class="mb-3">
+              <h4 class="mb-3 h5">
+                상품 이미지
+                <small class="text-muted ms-2">※ 상품 이미지는 1장만 업로드할 수 있습니다.</small>
+              </h4>
+              <div class="card">
+                <div class="d-flex justify-content-center align-items-center">
+                  <h6 class="fw-bold text-center my-3">사진을 추가해주세요.</h6>
+                  <h3>
+                    <label class="ms-1" for="chooseImage">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                           fill="currentColor" class="bi bi-plus-square ms-2" viewBox="0 0 16 16"
+                           style="color: #5AAB6F">
+                        <path
+                            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path
+                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                      </svg>
+                    </label>
+                  </h3>
+                </div>
+                <div class="input-group image-upload-container mb-3">
+                  <div class="upload-box">
+                    <div id="drop-image" class="drag-file">
+                      <input class="file" id="chooseImage" name="updateImage" type="file" multiple
+                             onchange="dropFile.handleProductImgFiles(this.files)"
+                             accept="image/png, image/jpeg, image/gif">
+                    </div>
+                    <div id="image-previews" class="preview-container"><!-- 미리보기 표시 영역 --></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 상품 설명 이미지 업로드 -->
+            <div class="mb-3">
+              <h4 class="mb-3 h5">
+                상품 설명
+                <small class="text-muted ms-2">※ 상품 설명 이미지는 최대 3장까지 업로드할 수 있습니다.</small>
+              </h4>
+              <div class="card">
+                <div class="d-flex justify-content-center align-items-center">
+                  <h6 class="fw-bold text-center my-3">상품 설명 사진을 추가해주세요.</h6>
+                  <h3>
+                    <label class="ms-1" for="chooseDescription">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                           fill="currentColor" class="bi bi-plus-square ms-2" viewBox="0 0 16 16"
+                           style="color: #5AAB6F">
+                        <path
+                            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path
+                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                      </svg>
+                    </label>
+                  </h3>
+                </div>
+                <div class="input-group image-upload-container mb-3">
+                  <div class="upload-box">
+                    <div id="drop-description" class="drag-file">
+                      <input class="file" id="chooseDescription" name="updateDescription" type="file"
+                             multiple
+                             onchange="dropFile.handleDescriptionFiles(this.files)"
+                             accept="image/png, image/jpeg, image/gif">
+                    </div>
+                    <div id="description-previews" class="preview-container">
+                      <!-- 미리보기 표시 영역 --></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="confirmModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false"
+           tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">상품 정보 수정</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              상품의 정보를 정말로 수정하시겠습니까?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소</button>
+              <button type="submit" class="btn btn-primary" id="btn-modify">수정</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<head>
+  <meta charset="UTF-8">
+  <script defer type="module" src="/js/user/users.js"></script>
+  <title>Admin detail Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
+  <div class="container">
+    <div class="row mb-8">
+      <div class="col-md-12">
+        <h2>관리자 상세 조회</h2>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/admins" class="text-inherit">회원 관리</a></li>
+            <li class="breadcrumb-item active" aria-current="page">관리자 상세 조회</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card mb-6 card-lg">
+        <div class="card-body p-6 ">
+          <div class="row">
+            <div class="mb-3 col-lg-6 mt-5">
+              <label class="form-label">아이디</label>
+              <input type="text" class="form-control" th:value="${admin.username}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6 mt-5">
+              <label class="form-label">이메일</label>
+              <input type="text" class="form-control" th:value="${admin.email}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">이름</label>
+              <input type="text" class="form-control" th:value="${admin.name}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">권한</label>
+              <input type="text" class="form-control" th:value="${admin.role}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">최초 등록 시각</label>
+              <input type="text" class="form-control" id="createdAt" th:value="${admin.createdAt}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">최종 수정 시각</label>
+              <input type="text" class="form-control" id="updatedAt" th:value="${admin.updatedAt != null ? admin.updatedAt : ''}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label for="exampleFormControlTextarea1" class="form-label">특이사항</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

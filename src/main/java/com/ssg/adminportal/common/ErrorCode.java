@@ -1,8 +1,15 @@
 package com.ssg.adminportal.common;
 
 public enum ErrorCode {
-    EXAMPLE_ERROR(404, "index.css"),
-    INVALID_VALUE(400, "Invalid value index.css error message️");
+    PRODUCT_NOT_FOUND(404, "Product not found"), // 상품 조회 실패
+    ADMIN_NOT_FOUND(404, "Admin not found"),  // 직원 조회 실패
+    INVALID_VALUE(400, "Invalid value provided"),
+    NON_EXISTENT_ID(404, "The ID does not exist"),
+    INVALID_REQUEST_TYPE(400, "Invalid request type provided"),
+    DATE_CALCULATION_ERROR(500, "An error occurred while calculating the date range"),
+    SENTIMENT_ANALYSIS_FAILURE(500, "An review sentiment analysis failed"),
+    CLOVA_API_CLIENT_ERROR(400, "Clova Studio API returned a client error"),
+    CLOVA_API_SERVER_ERROR(500, "Clova Studio API returned a server error");
 
     private int code;
     private String message;
@@ -18,5 +25,9 @@ public enum ErrorCode {
 
     public String getMessage() {
         return message;
+    }
+
+    public String getError() {
+        return "[" + code + "]" + " " + message;
     }
 }

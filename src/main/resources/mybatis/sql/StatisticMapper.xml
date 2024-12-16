@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssg.adminportal.mapper.StatisticMapper">
+  <insert id="insertMonthlyStatistics">
+    <![CDATA[
+      INSERT INTO Statistic (year, month, value, category, type, createdAt)
+      WITH DateParams AS (
+        SELECT
+            IF(MONTH(CURDATE()) = 1, YEAR(CURDATE()) - 1, YEAR(CURDATE())) AS target_year,
+            IF(MONTH(CURDATE()) = 1, 12, MONTH(CURDATE()) - 1)             AS target_month
+        ),
+      ContractStats AS (
+        SELECT YEAR(DATE_ADD(start_date, INTERVAL 9 HOUR))  AS year
+             , MONTH(DATE_ADD(start_date, INTERVAL 9 HOUR)) AS month
+             , SUM(IFNULL(contract_fee, 0))                 AS totalContractFee
+        FROM Contract
+        WHERE YEAR(DATE_ADD(start_date, INTERVAL 9 HOUR)) = (SELECT target_year FROM DateParams)
+          AND MONTH(DATE_ADD(start_date, INTERVAL 9 HOUR)) = (SELECT target_month FROM DateParams)
+        GROUP BY YEAR(DATE_ADD(start_date, INTERVAL 9 HOUR)), MONTH(DATE_ADD(start_date, INTERVAL 9 HOUR))
+      ),
+      AdvertisementStats AS (
+        SELECT YEAR(DATE_ADD(contract_date, INTERVAL 9 HOUR))  AS year
+             , MONTH(DATE_ADD(contract_date, INTERVAL 9 HOUR)) AS month
+             , SUM(IFNULL(advertising_fee, 0))                 AS totalAdvertisingFee
+        FROM BannerRestaurant
+        WHERE YEAR(DATE_ADD(contract_date, INTERVAL 9 HOUR)) = (SELECT target_year FROM DateParams)
+          AND MONTH(DATE_ADD(contract_date, INTERVAL 9 HOUR)) = (SELECT target_month FROM DateParams)
+        GROUP BY YEAR(DATE_ADD(contract_date, INTERVAL 9 HOUR)), MONTH(DATE_ADD(contract_date, INTERVAL 9 HOUR))
+      ),
+      PaymentStats AS (
+        SELECT YEAR(DATE_ADD(approved_at, INTERVAL 9 HOUR))  AS year
+             , MONTH(DATE_ADD(approved_at, INTERVAL 9 HOUR)) AS month
+             , SUM(IFNULL(final_price, 0))                   AS totalPayment
+        FROM Payment
+        WHERE canceled_at IS NULL
+          AND YEAR(DATE_ADD(approved_at, INTERVAL 9 HOUR)) = (SELECT target_year FROM DateParams)
+          AND MONTH(DATE_ADD(approved_at, INTERVAL 9 HOUR)) = (SELECT target_month FROM DateParams)
+        GROUP BY YEAR(DATE_ADD(approved_at, INTERVAL 9 HOUR)), MONTH(DATE_ADD(approved_at, INTERVAL 9 HOUR))
+      )
+      (
+        SELECT target_year
+             , target_month
+             , COUNT(id)
+             , 'REVIEW'
+             , 'M'
+             , NOW()
+        FROM Review,
+             DateParams
+        WHERE YEAR(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_year
+          AND MONTH(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_month
+        GROUP BY target_year, target_month
+
+        UNION ALL
+
+        SELECT target_year
+             , target_month
+             , COUNT(DISTINCT user_id)
+             , 'UNIQUE_REVIEW'
+             , 'M'
+             , NOW()
+        FROM Review,
+             DateParams
+        WHERE YEAR(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_year
+          AND MONTH(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_month
+        GROUP BY target_year, target_month
+
+        UNION ALL
+
+        SELECT target_year
+             , target_month
+             , COUNT(id)
+             , 'NEW_MEMB'
+             , 'M'
+             , NOW()
+        FROM User,
+             DateParams
+        WHERE YEAR(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_year
+          AND MONTH(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_month
+        GROUP BY target_year, target_month
+
+        UNION ALL
+
+        SELECT target_year
+             , target_month
+             , COUNT(id)
+             , 'DELETED_MEMB'
+             , 'M'
+             , NOW()
+        FROM User,
+             DateParams
+        WHERE is_unregistered = 1
+          AND YEAR(DATE_ADD(unregistered_at, INTERVAL 9 HOUR)) = target_year
+          AND MONTH(DATE_ADD(unregistered_at, INTERVAL 9 HOUR)) = target_month
+        GROUP BY target_year, target_month
+
+        UNION ALL
+
+        SELECT YEAR(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
+             , MONTH(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
+             , COUNT(id)
+             , 'ACTIVE_MEMB'
+             , 'M'
+             , NOW()
+        FROM User
+        WHERE is_unregistered = 0
+          AND created_at <= LAST_DAY(DATE_SUB(CURDATE(), INTERVAL 1 MONTH))
+
+        UNION ALL
+
+        SELECT target_year
+             , target_month
+             , COUNT(id)
+             , 'RESTAURANT'
+             , 'M'
+             , NOW()
+        FROM Restaurant,
+             DateParams
+        WHERE YEAR(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_year
+          AND MONTH(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_month
+        GROUP BY target_year, target_month
+
+        UNION ALL
+
+        SELECT target_year
+             , target_month
+             , COUNT(id)
+             , 'RESERVATION'
+             , 'M'
+             , NOW()
+        FROM Reservation,
+             DateParams
+        WHERE YEAR(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_year
+          AND MONTH(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_month
+        GROUP BY target_year, target_month
+
+        UNION ALL
+
+        SELECT target_year
+             , target_month
+             , COUNT(id)
+             , 'CANCELLED_RESERVATION'
+             , 'M'
+             , NOW()
+        FROM Reservation,
+             DateParams
+        WHERE status = 0
+          AND YEAR(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_year
+          AND MONTH(DATE_ADD(created_at, INTERVAL 9 HOUR)) = target_month
+        GROUP BY target_year, target_month
+
+        UNION ALL
+
+        SELECT dp.target_year
+             , dp.target_month
+             , SUM(IFNULL(cs.totalContractFee, 0)) + SUM(IFNULL(ads.totalAdvertisingFee, 0)) +
+               SUM(IFNULL(ps.totalPayment, 0))
+             , 'SALES'
+             , 'M'
+             , NOW()
+        FROM DateParams dp
+                 LEFT JOIN ContractStats cs ON dp.target_year = cs.year AND dp.target_month = cs.month
+                 LEFT JOIN AdvertisementStats ads ON dp.target_year = ads.year AND dp.target_month = ads.month
+                 LEFT JOIN PaymentStats ps ON dp.target_year = ps.year AND dp.target_month = ps.month
+        GROUP BY dp.target_year, dp.target_month
+      )
+    ]]>
+  </insert>
+
+  <insert id="insertWeeklyStatistics">
+    <![CDATA[
+      INSERT INTO Statistic (year, week, value, category, type, createdAt)
+      WITH DateParams AS (
+        SELECT
+          YEAR(DATE_SUB(CURDATE(), INTERVAL (WEEKDAY(CURDATE()) + 7) DAY)) AS target_year,
+          WEEK(DATE_SUB(CURDATE(), INTERVAL (WEEKDAY(CURDATE()) + 7) DAY)) AS target_week,
+          DATE_SUB(CURDATE(), INTERVAL (WEEKDAY(CURDATE()) + 7) DAY)       AS last_monday,
+          DATE_SUB(CURDATE(), INTERVAL (WEEKDAY(CURDATE()) + 1) DAY)       AS last_sunday
+      ),
+        ContractStats AS (
+          SELECT YEAR(DATE_ADD(start_date, INTERVAL 9 HOUR)) AS year
+               , WEEK(DATE_ADD(start_date, INTERVAL 9 HOUR)) AS week
+               , SUM(IFNULL(contract_fee, 0))                AS totalContractFee
+          FROM Contract
+          WHERE DATE_ADD(start_date, INTERVAL 9 HOUR)
+              BETWEEN (SELECT last_monday FROM DateParams)
+                  AND (SELECT last_sunday FROM DateParams)
+          GROUP BY YEAR(DATE_ADD(start_date, INTERVAL 9 HOUR))
+                 , WEEK(DATE_ADD(start_date, INTERVAL 9 HOUR))
+      ),
+        AdvertisementStats AS (
+          SELECT YEAR(DATE_ADD(contract_date, INTERVAL 9 HOUR)) AS year
+               , WEEK(DATE_ADD(contract_date, INTERVAL 9 HOUR)) AS week
+               , SUM(IFNULL(advertising_fee, 0))                AS totalAdvertisingFee
+          FROM BannerRestaurant
+          WHERE DATE_ADD(contract_date, INTERVAL 9 HOUR)
+              BETWEEN (SELECT last_monday FROM DateParams)
+                  AND (SELECT last_sunday FROM DateParams)
+          GROUP BY YEAR(DATE_ADD(contract_date, INTERVAL 9 HOUR))
+                 , WEEK(DATE_ADD(contract_date, INTERVAL 9 HOUR))
+      ),
+        PaymentStats AS (
+          SELECT YEAR(DATE_ADD(approved_at, INTERVAL 9 HOUR)) AS year
+             , WEEK(DATE_ADD(approved_at, INTERVAL 9 HOUR)) AS week
+             , SUM(IFNULL(final_price, 0))                  AS totalPayment
+          FROM Payment
+          WHERE canceled_at IS NULL
+            AND DATE_ADD(approved_at, INTERVAL 9 HOUR)
+              BETWEEN (SELECT last_monday FROM DateParams)
+                  AND (SELECT last_sunday FROM DateParams)
+        GROUP BY YEAR(DATE_ADD(approved_at, INTERVAL 9 HOUR))
+               , WEEK(DATE_ADD(approved_at, INTERVAL 9 HOUR)))
+      (
+        SELECT target_year
+             , target_week
+             , COUNT(id)
+             , 'REVIEW'
+             , 'W'
+             , NOW()
+        FROM Review,
+             DateParams
+        WHERE created_at BETWEEN last_monday AND last_sunday
+        GROUP BY target_year, target_week
+
+        UNION ALL
+
+        SELECT target_year
+             , target_week
+             , COUNT(DISTINCT user_id)
+             , 'UNIQUE_REVIEW'
+             , 'W'
+             , NOW()
+        FROM Review,
+             DateParams
+        WHERE created_at BETWEEN last_monday AND last_sunday
+        GROUP BY target_year, target_week
+
+        UNION ALL
+
+        SELECT target_year
+             , target_week
+             , COUNT(id)
+             , 'NEW_MEMB'
+             , 'W'
+             , NOW()
+        FROM User,
+             DateParams
+        WHERE created_at BETWEEN last_monday AND last_sunday
+        GROUP BY target_year, target_week
+
+        UNION ALL
+
+        SELECT target_year
+             , target_week
+             , COUNT(id)
+             , 'DELETED_MEMB'
+             , 'W'
+             , NOW()
+        FROM User,
+             DateParams
+        WHERE is_unregistered = 1
+          AND unregistered_at BETWEEN last_monday AND last_sunday
+        GROUP BY target_year, target_week
+
+        UNION ALL
+
+        SELECT YEAR(DATE_SUB(CURDATE(), INTERVAL 1 WEEK))
+             , WEEK(DATE_SUB(CURDATE(), INTERVAL 1 WEEK))
+             , COUNT(id)
+             , 'ACTIVE_MEMB'
+             , 'W'
+             , NOW()
+        FROM User
+        WHERE is_unregistered = 0
+          AND created_at <= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) + 1 DAY)
+
+        UNION ALL
+
+        SELECT target_year
+             , target_week
+             , COUNT(id)
+             , 'RESTAURANT'
+             , 'W'
+             , NOW()
+        FROM Restaurant,
+             DateParams
+        WHERE created_at BETWEEN last_monday AND last_sunday
+        GROUP BY target_year, target_week
+
+        UNION ALL
+
+        SELECT target_year
+             , target_week
+             , COUNT(id)
+             , 'RESERVATION'
+             , 'W'
+             , NOW()
+        FROM Reservation,
+             DateParams
+        WHERE created_at BETWEEN last_monday AND last_sunday
+        GROUP BY target_year, target_week
+
+        UNION ALL
+
+        SELECT target_year
+             , target_week
+             , COUNT(id)
+             , 'CANCELLED_RESERVATION'
+             , 'W'
+             , NOW()
+        FROM Reservation,
+             DateParams
+        WHERE status = 0
+          AND created_at BETWEEN last_monday AND last_sunday
+        GROUP BY target_year, target_week
+
+        UNION ALL
+
+        SELECT dp.target_year
+             , dp.target_week
+             , SUM(IFNULL(cs.totalContractFee, 0)) + SUM(IFNULL(ads.totalAdvertisingFee, 0)) +
+               SUM(IFNULL(ps.totalPayment, 0))
+             , 'SALES'
+             , 'W'
+             , NOW()
+        FROM DateParams dp
+                 LEFT JOIN ContractStats cs ON dp.target_year = cs.year AND dp.target_week = cs.week
+                 LEFT JOIN AdvertisementStats ads ON dp.target_year = ads.year AND dp.target_week = ads.week
+                 LEFT JOIN PaymentStats ps ON dp.target_year = ps.year AND dp.target_week = ps.week
+        GROUP BY dp.target_year, dp.target_week
+      )
+    ]]>
+  </insert>
+
+  <!-- 월별 통계 데이터 조회 -->
+    <select id="getMonthlyStatistics" resultType="com.ssg.adminportal.dto.StatisticDTO">
+      <![CDATA[
+        SELECT
+            year,
+            month,
+            value,
+            category,
+            type
+        FROM Statistic
+        WHERE type = 'M'
+          AND created_at BETWEEN DATE_SUB(NOW(), INTERVAL 1 YEAR) AND NOW()
+        ORDER BY year ASC, month ASC
+    ]]>
+    </select>
+
+    <!-- 주별 통계 데이터 조회 -->
+    <select id="getWeeklyStatistics" resultType="com.ssg.adminportal.dto.StatisticDTO">
+      <![CDATA[
+        SELECT
+            year,
+            week,
+            value,
+            category,
+            type
+        FROM Statistic
+        WHERE type = 'W'
+            AND created_at BETWEEN DATE_SUB(NOW(), INTERVAL 3 MONTH) AND NOW()
+        ORDER BY year ASC, week ASC
+    ]]>
+    </select>
+</mapper>

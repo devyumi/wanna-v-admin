@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<head>
+  <meta charset="UTF-8">
+  <script defer type="module" src="/js/user/user.js"></script>
+  <link rel="stylesheet" href="/css/user/user.css">
+  <title>User Detail Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
+  <div class="container">
+    <div class="row mb-8">
+      <div class="col-md-12">
+        <h2>회원 상세 조회</h2>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/users" class="text-inherit">회원 관리</a></li>
+            <li class="breadcrumb-item active" aria-current="page">회원 상세 조회</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card mb-6 card-lg">
+        <div class="card-body p-6 ">
+          <div class="mb-3 d-flex justify-content-center">
+            <img th:src="@{${user.user.profile}}" class="profile"/>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-lg-6 mt-5">
+              <label class="form-label">소셜 닉네임</label>
+              <input type="text" class="form-control" th:value="${user.user.username}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6 mt-5">
+              <label class="form-label">우편번호</label>
+            <input type="text" class="form-control"
+                   th:value="${user.user != null && user.user.address != null && user.user.address.zipCode != null ? user.user.address.zipCode : ''}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">전화번호</label>
+              <input type="text" class="form-control" th:value="${user.user.phone != null ? user.user.phone : ''}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">도로명 주소</label>
+              <input type="text" class="form-control" th:value="${user.user != null && user.user.address != null && user.user.address.roadAddress != null ? user.user.address.roadAddress : ''}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">이름</label>
+              <input type="text" class="form-control" th:value="${user.user.name != null ? user.user.name : ''}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">지번 주소</label>
+              <input type="text" class="form-control" th:value="${user.user != null && user.user.address != null && user.user.address.landLotAddress != null ? user.user.address.landLotAddress : ''}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">이메일</label>
+              <input type="text" class="form-control" th:value="${user.user.email}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">상세 주소</label>
+              <input type="text" class="form-control" th:value="${user.user != null && user.user.address != null && user.user.address.detailAddress != null ? user.user.address.detailAddress : ''}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">등급</label>
+              <input type="text" class="form-control" th:value="${user.grade}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">탈퇴 시각</label>
+              <input type="text" class="form-control" th:value="${user.user.unregisteredAt != null ? user.user.unregisteredAt : ''}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">포인트</label>
+              <input type="text" class="form-control" th:value="${user.user.point}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">탈퇴 여부</label>
+              <input type="text" class="form-control" th:value="${user.user.unregistered ? 'O' : 'X'}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">추천인 코드</label>
+              <input type="text" class="form-control" th:value="${user.user.code}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">챗봇 코드</label>
+              <input type="text" class="form-control" th:value="${user.user.chatBotCode != null ? user.user.chatBotCode : ''}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">사용자 동의 여부</label>
+              <input type="text" class="form-control" th:value="${user.user.consent ? '동의' : '비동의'}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">최초 등록 시각</label>
+              <input type="text" class="form-control" id="createdAt" th:value="${user.user.createdAt}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label class="form-label">최종 수정 시각</label>
+              <input type="text" class="form-control" id="updatedAt" th:value="${user.user.updateAt}" readonly>
+            </div>
+            <div class="mb-3 col-lg-6">
+              <label for="exampleFormControlTextarea1" class="form-label">특이사항</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<head>
+  <meta charset="UTF-8">
+  <script defer type="module" src="/js/product/products.js"></script>
+  <title>Product List Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
+
+  <div class="container">
+    <div class="row mb-8">
+      <div class="col-md-12">
+        <div class="d-md-flex justify-content-between align-items-center">
+          <div>
+            <h2>상점 관리</h2>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="#" class="text-inherit">상점 관리</a></li>
+                <li class="breadcrumb-item active" aria-current="page">상품 목록</li>
+              </ol>
+            </nav>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary"
+                    onclick="window.location.href='/products/create'">상품 등록
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-12 col-12 mb-5">
+        <div class="card h-100 card-lg">
+          <div class="p-6 d-flex">
+            <form class="me-auto" role="search">
+              <input class="form-control" id="search-input" type="search" placeholder="상품명을 입력하세요."
+                     aria-label="Search">
+            </form>
+            <div class="ms-2">
+              <select class="form-select" id="sort">
+                <option selected value="new">최신순</option>
+                <option value="name">이름순</option>
+                <option value="priceDesc">가격 높은순</option>
+                <option value="priceAsc">가격 낮은순</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table
+                  class="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap text-center">
+                <thead class="bg-light">
+                <tr>
+                  <th>ID</th>
+                  <th>상품명</th>
+                  <th>판매가</th>
+                  <th>카테고리</th>
+                  <th>재고</th>
+                  <th>활셩화 싱테</th>
+                  <th>등록일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 상품 리스트-->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="border-top d-md-flex justify-content-between align-items-center p-6">
+              <span id="pagination-info"></span>
+              <nav class="mt-2 mt-md-0">
+                <ul class="pagination mb-0" id="pagination-list">
+                  <li class="page-item" id="previous" style="display: none;"><a class="page-link"
+                                                                                href="#!">Previous</a>
+                  </li>
+                  <!-- 페이지 버튼 -->
+                  <li class="page-item" id="next" style="display: none;"><a class="page-link"
+                                                                            href="#!">Next</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

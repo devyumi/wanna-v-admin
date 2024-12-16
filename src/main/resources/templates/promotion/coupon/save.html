@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<head>
+  <meta charset="UTF-8">
+  <script defer src="/js/promotion/coupon/save.js"></script>
+  <title>Coupon Save Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
+  <div class="container">
+      <div class="row mb-8">
+        <div class="col-md-12">
+          <h2>쿠폰 등록</h2>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/events" class="text-inherit">쿠폰 관리</a></li>
+            <li class="breadcrumb-item active" aria-current="page">쿠폰 등록</li>
+          </ol>
+          <div style="display: flex; justify-content: flex-end;">
+            <button id="saveCouponButton" class="btn btn-primary">등록</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="card mb-6 card-lg">
+          <div class="card-body p-6">
+            <div class="row">
+              <div class="mb-3">
+                <label class="form-label">쿠폰 이름</label>
+                <input type="text" name="name" class="form-control">
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3">
+                <label class="form-label">이벤트</label>
+                <select class="form-select" name="eventId">
+                  <option value="">선택 안함</option>
+                  <option th:each="event : ${events}"
+                          th:value="${event.id}"
+                          th:text="${event.title}"></option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3">
+                <label class="form-label">쿠폰 타입</label>
+                <select class="form-select" id="couponTypeSelect" name="type">
+                  <option value="">쿠폰 타입</option>
+                  <option value="FIXED">정액</option>
+                  <option value="PERCENTAGE">정률</option>
+                </select>
+              </div>
+            </div>
+            <div class="row" id="fixedAmountRow" style="display: none;">
+              <div class="mb-3">
+                <label class="form-label">정액</label>
+                <input type="number" name="amount" class="form-control">
+              </div>
+            </div>
+            <div class="row" id="percentageRateRow" style="display: none;">
+              <div class="mb-3">
+                <label class="form-label">정률</label>
+                <input type="number" name="rate" class="form-control">
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3">
+                <label class="form-label">활성화 여부</label>
+                <select class="form-select" name="active">
+                  <option value="true">활성화</option>
+                  <option value="false">비활성화</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3">
+                <label class="form-label">만료 시간</label>
+                <input type="datetime-local" name="endDate" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<head>
+  <meta charset="UTF-8">
+  <script defer type="module" src="/js/product/product.js"></script>
+  <title>Product Detail Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
+  <div class="container">
+    <div class="row mb-8">
+      <div class="col-md-12">
+        <div class="d-md-flex justify-content-between align-items-center">
+          <div>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/products" class="text-inherit">상점 관리</a></li>
+                <li class="breadcrumb-item active" aria-current="page">상품 관리</li>
+              </ol>
+            </nav>
+            <h2 th:text="'# ' + ${product.id}" style="margin-top: 25px;"></h2>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary"
+                    th:onclick="'window.location.href=\'/products/' + ${product.id} + '/update\''">
+              상품 수정
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row ">
+      <div class="col-xl-12 col-12 mb-5">
+        <div class="card h-100 card-lg">
+          <div class="card-body p-6">
+            <table class="table mb-6 border fs-5">
+              <tbody>
+              <tr>
+                <td class="table-secondary fw-bold">상품명</td>
+                <td colspan="4" th:text="${product.name}"></td>
+              </tr>
+              <tr>
+                <td class="table-secondary fw-bold" style="width: 15%;">원가</td>
+                <td class="price" th:data-price="${product.costPrice}"></td>
+                <td class="table-secondary fw-bold" style="width: 15%;">판매가</td>
+                <td class="price" th:data-price="${product.sellingPrice}"></td>
+              </tr>
+              <tr>
+                <td class="table-secondary fw-bold" style="width: 15%;">할인율</td>
+                <td th:text="${product.discountRate} + '%'"></td>
+                <td class="table-secondary fw-bold" style="width: 15%;">최종 판매가</td>
+                <td class="price" th:data-price="${product.finalPrice}"></td>
+              </tr>
+              <tr>
+                <td class="table-secondary fw-bold" style="width: 15%;">카테고리</td>
+                <td th:text="${product.category.getName()}"></td>
+                <td class="table-secondary fw-bold" style="width: 15%;">재고</td>
+                <td th:text="${product.stock}"></td>
+              </tr>
+              <tr>
+                <td class="table-secondary fw-bold">썸네일</td>
+                <td colspan="4">
+                  <div th:each="image : ${product.image}">
+                    <img th:src="@{${image}}" style="width: 150px;" alt="상품 설명 이미지">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="table-secondary fw-bold">설명</td>
+                <td colspan="4">
+                  <div th:each="description : ${product.description}">
+                    <!-- 이미지 클릭 시 모달 열기 -->
+                    <button class="btn" data-bs-toggle="modal"
+                            th:data-bs-target="'#descriptionModal' + ${description.hashCode()}">
+                      <img th:src="@{${description}}" style="max-height: 150px; cursor: pointer;"
+                           alt="상품 설명 이미지">
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="table-secondary fw-bold" style="width: 15%;">최초 생성일</td>
+                <td th:text="${product.createdAt != null ? product.createdAt : '-'}"></td>
+                <td class="table-secondary fw-bold" style="width: 15%;">최초 생성자</td>
+                <td th:text="${product.createdById?.name != null ? product.createdById.name : '-'}"></td>
+              </tr>
+              <tr>
+                <td class="table-secondary fw-bold" style="width: 15%;">최종 수정일</td>
+                <td th:text="${product.updatedAt != null ? product.updatedAt : '-'}"></td>
+                <td class="table-secondary fw-bold" style="width: 15%;">최종 수정자</td>
+                <td th:text="${product.updatedById?.name != null ? product.updatedById.name : '-'}"></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:each="description : ${product.description}">
+      <div id="descriptionModal" th:id="'descriptionModal' + ${description.hashCode()}"
+           class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <img th:src="@{${description}}" style="width: 100%;"
+                   alt="상품 설명 이미지">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

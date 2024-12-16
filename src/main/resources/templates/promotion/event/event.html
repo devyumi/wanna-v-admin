@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/promotion/event/event.css">
+  <script defer type="module" src="/js/promotion/event/event.js"></script>
+  <title>Event detail Page</title>
+</head>
+<body>
+<main layout:fragment="main-content" th:class="main-container">
+  <div class="container">
+    <div class="row mb-8">
+      <div class="col-md-12">
+          <h2>이벤트 상세 조회</h2>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="/events" class="text-inherit">이벤트 관리</a></li>
+              <li class="breadcrumb-item active" aria-current="page">이벤트 상세 조회</li>
+            </ol>
+          </nav>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card mb-6 card-lg">
+        <div class="card-body p-6 ">
+          <div class="row">
+            <div class="mb-3 mt-5">
+              <label class="form-label">제목</label>
+              <input type="text" class="form-control" th:value="${event.title}">
+            </div>
+            <div class="mb-3 mt-5">
+              <label class="form-label">썸네일</label>
+              <div th:each="image : ${event.thumbnail}">
+                <img th:src="@{${image}}" style="width: 50%;">
+              </div>
+            </div>
+            <div class="mb-3 mt-5">
+              <label class="form-label">내용</label>
+              <div th:each="image : ${event.detail}">
+                <img th:src="@{${image}}" style="width: 50%;">
+              </div>
+            </div>
+            <div class="mb-3 mt-5 col-lg-6">
+              <label class="form-label">이벤트 시작 날짜</label>
+              <input type="text" class="form-control" th:value="${event.startDate}">
+            </div>
+            <div class="mb-3 mt-5 col-lg-6">
+              <label class="form-label">이벤트 종료 날짜</label>
+              <input type="text" class="form-control" th:value="${event.endDate}">
+            </div>
+            <div class="mb-3 mt-5 col-lg-6">
+              <label class="form-label">최초 등록 시각</label>
+              <input type="text" class="form-control" id="createdAt" th:value="${event.createdAt}" readonly>
+            </div>
+            <div class="mb-3 mt-5 col-lg-6">
+              <label class="form-label">최종 수정 시각</label>
+              <input type="text" class="form-control" id="updatedAt" th:value="${event.updatedAt != null ? event.updatedAt : ''}" readonly>
+            </div>
+            <div class="mb-3 mt-5 col-lg-6">
+              <label class="form-label">최초 생성자</label>
+              <input type="text" class="form-control" th:value="${event.createdBy != null ? event.createdBy.name : ''}" readonly>
+            </div>
+            <div class="mb-3 mt-5 col-lg-6">
+              <label class="form-label">최종 수정자</label>
+              <input type="text" class="form-control" th:value="${event.updatedBy != null ? event.updatedBy : ''}" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
