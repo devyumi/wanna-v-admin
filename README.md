@@ -1,38 +1,48 @@
-# Final Project 어드민 페이지
+# 🌿 Wanna V: OCR을 활용한 영수증 기반 비건 식당 예약 및 리뷰 플랫폼 (Admin)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/ab4dd5fe-5bc3-4d48-843f-9f6e2195f2c7" height="200">
+</div>
 
-## Git commit message convention
-### 🎉 Init (Initialization)
-- **설명**: 프로젝트의 초기 설정이나 기본적인 구조 설계
-- **예시**: `🎉 Init: set up initial project structure`
+<br>
 
-### ✨ Feat (Feature)
-- **설명**: 새로운 기능을 추가하는 커밋
-- **예시**:`✨ Feat: add user login functionality`
+## 🌟 프로젝트 소개
+- Wanna V **Admin Repository**입니다.
+- Wanna V에 대한 자세한 설명은 User Repository를 참고해주세요.
 
-### 🐛 Fix (Bug Fix)
-- **설명**: 버그를 수정하는 커밋
-- **예시**:`🐛 Fix: correct calculation error in tax module`
+[<img src="https://img.shields.io/badge/User Repository 바로가기-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>](https://github.com/devyumi/wanna-v-user)
 
-### 🎨 Style
-- **설명**: 기능적 변경이 없으며, 코드의 포맷이나 스타일, 주석 등을 수정
-- **예시**:`🎨 Style: format code according to ESLint rules`
+<br>
 
-### ♻️ Refactor
-- **설명**: 코드의 구조를 변경하지만 기능은 변경하지 않는 커밋
-- **예시**:`♻️ Refactor: reorganize project structure`
+## 🎨 주요 기능
 
-### ✅ Test
-- **설명**: 테스트 관련 변경 (테스트 추가, 수정, 제거 등)
-- **예시**:`✅ Test: add unit tests for new user service`
+### ➡️ 대시보드
 
-### 📝 Docs (Documentation)
-- **설명**: 문서화 관련 변경
-- **예시**:`📝 Docs: update README with setup instructions`
+관리자는 **월별(1년), 주별(3개월) 통계**를 확인할 수 있습니다.
 
-### 🔒 Security
-- **설명**: 보안 관련 수정
-- **예시**:`🔒 security: fix XSS vulnerability`
+월별 통계는 매달 1일, 주별 통계는 매주 월요일에 데이터가 갱신됩니다.
+```
+확인 가능 통계: 매출, 활성 유저, 신규 유저, 탈퇴 유저, 신규 식당 수, 리뷰 수, 식당 예약 건수, 식당 예약 취소 건수
+```
 
-### 🚀 Chore
-- **설명**: 기타 잡다한 작업이나 설정 변경
-- **예시**:`🚀 chore: upgrade npm packages`
+<br>
+
+### ➡️ 식당 관리
+
+`식당 분류`, `제공 서비스`, `비건 등급`, `영업 시간`, `브레이크 타임`, `라스트 오더` 등 다양한 정보를 포함하여 식당을 등록할 수 있습니다.
+
+식당에 대한 **긍정, 부정 리뷰 수**를 확인할 수 있습니다.
+
+<br>
+
+### ➡️ 리뷰 관리
+
+관리자는 부적절한 리뷰를 숨김으로써 깨끗한 리뷰 환경을 지속할 수 있습니다.
+```
+부적절한 리뷰: 비속어 혹은 욕설이 포함된 리뷰, 바이럴 리뷰 등
+```
+
+<br>
+
+### ➡️ 상품 관리
+
+관리자는 `비건 상품`만을 등록할 수 있으며 `원가`, `할인율` 등을 모두 고려해야 합니다.
